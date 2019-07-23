@@ -6,17 +6,22 @@ import {registerUser} from '../store/actions/action';
 class Register extends Component {
     state = {
         phone: '',
-        username: '',
-        password: ''
+        password: '',
+        firstname: '',
+        lastname: ''
     }
 
     updateInputPhone = (e) => {
         e.preventDefault()
         this.setState({ phone: e.target.value })
     }
-    updateInputUsername = (e) => {
+    updateInputFirstname = (e) => {
         e.preventDefault()
-        this.setState({ username: e.target.value })
+        this.setState({ firstname: e.target.value })
+    }
+    updateInputLastname = (e) => {
+        e.preventDefault()
+        this.setState({ lastname: e.target.value })
     }
     updateInputPassword = (e) => {
         e.preventDefault()
@@ -35,23 +40,27 @@ class Register extends Component {
                     <div className="logo">
                         <img className="border-bottom border-secondary" src=""/>
                     </div>
-                    <h1 className="text-center">Регистрация</h1>
+                    <h1 className="text-center title">Регистрация</h1>
                     <div>
                         <Form onSubmit={this.submitFormHandler} >
                             <Form.Group controlId="formGroupPhone">
-                                <Form.Label>Phone number</Form.Label>
-                                <Form.Control onChange={this.updateInputPhone} type="phone" placeholder="Phone" required />
+                                {/* <Form.Label>Phone number</Form.Label> */}
+                                <Form.Control className="input" onChange={this.updateInputPhone} type="phone" placeholder="Номер телефона" required />
                             </Form.Group>
                             <Form.Group controlId="formGroupUsername">
-                                <Form.Label>Your name</Form.Label>
-                                <Form.Control onChange={this.updateInputUsername} type="text" placeholder="Username" required />
+                                {/* <Form.Label>Your name</Form.Label> */}
+                                <Form.Control className="input" onChange={this.updateInputFirstname} type="text" placeholder="Имя" required />
+                            </Form.Group>
+                            <Form.Group controlId="formGroupUsername">
+                                {/* <Form.Label>Your name</Form.Label> */}
+                                <Form.Control className="input" onChange={this.updateInputLastname} type="text" placeholder="Фамилия" required />
                             </Form.Group>
                             <Form.Group controlId="formGroupPassword">
-                                <Form.Label>Password</Form.Label>
-                                <Form.Control onChange={this.updateInputPassword} type="password" placeholder="Password" required />
+                                {/* <Form.Label>Password</Form.Label> */}
+                                <Form.Control className="input" onChange={this.updateInputPassword} type="password" placeholder="Пароль" required />
                             </Form.Group>
                             <div>
-                                <Button type="submit" variant="primary" size="lg" block>Accept</Button>
+                                <Button type="submit" variant="primary" size="lg" block>Создать</Button>
                             </div>
                         </Form>
                     </div>

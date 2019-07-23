@@ -1,0 +1,11 @@
+.logo {
+    padding-bottom: 10px;
+}
+.title {
+    margin-bottom: 70px;
+}
+.input {
+    padding: 25px 10px !important;
+    margin-bottom: 10px;
+    font-size: 16px !important;
+}
