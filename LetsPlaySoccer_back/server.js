@@ -1,29 +1,12 @@
 const express = require('express');
-const logger = require('morgan');
-const bodyParser = require('body-parser');
-
-const http = require('http');
-
 const app = express();
+const PORT = 8000;
+const users = require('./app/users');
+const db = require('./fileDb.js');
 
-app.use(logger('dev'));
+app.use(express.json());
+app.use('/users', users(db));
 
-app.use(bodyParser.json());
-
-app.use(bodyParser.urlencoded({ extended: false }));
-
-app.get('*', (req, res) => res.status(200).send({
-
-    message: 'Welcome to the beginning of nothingness.',
-
-}));
-
-const port = parseInt(process.env.PORT, 10) || 8000;
-
-app.set('port', port);
-
-const server = http.createServer(app);
-
-server.listen(port);
-
-module.exports = app;
+app.listen(PORT, () => {
+    console.log(`Server running at ${PORT} port`);
+});
