@@ -1,0 +1,28 @@
+.profile-container {
+    max-width: 360px;
+}
+.profile {
+    margin-bottom: 30px;
+}
+.menu-item {
+    flex: 0 0 100%;
+    margin-left: 20px;
+    line-height: 60px;
+}
+.menu-item:last-child {
+    margin-top: 200px;
+}
+.menu-link {
+    color: inherit;
+    
+}
+.menu-btn {
+    background: none;
+    border: none;
+    margin-top: auto;
+}
+.messages {
+    color: rgb(231, 38, 38);
+    display: inline-block;
+    width: 100%;
+}
