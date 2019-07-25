@@ -32,8 +32,21 @@ class Register extends Component {
 
     submitFormHandler = (e) => {
         e.preventDefault();
-        if (this.state.phone[16] !== "_") {
-            this.props.registration(this.state)
+        if (this.state.phone[16] !== "_" && (
+            this.state.phone.slice(3, 6) === "700" || 
+            this.state.phone.slice(3, 6) === "701" ||
+            this.state.phone.slice(3, 6) === "702" ||
+            this.state.phone.slice(3, 6) === "705" ||
+            this.state.phone.slice(3, 6) === "707" ||
+            this.state.phone.slice(3, 6) === "708" ||
+            this.state.phone.slice(3, 6) === "747" ||
+            this.state.phone.slice(3, 6) === "771" ||
+            this.state.phone.slice(3, 6) === "775" ||
+            this.state.phone.slice(3, 6) === "776" ||
+            this.state.phone.slice(3, 6) === "777" ||
+            this.state.phone.slice(3, 6) === "778")
+            ) {
+                this.props.registration(this.state)
         } else {
             alert("Вы ввели номер неверно")
         };
@@ -50,7 +63,7 @@ class Register extends Component {
                     <div>
                         <Form onSubmit={this.submitFormHandler} >
                             <Form.Group controlId="formGroupPhone">
-                                <MaskedFormControl onChange={this.updateInputPhone} className="input" name='phoneNumber' mask='8 (111) 111 11 11' required />
+                                <MaskedFormControl onChange={this.updateInputPhone} className="input" name='phoneNumber' mask='8 (111) 111-11-11' required />
                             </Form.Group>
                             <FormElement onChange={this.updateInputFirstname} type="text" placeholder="Имя"/>
                             <FormElement onChange={this.updateInputLastname} type="text" placeholder="Фамилия" />

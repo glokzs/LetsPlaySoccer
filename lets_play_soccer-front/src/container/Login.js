@@ -17,8 +17,23 @@ class Login extends Component {
 
     onSubmitHandler = e => {
         e.preventDefault();
-        if (this.state.phone[16] !== "_") {
-            this.props.loginUser(this.state);
+        if (this.state.phone[16] !== "_" && (
+            this.state.phone.slice(3, 6) === "700" || 
+            this.state.phone.slice(3, 6) === "701" ||
+            this.state.phone.slice(3, 6) === "702" ||
+            this.state.phone.slice(3, 6) === "705" ||
+            this.state.phone.slice(3, 6) === "707" ||
+            this.state.phone.slice(3, 6) === "708" ||
+            this.state.phone.slice(3, 6) === "747" ||
+            this.state.phone.slice(3, 6) === "771" ||
+            this.state.phone.slice(3, 6) === "775" ||
+            this.state.phone.slice(3, 6) === "776" ||
+            this.state.phone.slice(3, 6) === "777" ||
+            this.state.phone.slice(3, 6) === "778"
+            )) {
+                if(window.confirm("Убедитесь что номер введён правильно "+this.state.phone)) {
+                    this.props.loginUser(this.state);
+                }
         } else {
             alert("Вы ввели номер неверно")
         };
@@ -44,7 +59,7 @@ class Login extends Component {
                     }
                     <Form onSubmit={this.onSubmitHandler} >
                         <Form.Group controlId="formGroupPhone">
-                            <MaskedFormControl onChange={this.updateInputPhone} className="input" name='phoneNumber' mask='8 (111) 111 11 11' required />
+                            <MaskedFormControl onChange={this.updateInputPhone} className="input" name='phoneNumber' mask='8 (111) 111-11-11' required />
                         </Form.Group>
                         <FormElement onChange={this.updateInputPassword} type="password" placeholder="Пароль" />
                         <div className="text-right">

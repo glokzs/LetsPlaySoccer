@@ -8,7 +8,6 @@ const registerUserSuccess = () => {
 };
 
 export const registerUser = userData => {
-    console.log(userData);
     return dispatch => {
         axios.post("/users", userData).then(
             response => {
@@ -34,7 +33,6 @@ const loginUserError = (error) => {
 };
 
 export const loginUser = userData => {
-    console.log(userData.phone);
     return dispatch => {
         axios.post("/users/sessions", userData).then(
             response => {
