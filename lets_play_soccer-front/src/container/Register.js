@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import {connect} from "react-redux";
 import {Form, Button, Container} from 'react-bootstrap';
 import {registerUser} from '../store/actions/action';
+import FormElement from '../components/FormElement';
+import MaskedFormControl from 'react-bootstrap-maskedinput';
 
 class Register extends Component {
     state = {
@@ -30,7 +32,11 @@ class Register extends Component {
 
     submitFormHandler = (e) => {
         e.preventDefault();
-        this.props.registration(this.state)
+        if (this.state.phone[16] !== "_") {
+            this.props.registration(this.state)
+        } else {
+            alert("Вы ввели номер неверно")
+        };
     };
 
     render() {
@@ -44,21 +50,11 @@ class Register extends Component {
                     <div>
                         <Form onSubmit={this.submitFormHandler} >
                             <Form.Group controlId="formGroupPhone">
-                                {/* <Form.Label>Phone number</Form.Label> */}
-                                <Form.Control className="input" onChange={this.updateInputPhone} type="phone" placeholder="Номер телефона" required />
+                                <MaskedFormControl onChange={this.updateInputPhone} className="input" name='phoneNumber' mask='8 (111) 111 11 11' required />
                             </Form.Group>
-                            <Form.Group controlId="formGroupUsername">
-                                {/* <Form.Label>Your name</Form.Label> */}
-                                <Form.Control className="input" onChange={this.updateInputFirstname} type="text" placeholder="Имя" required />
-                            </Form.Group>
-                            <Form.Group controlId="formGroupUsername">
-                                {/* <Form.Label>Your name</Form.Label> */}
-                                <Form.Control className="input" onChange={this.updateInputLastname} type="text" placeholder="Фамилия" required />
-                            </Form.Group>
-                            <Form.Group controlId="formGroupPassword">
-                                {/* <Form.Label>Password</Form.Label> */}
-                                <Form.Control className="input" onChange={this.updateInputPassword} type="password" placeholder="Пароль" required />
-                            </Form.Group>
+                            <FormElement onChange={this.updateInputFirstname} type="text" placeholder="Имя"/>
+                            <FormElement onChange={this.updateInputLastname} type="text" placeholder="Фамилия" />
+                            <FormElement onChange={this.updateInputPassword} type="password" placeholder="Пароль" />
                             <div>
                                 <Button type="submit" variant="primary" size="lg" block>Создать</Button>
                             </div>

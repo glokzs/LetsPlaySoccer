@@ -3,6 +3,8 @@ import {connect} from "react-redux";
 import {Form, Button, Container} from 'react-bootstrap';
 import { loginUser } from '../store/actions/action';
 import { NavLink } from "react-router-dom";
+import FormElement from '../components/FormElement';
+import MaskedFormControl from 'react-bootstrap-maskedinput';
 import './Login.css';
 
 
@@ -15,7 +17,11 @@ class Login extends Component {
 
     onSubmitHandler = e => {
         e.preventDefault();
-        this.props.loginUser(this.state);
+        if (this.state.phone[16] !== "_") {
+            this.props.loginUser(this.state);
+        } else {
+            alert("Вы ввели номер неверно")
+        };
     };
     updateInputPhone = (e) => {
         e.preventDefault();
@@ -38,13 +44,9 @@ class Login extends Component {
                     }
                     <Form onSubmit={this.onSubmitHandler} >
                         <Form.Group controlId="formGroupPhone">
-                            {/* <Form.Label>Phone number</Form.Label> */}
-                            <Form.Control className="input" maxLength="11" onChange={this.updateInputPhone} type="phone" placeholder="Номер телефона" required />
+                            <MaskedFormControl onChange={this.updateInputPhone} className="input" name='phoneNumber' mask='8 (111) 111 11 11' required />
                         </Form.Group>
-                        <Form.Group controlId="formGroupPassword">
-                            {/* <Form.Label>Password</Form.Label> */}
-                            <Form.Control className="input" onChange={this.updateInputPassword} type="password" placeholder="Пароль" required />
-                        </Form.Group>
+                        <FormElement onChange={this.updateInputPassword} type="password" placeholder="Пароль" />
                         <div className="text-right">
                             <NavLink to="">Забыли пароль?</NavLink>
                         </div>

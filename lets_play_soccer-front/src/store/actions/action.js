@@ -34,7 +34,7 @@ const loginUserError = (error) => {
 };
 
 export const loginUser = userData => {
-    console.log(userData);
+    console.log(userData.phone);
     return dispatch => {
         axios.post("/users/sessions", userData).then(
             response => {
