@@ -1,11 +1,20 @@
 const express = require('express');
-const app = express();
-const PORT = 8000;
-const users = require('./app/users');
-const db = require('./fileDb.js');
+const bodyParser = require('body-parser');
 
-app.use(express.json());
-app.use('/users', users(db));
+const users = require('./app/users');
+const cors = require('cors');
+
+const PORT = 8000;
+
+const app = express();
+app.use(cors());
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+
+app.use('/users', users);
+
+// app.use(express.json());
 
 app.listen(PORT, () => {
     console.log(`Server running at ${PORT} port`);
