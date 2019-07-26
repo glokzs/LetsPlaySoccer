@@ -6,7 +6,7 @@ const initialState = {
     user: null
 };
 
-const reducer = (state = initialState, action) => {
+const userReducer = (state = initialState, action) => {
     switch (action.type) {
         case REGISTER_USER_SUCCESS:
             return {...state, registerError: null};
@@ -23,4 +23,4 @@ const reducer = (state = initialState, action) => {
     };
 };
 
-export default reducer;
+export default userReducer;

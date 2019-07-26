@@ -1,19 +1,54 @@
-import React from 'react';
-import {Route, Switch} from "react-router";
-import Register from './container/Register';
-import Login from './container/Login';
-import Menu from './components/Menu';
+import React, {Component, Fragment} from 'react';
+import {Route, Switch, withRouter} from "react-router-dom";
+import {connect} from 'react-redux';
+import Toolbar from "./components/UI/Toolbar";
+import {logoutUser} from "./store/actions/userAction";
+import MainRoutes from './Routes';
+import Register from "./containers/Register";
+import Login from "./containers/Login";
+import Tutorial from "./containers/Tutorial";
 
-function App() {
-  return (
-    <div className="App">
-      <Switch>
-          <Route path="/register" component={Register}/>
-          <Route path="/login" component={Login}/>
-          <Route path="/menu" component={Menu}/>
-        </Switch>
-    </div>
-  );
+
+class App extends Component {
+    render() {
+        return (
+            <Fragment>
+                <Switch>
+                    <Route exact path="/" render={props => {
+                        return (
+                            <Fragment>
+                                <header>
+                                    <Toolbar user={props.user} logout={props.onLogoutUser} />
+                                </header>
+                                <main>
+                                    <div className='container'>
+                                        <MainRoutes user={props.user} />
+                                    </div>
+                                </main>
+                            </Fragment>
+                        );
+                    }} />
+                    <Route exact path="/register" component={Register}/>
+                    <Route exact path="/login" component={Login}/>
+                    <Route exact path="/tutorial" component={Tutorial}/>
+                </Switch>
+            </Fragment>
+        );
+    }
 }
 
-export default App;
+const mapStateToProps = state => {
+    return {
+        user: state.users.user
+    }
+};
+
+const mapDispatchToProps = dispatch => ({
+    onLogoutUser: () => dispatch(logoutUser())
+});
+
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));
+
+
+

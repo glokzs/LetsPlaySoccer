@@ -1,13 +1,14 @@
-import { REGISTER_USER_SUCCESS, LOGIN_USER_SUCCESS, LOGIN_USER_ERROR } from './action-type';
+import { REGISTER_USER_SUCCESS, LOGIN_USER_SUCCESS, LOGIN_USER_ERROR, LOGOUT_USER } from './action-type';
 import axios from "../../axios-api";
 import {push} from "connected-react-router";
-import {NotificationManager} from "react-notifications";
+// import {NotificationManager} from "react-notifications";
 
 const registerUserSuccess = () => {
     return {type: REGISTER_USER_SUCCESS};
 };
 
 export const registerUser = userData => {
+    // console.log(userData);
     return dispatch => {
         axios.post("/users", userData).then(
             response => {
@@ -33,6 +34,7 @@ const loginUserError = (error) => {
 };
 
 export const loginUser = userData => {
+    // console.log(userData);
     return dispatch => {
         axios.post("/users/sessions", userData).then(
             response => {
@@ -47,5 +49,19 @@ export const loginUser = userData => {
                 }
             }
         )
+    }
+};
+
+export const logoutUser = () => {
+    return (dispatch, getState) => {
+        const token = getState().users.user.token;
+        const headers = {Authorization: token};
+
+        return axios.delete('/users/session', {headers}).then(
+            response => {
+                dispatch({type: LOGOUT_USER});
+                dispatch(push('/'));
+            }
+        );
     }
 };

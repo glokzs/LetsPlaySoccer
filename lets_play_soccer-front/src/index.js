@@ -7,19 +7,18 @@ import {connectRouter, routerMiddleware, ConnectedRouter} from "connected-react-
 import thunkMiddleware from 'redux-thunk';
 import axios from "./axios-api";
 import App from './App';
-import reducer from './store/reducers/reducer'
-// import reducer from './store/reducers/reduser';
-// import usersReducer from './store/reducers/usersReducer';
+import userReducer from './store/reducers/userReducer'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-notifications/lib/notifications.css';
+import './assets/stylesheet/app.scss';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const history = createBrowserHistory();
 
 const rootReducer = combineReducers({
-//   products: reducer,
-  users: reducer,
+//   products: userReducer,
+  users: userReducer,
   router: connectRouter(history)
 });
 
