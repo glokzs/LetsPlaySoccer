@@ -1,5 +1,7 @@
 const express = require('express');
 const router = express.Router();
+const User = require('../models/User');
+
 const multer  = require('multer');
 const path = require('path');
 const config = require('../config');
@@ -16,30 +18,36 @@ const storage = multer.diskStorage({
 
 const upload = multer({storage});
 
-const createRouter = (db) => {
-    db.init();
-
     router.get('/', (req, res) => {
-        let users = db.getItems('users');
-        res.send(users);
+        User.findAll()
+            .then(users => {
+                res.json(users)
+            })
+            .catch(err => {
+                res.send('error: ' + err)
+            })
     });
 
     router.get('/:id', (req, res) => {
-        const user = db.findBy('id', req.params.id, 'users');
-        if (user) res.send(user);
-        else res.sendStatus(500);
+        User.findOne({
+            where: {
+                id: req.params.id
+            }
+        }).then(user => {
+                if (user) {
+                    res.json(user)
+                } else {
+                    res.send('User does not exist')
+                }
+        }).catch(err => {
+            res.send('error: ' + err)
+        })
 
     });
 
     router.post('/', upload.single('avatar'), (req, res) => {
-        if (db.getItems('users').length) {
-            const busyNumber = db.findBy('number', req.body.phoneNumber, 'users');
-
-            if (busyNumber) res.status(500).send({message: 'busy phone number'});
-        }
-
+        console.log('hello');
         const user = {
-            id: nanoid(),
             displayName: req.body.displayName,
             phoneNumber: req.body.phoneNumber,
             password: req.body.password
@@ -49,25 +57,33 @@ const createRouter = (db) => {
             user.avatar = req.file.filename;
         }
 
-        db.addItem(user, 'users');
-
-        res.send(user);
+        User.create(user)
+            .then(data => {
+                res.send(data)
+            })
+            .catch(err => {
+                res.json('error: ' + err)
+            });
     });
 
     router.post('/sessions', async (req, res) => {
-        const user = db.findBy('number', req.body.phoneNumber, 'users');
-        console.log(user);
+        const user = await User.findOne({
+            where: {
+                phoneNumber: req.body.phoneNumber
+            }
+        });
+
         if(!user) {
             return res.status(400).send({message: 'User not found'});
         }
 
-        if(!(user.password === req.body.password)) {
+        const isMatch = await user.checkPassword(req.body.password);
+
+        if(!isMatch) {
             return res.status(400).send({message: 'Wrong password'});
         }
 
-        user.token = nanoid();
-
-        db.saveToken(user);
+        user.update({token: nanoid()});
 
         res.send(user);
 
@@ -78,16 +94,19 @@ const createRouter = (db) => {
         const success = {message: "Logged out!"};
         if(!token) return res.send(success);
 
-        const user = db.findBy('token', token, 'users');
+        const user = await User.findOne({
+            where: {
+                token: token
+            }
+        });
+
         if(!user) return res.send(success);
 
-        db.deleteToken(user.id);
+        user.update({token: ''});
 
         res.send(success);
     });
 
-    return router
 
-};
 
-module.exports = createRouter;
+module.exports = router;
