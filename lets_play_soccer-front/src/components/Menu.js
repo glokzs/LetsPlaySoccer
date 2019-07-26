@@ -2,13 +2,14 @@ import React from 'react';
 import { NavLink } from "react-router-dom";
 import { Nav, NavItem } from 'react-bootstrap';
 import './Menu.css';
+import photo from '../uploads/Mask.png'
 const Menu = props => {
     
     
     return (
         <div className="profile-container">
             <div className="profile">
-                <img /*src={props.user.photo}*//>
+                <img className="photo-profile" src={photo}/>
                 <h2>{/*props.user.name*/}</h2>
                 <spawn>{/*props.user.rating*/}</spawn>
             </div>

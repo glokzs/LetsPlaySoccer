@@ -41,8 +41,8 @@ class Login extends Component {
 
         return (
             <>
-                <Container>
-                    <div className="logo">
+                <div className="container-login">
+                    <div className="logo text-center">
                         <img className="border-bottom border-secondary" src=""/>
                     </div>
                     <h1 className="text-center title">Вход в систему</h1>
@@ -64,7 +64,7 @@ class Login extends Component {
                     <div>
                         <span>Ещё нет аккаунта? <NavLink to="/register">Создайте </NavLink>прямо сейчас</span>
                     </div>
-                </Container>
+                </div>
             </>
         )
     }    

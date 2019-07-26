@@ -47,9 +47,9 @@ class Register extends Component {
     render() {
         return (
             <>
-                <Container>
-                    <div className="logo">
-                        <img className="border-bottom border-secondary" src=""/>
+                <div className="container-login" >
+                    <div className="logo text-center">
+                        <img className="border-bottom border-secondary" src="" />
                     </div>
                     <h1 className="text-center title">Регистрация</h1>
                     <div>
@@ -65,8 +65,7 @@ class Register extends Component {
                             </div>
                         </Form>
                     </div>
-
-                </Container>
+                </div>
             </>
         );
     };
