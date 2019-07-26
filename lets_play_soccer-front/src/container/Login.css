@@ -1,11 +1,47 @@
 .logo {
-    padding-bottom: 10px;
+    margin-bottom: 40px;
+    margin-top: 100px;
+    background: url('../uploads/LogoBig.png') center no-repeat;
+    height: 45px;
 }
 .title {
-    margin-bottom: 70px;
+    margin-bottom: 50px;
+    font-size: 28px;
 }
 .input {
     padding: 25px 10px !important;
     margin-bottom: 10px;
     font-size: 16px !important;
+}
+.container-login {
+    max-width: 700px;
+    margin: 0 auto;
+}
+@media (max-width: 992px) {
+    .container-login {
+        max-width: 600px;
+    }
+} 
+@media (max-width: 768px) {
+    .container-login {
+        max-width: 500px;
+    }
+    .title {
+        font-size: 18px;
+    }
+}
+@media (max-width: 576px) {
+    .container-login {
+        max-width: 330px;
+    }
+    .logo {
+        margin-top: 40px;
+        margin-bottom: 20px;
+        background: url('../uploads//LogoSmall.png') center no-repeat;
+    }
+}
+@media (max-width: 345px) {
+    .container-login {
+        max-width: 280px;
+    }
 }

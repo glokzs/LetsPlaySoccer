@@ -17,26 +17,16 @@ class Login extends Component {
 
     onSubmitHandler = e => {
         e.preventDefault();
-        if (this.state.phone[16] !== "_" && (
-            this.state.phone.slice(3, 6) === "700" || 
-            this.state.phone.slice(3, 6) === "701" ||
-            this.state.phone.slice(3, 6) === "702" ||
-            this.state.phone.slice(3, 6) === "705" ||
-            this.state.phone.slice(3, 6) === "707" ||
-            this.state.phone.slice(3, 6) === "708" ||
-            this.state.phone.slice(3, 6) === "747" ||
-            this.state.phone.slice(3, 6) === "771" ||
-            this.state.phone.slice(3, 6) === "775" ||
-            this.state.phone.slice(3, 6) === "776" ||
-            this.state.phone.slice(3, 6) === "777" ||
-            this.state.phone.slice(3, 6) === "778"
-            )) {
-                if(window.confirm("Убедитесь что номер введён правильно "+this.state.phone)) {
-                    this.props.loginUser(this.state);
-                }
+        let checkNumber = this.state.phone.includes('_')
+        const array = ["700", "701", "702", "705", "707", "708", "747", "771", "775", "776", "777", "778"]
+        let checkOperator = array.includes(this.state.phone.slice(3, 6));
+        if (checkNumber == false && checkOperator == true) {
+            if(window.confirm("Убедитесь что номер введён правильно "+this.state.phone)) {
+                this.props.loginUser(this.state);
+            }
         } else {
-            alert("Вы ввели номер неверно")
-        };
+            alert("Вы ввели номер неверно");
+        }
     };
     updateInputPhone = (e) => {
         e.preventDefault();
@@ -47,10 +37,12 @@ class Login extends Component {
         this.setState({ password: e.target.value });
     };
     render() {
+        console.log(this.state.phone.slice(3, 6));
+
         return (
             <>
-                <Container>
-                    <div className="logo">
+                <div className="container-login">
+                    <div className="logo text-center">
                         <img className="border-bottom border-secondary" src=""/>
                     </div>
                     <h1 className="text-center title">Вход в систему</h1>
@@ -72,7 +64,7 @@ class Login extends Component {
                     <div>
                         <span>Ещё нет аккаунта? <NavLink to="/register">Создайте </NavLink>прямо сейчас</span>
                     </div>
-                </Container>
+                </div>
             </>
         )
     }    
