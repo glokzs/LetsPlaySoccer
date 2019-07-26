@@ -1,0 +1,132 @@
+.tutorial {
+  &__wrap {
+    background-color: $primary;
+    height: 100vh;
+  }
+  &__page {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: $primary;
+    position: relative;
+    @include media-breakpoint-up(sm) {
+      max-width: 450px;
+      max-height: 550px;
+      margin: 50px auto 0;
+    }
+  }
+  &__circle {
+    width: 100%;
+    padding-bottom: 100%;
+    position: absolute;
+    top: 7%;
+    &::before {
+      position: absolute;
+      content: '';
+      display: block;
+      width: 90%;
+      padding-bottom: 90%;
+      background-color: darken($primary, 2%);
+      border-radius: 50%;
+      top: 5%; left: 5%;
+    }
+    &::after {
+      position: absolute;
+      content: '';
+      display: block;
+      width: 64%;
+      padding-bottom: 64%;
+      background-color: darken($primary, 4%);
+      border-radius: 50%;
+      top: 18%; left: 18%;
+    }
+  }
+  &__icon {
+    z-index: 1;
+    background-color: darken($primary, 10%);
+    width: 46%;
+    padding-bottom: 46%;
+    border-radius: 50%;
+    position: absolute;
+    top: 27%;
+    left: 27%;
+    &::before {
+      font-size: 6rem;
+      color: #63D471;
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+  .icon--soccer-field {
+    &::before {
+      font-size: 5rem;
+    }
+  }
+  .icon--arrow-right {
+    color: $primary;
+    margin-left: 10px;
+  }
+  &__title {
+    font-size: 18px;
+  }
+  &__text {
+    font-size: 14px;
+  }
+  &__next {
+    background: white;
+    padding: 11px;
+    position: absolute;
+    font-weight: bold;
+    bottom: -68%;
+    border: none;
+    left: 0;
+    right: 0;
+    width: 194px;
+    margin: 0 auto;
+    &:hover {
+      text-decoration: none;
+      color: $primary;
+    }
+  }
+  .carousel-caption {
+    bottom: 23%;
+    right: 15px;
+    left: 15px;
+  }
+  .carousel-indicators li {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    opacity: 1;
+  }
+  .carousel-indicators .active {
+    width: 10px;
+    height: 10px;
+  }
+  .carousel-indicators {
+    align-items: center;
+    bottom: 19%;
+  }
+  .carousel-control-prev {
+    display: none;
+  }
+  .carousel-control-next {
+    top: unset;
+    width: 194px;
+    background: white;
+    color: $primary;
+    font-weight: bold;
+    opacity: 1;
+    padding: 11px;
+    left: 0;
+    margin: 0 auto;
+    bottom: 12%;
+  }
+}

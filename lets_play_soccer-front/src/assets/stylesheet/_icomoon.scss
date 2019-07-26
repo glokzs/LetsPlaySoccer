@@ -1,0 +1,18 @@
+$icons-set: (
+        soccer-ball: '\e900',
+        soccer-field: '\e901',
+        teamwork: '\e902',
+        arrow-right: '\e903'
+);
+.icon {
+  @each $icon, $code in $icons-set {
+    &--#{$icon} {
+      &::before {
+        content: $code;
+        font-family: 'icomoon';
+        color: inherit;
+        font-size: inherit;
+      }
+    }
+  }
+}
