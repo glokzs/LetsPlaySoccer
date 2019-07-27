@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 const db = {};
-const sequelize = new Sequelize('LetsPlaySoccer', 'root', 'Bekarav4', {
+const sequelize = new Sequelize("LetsPlaySoccer", 'root', '1qaz@WSX29', {
     host: 'localhost',
     dialect: 'mysql',
     operatorsAliases: false,
@@ -13,7 +13,7 @@ const sequelize = new Sequelize('LetsPlaySoccer', 'root', 'Bekarav4', {
     }
 });
 
+sequelize.sync();
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
-
 module.exports = db;
