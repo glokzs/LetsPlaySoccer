@@ -17,7 +17,7 @@ const User = db.sequelize.define(
         phoneNumber: {
             type: Sequelize.STRING,
             validate: {
-                isMobilePhone: ['kk-KZ']
+                isMobilePhone: ['kk-KZ', {strictMode: true}]
             },
             unique: true,
             required: true,
