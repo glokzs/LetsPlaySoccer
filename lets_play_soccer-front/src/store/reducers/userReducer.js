@@ -1,4 +1,11 @@
-import { REGISTER_USER_SUCCESS, REGISTER_USER_ERROR, LOGIN_USER_SUCCESS, LOGIN_USER_ERROR, LOGOUT_USER } from '../actions/action-type';
+import {
+    REGISTER_USER_SUCCESS,
+    REGISTER_USER_ERROR,
+    LOGIN_USER_SUCCESS,
+    LOGIN_USER_ERROR,
+    LOGOUT_USER,
+    CLEAR_USER_ERRORS
+} from '../actions/action-type';
 
 const initialState = {
     registerError: null,
@@ -9,7 +16,7 @@ const initialState = {
 const userReducer = (state = initialState, action) => {
     switch (action.type) {
         case REGISTER_USER_SUCCESS:
-            return {...state, registerError: null};
+            return {...state, user: action.user, registerError: null};
         case REGISTER_USER_ERROR:
             return {...state, registerError: action.error};
         case LOGIN_USER_SUCCESS:
@@ -18,9 +25,11 @@ const userReducer = (state = initialState, action) => {
             return {...state, loginError: action.error};
         case LOGOUT_USER:
             return {...state, user: null};
+        case CLEAR_USER_ERRORS:
+            return {...state, registerError: null};
         default:
             return state;
-    };
+    }
 };
 
 export default userReducer;

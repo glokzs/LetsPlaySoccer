@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
 import {connect} from "react-redux";
-import {Form, Button} from 'react-bootstrap';
+import {Form, Button, Alert} from 'react-bootstrap';
 import { loginUser } from '../store/actions/userAction';
 import { NavLink } from "react-router-dom";
-import FormElement from '../components/FormElement';
-import MaskedFormControl from 'react-bootstrap-maskedinput';
+import FormElement from '../components/UI/FormElement';
+import MobileInput from "../components/UI/MobileInput";
 
 class Login extends Component {
 
@@ -13,29 +13,23 @@ class Login extends Component {
         password: ''
     };
 
+    updateInput = (e) => {
+        e.preventDefault();
+        this.setState({ [e.target.name]: e.target.value });
+    };
+    updatePhoneInput = phone => {
+        this.setState({phone});
+    };
+
     onSubmitHandler = e => {
         e.preventDefault();
-        let checkNumber = this.state.phone.includes('_');
-        const array = ["700", "701", "702", "705", "707", "708", "747", "771", "775", "776", "777", "778"];
-        let checkOperator = array.includes(this.state.phone.slice(3, 6));
-        if (checkNumber === false && checkOperator === true) {
-            if(window.confirm("Убедитесь что номер введён правильно "+this.state.phone)) {
-                this.props.loginUser(this.state);
-            }
-        } else {
-            alert("Вы ввели номер неверно");
-        }
+        this.props.loginUser({
+            phoneNumber: '+7'+this.state.phone,
+            password: this.state.password,
+        });
     };
-    updateInputPhone = (e) => {
-        e.preventDefault();
-        this.setState({ phone: e.target.value });
-    };
-    updateInputPassword = (e) => {
-        e.preventDefault();
-        this.setState({ password: e.target.value });
-    };
+
     render() {
-        console.log(this.state.phone.slice(3, 6));
 
         return (
             <div className="container-login">
@@ -44,13 +38,20 @@ class Login extends Component {
                 </div>
                 <h1 className="text-center title">Вход в систему</h1>
                 {
-                    this.props.error ? <span>Введён неверный логин или пароль</span> : null
+                    this.props.error ? <Alert variant={'danger'}>Введён неверный логин или пароль</Alert> : null
                 }
                 <Form onSubmit={this.onSubmitHandler} >
-                    <Form.Group controlId="formGroupPhone">
-                        <MaskedFormControl onChange={this.updateInputPhone} className="input" name='phoneNumber' mask='8 (111) 111-11-11' required />
-                    </Form.Group>
-                    <FormElement onChange={this.updateInputPassword} type="password" placeholder="Пароль" />
+                    <MobileInput
+                        value={this.state.phone}
+                        onChange={this.updatePhoneInput}
+                    />
+                    <FormElement
+                        onChange={this.updateInput}
+                        type="password"
+                        placeholder="Пароль"
+                        name="password"
+                        value={this.state.password}
+                    />
                     <div className="text-right">
                         <NavLink to="">Забыли пароль?</NavLink>
                     </div>

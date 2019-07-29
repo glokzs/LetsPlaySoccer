@@ -1,47 +1,34 @@
 import React, {Component} from 'react';
 import {connect} from "react-redux";
-import {Form, Button} from 'react-bootstrap';
-import {registerUser} from '../store/actions/userAction';
-import FormElement from '../components/FormElement';
-import MaskedFormControl from 'react-bootstrap-maskedinput';
+import {Form, Button, Alert} from 'react-bootstrap';
+import {clearUserErrors, loginUser, registerUser} from '../store/actions/userAction';
+import FormElement from '../components/UI/FormElement';
+import MobileInput from "../components/UI/MobileInput";
 
 class Register extends Component {
     state = {
         phone: '',
         password: '',
-        firstname: '',
-        lastname: ''
+        displayName: '',
     };
 
-    updateInputPhone = (e) => {
+    updateInput = (e) => {
         e.preventDefault();
-        this.setState({ phone: e.target.value });
+        this.setState({ [e.target.name]: e.target.value });
+        this.props.clearUserErrors();
     };
-    updateInputFirstname = (e) => {
-        e.preventDefault();
-        this.setState({ firstname: e.target.value })
-    };
-    updateInputLastname = (e) => {
-        e.preventDefault();
-        this.setState({ lastname: e.target.value })
-    };
-    updateInputPassword = (e) => {
-        e.preventDefault();
-        this.setState({ password: e.target.value })
+    updatePhoneInput = phone => {
+        this.setState({phone});
+        this.props.clearUserErrors();
     };
 
     submitFormHandler = (e) => {
         e.preventDefault();
-        let checkNumber = this.state.phone.includes('_');
-        const array = ["700", "701", "702", "705", "707", "708", "747", "771", "775", "776", "777", "778"];
-        let checkOperator = array.includes(this.state.phone.slice(3, 6));
-        if (checkNumber === false && checkOperator === true) {
-            if(window.confirm("Убедитесь что номер введён правильно "+this.state.phone)) {
-                this.props.registration(this.state);
-            }
-        } else {
-            alert("Вы ввели номер неверно");
-        }
+        this.props.registration({
+            phoneNumber: '+7'+this.state.phone,
+            password: this.state.password,
+            displayName: this.state.displayName
+        });
     };
 
     render() {
@@ -53,14 +40,29 @@ class Register extends Component {
                 <h1 className="text-center title">Регистрация</h1>
                 <div>
                     <Form onSubmit={this.submitFormHandler} >
-                        <Form.Group controlId="formGroupPhone">
-                            <MaskedFormControl onChange={this.updateInputPhone} className="input" name='phoneNumber' mask='8 (111) 111-11-11' required />
-                        </Form.Group>
-                        <FormElement onChange={this.updateInputFirstname} type="text" placeholder="Имя"/>
-                        <FormElement onChange={this.updateInputLastname} type="text" placeholder="Фамилия" />
-                        <FormElement onChange={this.updateInputPassword} type="password" placeholder="Пароль" />
+                        <FormElement
+                            onChange={this.updateInput}
+                            type="text"
+                            placeholder="ФИО"
+                            name="displayName"
+                            value={this.state.displayName}
+                        />
+                        <MobileInput
+                            value={this.state.phone}
+                            onChange={this.updatePhoneInput}
+                        />
+                        {(this.props.registerError && this.props.registerError.message) ?
+                            <Alert variant={'danger'}>{this.props.registerError.message}</Alert>: null
+                        }
+                        <FormElement
+                            onChange={this.updateInput}
+                            type="password"
+                            placeholder="Пароль"
+                            name="password"
+                            value={this.state.password}
+                        />
                         <div>
-                            <Button type="submit" variant="primary" size="lg" block>Создать</Button>
+                            <Button type="submit" variant="primary" size="lg" block>Зарегистрироваться</Button>
                         </div>
                     </Form>
                 </div>
@@ -69,10 +71,17 @@ class Register extends Component {
     };
 }
 
+const mapStateToProps = state => {
+    return {
+        registerError: state.users.registerError
+    };
+};
 const mapDispatchToProps = dispatch => {
     return {
-        registration: (data)=>{ dispatch(registerUser(data))}
+        registration: data=> dispatch(registerUser(data)),
+        clearUserErrors: () => dispatch(clearUserErrors()),
+        loginUser: data => dispatch(loginUser(data))
     };
 };
 
-export default connect(null, mapDispatchToProps)(Register);
+export default connect(mapStateToProps, mapDispatchToProps)(Register);

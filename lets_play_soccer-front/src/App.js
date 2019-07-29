@@ -7,15 +7,21 @@ import MainRoutes from './Routes';
 import Register from "./containers/Register";
 import Login from "./containers/Login";
 import Tutorial from "./containers/Tutorial";
+import {Redirect} from "react-router";
 
 
 class App extends Component {
+
     render() {
         return (
             <Fragment>
                 <Switch>
-                    <Route exact path="/" render={props => {
-                        return (
+                    <Route exact path="/register" component={Register}/>
+                    <Route exact path="/login" component={Login}/>
+                    <Route exact path="/tutorial" component={Tutorial}/>
+                    <Route exact path="/" render={props =>
+                        this.props.user?
+                         (
                             <Fragment>
                                 <header>
                                     <Toolbar user={props.user} logout={props.onLogoutUser} />
@@ -26,11 +32,10 @@ class App extends Component {
                                     </div>
                                 </main>
                             </Fragment>
-                        );
-                    }} />
-                    <Route exact path="/register" component={Register}/>
-                    <Route exact path="/login" component={Login}/>
-                    <Route exact path="/tutorial" component={Tutorial}/>
+                        ) :
+                            <Redirect to={{ pathname: '/login', state: { from: props.location } }} />
+                    } />
+
                 </Switch>
             </Fragment>
         );

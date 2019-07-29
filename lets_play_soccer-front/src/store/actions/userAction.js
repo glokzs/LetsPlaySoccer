@@ -1,4 +1,10 @@
-import { REGISTER_USER_SUCCESS, LOGIN_USER_SUCCESS, LOGIN_USER_ERROR, LOGOUT_USER } from './action-type';
+import {
+    REGISTER_USER_SUCCESS,
+    LOGIN_USER_SUCCESS,
+    LOGIN_USER_ERROR,
+    LOGOUT_USER,
+    REGISTER_USER_ERROR, CLEAR_USER_ERRORS
+} from './action-type';
 import axios from "../../axios-api";
 import {push} from "connected-react-router";
 // import {NotificationManager} from "react-notifications";
@@ -6,22 +12,25 @@ import {push} from "connected-react-router";
 const registerUserSuccess = () => {
     return {type: REGISTER_USER_SUCCESS};
 };
+const registerUserError = (error) => {
+    return {type: REGISTER_USER_ERROR, error};
+};
 
 export const registerUser = userData => {
     // console.log(userData);
     return dispatch => {
-        axios.post("/users", userData).then(
+        return axios.post("/users", userData).then(
             response => {
                 dispatch(registerUserSuccess());
-                dispatch(push("/"));
+                // dispatch(push("/"));
             },
-            // error => {
-            //     if (error.response && error.response.data) {
-            //         dispatch(registerUserError(error.response.data));
-            //     } else {
-            //         dispatch(registerUserError({global: "No internet connection"}));
-            //     }
-            // }
+            error => {
+                if (error.response && error.response.data) {
+                    dispatch(registerUserError(error.response.data));
+                } else {
+                    dispatch(registerUserError({global: "No internet connection"}));
+                }
+            }
         )
     }
 };
@@ -34,12 +43,11 @@ const loginUserError = (error) => {
 };
 
 export const loginUser = userData => {
-    // console.log(userData);
     return dispatch => {
-        axios.post("/users/sessions", userData).then(
+        return axios.post('/users/sessions', userData).then(
             response => {
                 dispatch(loginUserSuccess(response.data));
-                dispatch(push("/"));
+                dispatch(push('/'));
             },
             error => {
                 if (error.response && error.response.data) {
@@ -48,14 +56,14 @@ export const loginUser = userData => {
                     dispatch(loginUserError({global: "No internet connection"}));
                 }
             }
-        )
-    }
+        );
+    };
 };
 
 export const logoutUser = () => {
     return (dispatch, getState) => {
         const token = getState().users.user.token;
-        const headers = {Authorization: token};
+        const headers = {Token: token};
 
         return axios.delete('/users/session', {headers}).then(
             response => {
@@ -63,5 +71,11 @@ export const logoutUser = () => {
                 dispatch(push('/'));
             }
         );
+    }
+};
+
+export const clearUserErrors = () => {
+    return (dispatch) => {
+        dispatch({type: CLEAR_USER_ERRORS});
     }
 };
