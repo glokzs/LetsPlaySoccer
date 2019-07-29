@@ -9,8 +9,8 @@ import axios from "../../axios-api";
 import {push} from "connected-react-router";
 // import {NotificationManager} from "react-notifications";
 
-const registerUserSuccess = () => {
-    return {type: REGISTER_USER_SUCCESS};
+const registerUserSuccess = user => {
+    return {type: REGISTER_USER_SUCCESS, user};
 };
 const registerUserError = (error) => {
     return {type: REGISTER_USER_ERROR, error};
@@ -21,8 +21,8 @@ export const registerUser = userData => {
     return dispatch => {
         return axios.post("/users", userData).then(
             response => {
-                dispatch(registerUserSuccess());
-                // dispatch(push("/"));
+                dispatch(registerUserSuccess(response.data));
+                dispatch(push("/tutorial"));
             },
             error => {
                 if (error.response && error.response.data) {
