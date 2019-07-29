@@ -62,6 +62,7 @@ const upload = multer({storage});
         if (req.file) {
             user.avatar = req.file.filename;
         }
+        user.token = nanoid();
         const userFromDB = await User.findOne({
             where: {
                 phoneNumber: req.body.phoneNumber
