@@ -19,7 +19,11 @@ const storage = multer.diskStorage({
 const upload = multer({storage});
 
     router.get('/', (req, res) => {
-        User.findAll()
+        User.findAll({
+            attributes: {
+                exclude: ['password']
+            }
+        })
             .then(users => {
                 res.json(users)
             })
@@ -32,21 +36,23 @@ const upload = multer({storage});
         User.findOne({
             where: {
                 id: req.params.id
+            },
+            attributes: {
+                exclude: ['password']
             }
         }).then(user => {
                 if (user) {
                     res.json(user)
                 } else {
-                    res.send('User does not exist')
+                    res.send('Такого пользователя нет')
                 }
         }).catch(err => {
-            res.send('error: ' + err)
+            res.status(400).send('Ошибка: ' + err)
         })
 
     });
 
-    router.post('/', upload.single('avatar'), (req, res) => {
-        console.log('hello');
+    router.post('/', upload.single('avatar'), async (req, res) => {
         const user = {
             displayName: req.body.displayName,
             phoneNumber: req.body.phoneNumber,
@@ -56,10 +62,21 @@ const upload = multer({storage});
         if (req.file) {
             user.avatar = req.file.filename;
         }
+        const userFromDB = await User.findOne({
+            where: {
+                phoneNumber: req.body.phoneNumber
+            },
+        });
+
+        if(userFromDB) {
+            return res.status(400).send({message: 'Пользователь уже существует'});
+        }
 
         User.create(user)
             .then(data => {
-                res.send(data)
+                const user = data.toJSON();
+                delete user.password;
+                res.json(user);
             })
             .catch(err => {
                 res.json('error: ' + err)
@@ -70,39 +87,43 @@ const upload = multer({storage});
         const user = await User.findOne({
             where: {
                 phoneNumber: req.body.phoneNumber
-            }
+            },
         });
 
         if(!user) {
-            return res.status(400).send({message: 'User not found'});
+            return res.status(400).send({message: 'Такого пользователя нет'});
         }
 
         const isMatch = await user.checkPassword(req.body.password);
 
         if(!isMatch) {
-            return res.status(400).send({message: 'Wrong password'});
+            return res.status(400).send({message: 'Неверный пароль'});
         }
 
         user.update({token: nanoid()});
-
-        res.send(user);
+        const copyUser = user.toJSON();
+        delete copyUser.password;
+        res.status(200).json(copyUser);
 
     });
 
     router.delete('/sessions', async (req, res) => {
         const token = req.get("Token");
-        const success = {message: "Logged out!"};
+        const success = {message: "Вы вышли из сессии"};
         if(!token) return res.send(success);
 
         const user = await User.findOne({
             where: {
                 token: token
+            },
+            attributes: {
+                exclude: ['password']
             }
         });
 
         if(!user) return res.send(success);
 
-        user.update({token: ''});
+        user.update({token: null});
 
         res.send(success);
     });
