@@ -40,9 +40,7 @@ class Register extends Component {
         } else {
             form = (
                 <div className="container-login" >
-                    <div className="logo text-center">
-                        <div className="border-bottom border-secondary" />
-                    </div>
+                    <div className="logo text-center"></div>
                     <h1 className="text-center title">Регистрация</h1>
                     <div>
                         <Form onSubmit={this.submitFormHandler} >
