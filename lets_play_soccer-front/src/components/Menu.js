@@ -2,6 +2,7 @@ import React from 'react';
 import { NavLink } from "react-router-dom";
 import { Nav, NavItem } from 'react-bootstrap';
 import photo from '../uploads/Mask.png'
+import Footer from './Footer';
 const Menu = props => {
     
     
@@ -22,6 +23,7 @@ const Menu = props => {
                 </NavItem>
                 <NavItem className="menu-item" > <button className="menu-btn" >Logout</button> </NavItem>
             </Nav>
+            <Footer />
         </div>
     );
 };

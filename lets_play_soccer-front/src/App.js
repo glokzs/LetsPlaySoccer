@@ -8,6 +8,7 @@ import Register from "./containers/Register";
 import Login from "./containers/Login";
 import Tutorial from "./containers/Tutorial";
 import {Redirect} from "react-router";
+import Menu from './components/Menu';
 
 
 class App extends Component {

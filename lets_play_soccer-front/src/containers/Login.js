@@ -39,9 +39,7 @@ class Login extends Component {
             form = (
                 <div className="container-login">
 
-                    <div className="logo text-center">
-                        <div className="border-bottom border-secondary" />
-                    </div>
+                    <div className="logo text-center"></div>
                     <h1 className="text-center title">Вход в систему</h1>
                     {
                         this.props.error ? <Alert variant={'danger'}>Введён неверный логин или пароль</Alert> : null
