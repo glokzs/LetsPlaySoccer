@@ -29,5 +29,5 @@ module.exports = (sequelize, type) => {
             timestamps: false
         }
     );
-    return Format;
+    return Time;
 };
