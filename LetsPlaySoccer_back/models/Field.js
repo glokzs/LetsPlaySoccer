@@ -1,6 +1,6 @@
 module.exports = (sequelize, type) => {
     const Field = sequelize.define(
-        'user',
+        'field',
         {
             id: {
                 type: type.INTEGER,
@@ -12,7 +12,7 @@ module.exports = (sequelize, type) => {
                 required: true,
             },
             description: {
-                type: type.text,
+                type: type.TEXT,
             },
             address: {
                 type: type.STRING,
@@ -56,6 +56,10 @@ module.exports = (sequelize, type) => {
             },
             webSite: {
                 type: type.STRING
+            },
+            disabled: {
+                type: type.BOOLEAN,
+
             }
         },
         {
