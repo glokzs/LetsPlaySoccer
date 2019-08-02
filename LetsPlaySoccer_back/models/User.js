@@ -1,56 +1,57 @@
-const Sequelize = require('sequelize');
 const bcrypt = require('bcrypt');
-const db = require('../database/db.js');
 
-const User = db.sequelize.define(
-    'user',
-    {
-        id: {
-            type: Sequelize.INTEGER,
-            primaryKey: true,
-            autoIncrement: true
-        },
-        password: {
-            type: Sequelize.STRING,
-            required: true,
-        },
-        phoneNumber: {
-            type: Sequelize.STRING,
-            validate: {
-                isMobilePhone: ['kk-KZ', {strictMode: true}]
+module.exports = (sequelize, type) => {
+    const User = sequelize.define(
+        'user',
+        {
+            id: {
+                type: type.INTEGER,
+                primaryKey: true,
+                autoIncrement: true
             },
-            unique: true,
-            required: true,
+            password: {
+                type: type.STRING,
+                allowNull: false,
+            },
+            phoneNumber: {
+                type: type.STRING,
+                validate: {
+                    isMobilePhone: {
+                        args: ['kk-KZ', {strictMode: true}],
+                        msg: "Не правильный формат номера"
+                    }
+                },
+                unique: true,
+                allowNull: false,
+            },
+            displayName: {
+                type: type.STRING(100),
+                allowNull: false,
+            },
+            avatar: {
+                type: type.STRING
+            },
+            token: {
+                type: type.STRING
+            },
         },
-        displayName: {
-            type: Sequelize.STRING,
-            required: true,
-        },
-        avatar: {
-            type: Sequelize.STRING
-        },
-        token: {
-            type: Sequelize.STRING
-        },
-    },
-    {
-        timestamps: false
-    }
-);
+        {
+            timestamps: false
+        }
+    );
+    User.beforeCreate((user) => {
+        return bcrypt.hash(user.password, 10)
+            .then(hash => {
+                user.password = hash;
+            })
+            .catch(err => {
+                throw new Error(err);
+                // console.log(err)
+            });
+    });
 
-User.beforeCreate((user) => {
-    return bcrypt.hash(user.password, 10)
-        .then(hash => {
-            user.password = hash;
-        })
-        .catch(err => {
-            throw new Error(err);
-            // console.log(err)
-        });
-});
-
-User.prototype.checkPassword = function (password) {
-    return bcrypt.compare(password, this.password)
+    User.prototype.checkPassword = function (password) {
+        return bcrypt.compare(password, this.password)
+    };
+    return User;
 };
-
-module.exports = User;

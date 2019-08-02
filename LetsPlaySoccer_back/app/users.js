@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const User = require('../models/User');
+const {User} = require('../sequelize');
 
 const multer  = require('multer');
 const path = require('path');
@@ -62,7 +62,6 @@ const upload = multer({storage});
         if (req.file) {
             user.avatar = req.file.filename;
         }
-        user.token = nanoid();
         const userFromDB = await User.findOne({
             where: {
                 phoneNumber: req.body.phoneNumber
@@ -128,7 +127,5 @@ const upload = multer({storage});
 
         res.send(success);
     });
-
-
 
 module.exports = router;

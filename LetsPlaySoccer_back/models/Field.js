@@ -9,14 +9,14 @@ module.exports = (sequelize, type) => {
             },
             name: {
                 type: type.STRING,
-                required: true,
+                allowNull: false,
             },
             description: {
                 type: type.TEXT,
             },
             address: {
                 type: type.STRING,
-                required: true,
+                allowNull: false,
             },
             latitude: {
                 type: type.INTEGER,
@@ -44,11 +44,11 @@ module.exports = (sequelize, type) => {
                         msg: "Не правильный формат номера"
                     }
                 },
-                required: true,
+                allowNull: false,
             },
             email: {
                 type: type.STRING,
-                required: true,
+                allowNull: false,
                 unique: true,
                 validate: {
                     isEmail: true
@@ -59,6 +59,8 @@ module.exports = (sequelize, type) => {
             },
             disabled: {
                 type: type.BOOLEAN,
+                allowNull: false,
+                defaultValue: false
 
             }
         },

@@ -1,5 +1,7 @@
 const Sequelize = require('sequelize');
-const UserModel = require("./models/User")
+const UserModel = require("./models/User");
+const FieldModel = require("./models/Field");
+const ImageModel = require('./models/Image');
 const sequelize = new Sequelize("LetsPlaySoccer", 'root', '1qaz@WSX29', {
     host: 'localhost',
     dialect: 'mysql',
@@ -13,7 +15,11 @@ const sequelize = new Sequelize("LetsPlaySoccer", 'root', '1qaz@WSX29', {
     }
 });
 const User = UserModel(sequelize, Sequelize);
+const Field = FieldModel(sequelize, Sequelize);
+const Image = ImageModel(sequelize, Sequelize);
 sequelize.sync({force: true});
 module.exports = {
-    User
+    User,
+    Field,
+    Image
 };

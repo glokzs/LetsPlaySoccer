@@ -1,14 +1,23 @@
 module.exports = (sequelize, type) => {
-    const Image = sequelize.define(
-        'image',
+    const Time = sequelize.define(
+        'time',
         {
             id: {
                 type: type.INTEGER,
                 primaryKey: true,
                 autoIncrement: true
             },
-            url: {
-                type: type.STRING,
+            from: {
+                type: type.TIME,
+                allowNull: false
+            },
+            to: {
+                type: type.TIME,
+                allowNull: false
+            },
+            price: {
+                type: type.INTEGER,
+                allowNull: false,
             },
             disabled: {
                 type: type.BOOLEAN,
@@ -20,5 +29,5 @@ module.exports = (sequelize, type) => {
             timestamps: false
         }
     );
-    return Image;
+    return Format;
 };
