@@ -2,7 +2,30 @@ $icons-set: (
         soccer-ball: '\e900',
         soccer-field: '\e901',
         teamwork: '\e902',
-        arrow-right: '\e903'
+        arrow-right: '\e903',
+        arrow-down: '\e904',
+        camera: '\e905',
+        check: '\e906',
+        star: '\e907',
+        t-shirt-s: '\e908',
+        map-b: '\e909',
+        t-shirt: '\e90a',
+        clock: '\e90b',
+        calendar-b: '\e90c',
+        map-s: '\e90d',
+        hamburger: '\e90e',
+        add-r: '\e90f',
+        map-o: '\e910',
+        search: '\e911',
+        send: '\e912',
+        share: '\e913',
+        msg: '\e914',
+        phone: '\e915',
+        timer: '\e916',
+        envelop: '\e917',
+        x: '\e918',
+        plus: '\e919',
+
 );
 .icon {
   @each $icon, $code in $icons-set {

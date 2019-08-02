@@ -8,7 +8,7 @@ import Register from "./containers/Register";
 import Login from "./containers/Login";
 import Tutorial from "./containers/Tutorial";
 import {Redirect} from "react-router";
-import Menu from './components/Menu';
+import FontIcons from './containers/OnlyForDevelopment/FontIcons';
 
 
 class App extends Component {
@@ -20,6 +20,9 @@ class App extends Component {
                     <Route exact path="/register" component={Register}/>
                     <Route exact path="/login" component={Login}/>
                     <Route exact path="/tutorial" component={Tutorial}/>
+                    <Route exact path="/only_for_dev/icons" component={FontIcons}/>
+    
+                    
                     <Route exact path="/" render={props =>
                         this.props.user?
                          (

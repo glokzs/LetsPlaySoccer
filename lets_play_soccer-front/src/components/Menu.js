@@ -14,8 +14,8 @@ const Menu = props => {
                 <spawn>{/*props.user.rating*/}</spawn>
             </div>
             <Nav>
-                <NavItem className="menu-item" ><NavLink className="menu-link" to="/matchs" >Матчи</NavLink></NavItem>
-                <NavItem className="menu-item" ><NavLink className="menu-link" to="/matchs/completed" >Завершённые матчи</NavLink></NavItem>
+                <NavItem className="menu-item" ><NavLink className="menu-link" to="/matches" >Матчи</NavLink></NavItem>
+                <NavItem className="menu-item" ><NavLink className="menu-link" to="/matches/completed" >Завершённые матчи</NavLink></NavItem>
                 <NavItem className="menu-item" ><NavLink className="menu-link" to={"/profile?id="/*+props.user._id*/} >Профиль</NavLink></NavItem>
                 <NavItem className="menu-item" >
                     <NavLink className="menu-link" to={"/messages?id="/*+props.user._id*/} >Уведомления</NavLink>
