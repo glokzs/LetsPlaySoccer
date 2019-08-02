@@ -8,14 +8,14 @@ module.exports = (sequelize, type) => {
                 autoIncrement: true
             },
             name: {
-                type: type.STRING,
+                type: type.CHAR,
                 allowNull: false,
             },
             description: {
-                type: type.TEXT,
+                type: type.BLOB,
             },
             address: {
-                type: type.STRING,
+                type: type.CHAR,
                 allowNull: false,
             },
             latitude: {
@@ -75,6 +75,10 @@ module.exports = (sequelize, type) => {
                     }
                 }
             }
+        },
+        {
+            charset: 'utf8',
+            collate: 'utf8_unicode_ci'
         }
     );
     return Field;
