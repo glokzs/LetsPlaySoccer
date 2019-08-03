@@ -28,14 +28,14 @@ const Day = DayModel(sequelize, Sequelize);
 const Format = FormatModel(sequelize, Sequelize);
 const Time = TimeModel(sequelize, Sequelize);
 
-Time.belongsTo(Day);
+Day.hasMany(Time);
 Image.belongsTo(Field);
 Field.belongsToMany(Format, { through: FieldFormat, unique: false });
 Format.belongsToMany(Field, { through: FieldFormat, unique: false });
 Field.belongsToMany(Day, { through: FieldDay, unique: false });
 Day.belongsToMany(Field, { through: FieldDay, unique: false });
 
-sequelize.sync();
+sequelize.sync({force: true});
 module.exports = {
     User,
     Field,

@@ -12,7 +12,7 @@ module.exports = (sequelize, type) => {
                 allowNull: false,
             },
             description: {
-                type: type.BLOB,
+                type: type.TEXT,
             },
             address: {
                 type: type.CHAR,
