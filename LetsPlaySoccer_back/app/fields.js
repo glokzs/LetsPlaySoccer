@@ -18,7 +18,7 @@ const storage = multer.diskStorage({
 const upload = multer({storage});
 
 router.get('/', async (req, res) => {
-    const fields = await Field.findAll({include: [Format, Day]});
+    const fields = await Field.findAll({include: [Format, {model: Day, include: [Time]}]});
     res.send(fields);
 });
 //
@@ -50,7 +50,7 @@ router.post('/',upload.single('image'), async (req, res) => {
         })
     }
     Field.create(body)
-        .then(field => Promise.all(formats).then(storedFormats => field.addFormats(storedFormats)).then(() => field))
+        .then(field => Promise.all(formats).then(storedFormats => field.addFormats(storedFormats),err => console.log(err)).then(() => field))
         .then(field => Promise.all(days).then(storedDays => field.addDays(storedDays)).then(() => field))
         .then(field => Field.findOne({ where: {id: field.id}, include: [Format, {model: Day, include: [Time]}]}))
         .then(field => {

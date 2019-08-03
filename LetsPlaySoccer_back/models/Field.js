@@ -49,7 +49,6 @@ module.exports = (sequelize, type) => {
             email: {
                 type: type.STRING,
                 allowNull: false,
-                unique: true,
                 validate: {
                     isEmail: true
                 }

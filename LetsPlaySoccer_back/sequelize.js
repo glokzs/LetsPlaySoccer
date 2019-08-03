@@ -35,7 +35,7 @@ Format.belongsToMany(Field, { through: FieldFormat, unique: false });
 Field.belongsToMany(Day, { through: FieldDay, unique: false });
 Day.belongsToMany(Field, { through: FieldDay, unique: false });
 
-sequelize.sync({force: true});
+sequelize.sync();
 module.exports = {
     User,
     Field,
