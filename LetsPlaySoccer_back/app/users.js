@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const User = require('../models/User');
+const {User} = require('../sequelize');
 
 const multer  = require('multer');
 const path = require('path');
@@ -128,7 +128,5 @@ const upload = multer({storage});
 
         res.send(success);
     });
-
-
 
 module.exports = router;

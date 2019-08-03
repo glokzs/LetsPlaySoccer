@@ -9,9 +9,9 @@ const PORT = 8000;
 const app = express();
 app.use(cors());
 app.use(express.static('public'));
-
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+//
+// app.use(bodyParser.json());
+// app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use('/users', users);
 
