@@ -8,7 +8,7 @@ const config = require('../config');
 const nanoid = require('nanoid');
 
 const storage = multer.diskStorage({
-    destination: function (req, file, cb) { //тут есть req
+    destination: function (req, file, cb) {
         cb(null, config.userPath);
     },
     filename: function (req, file, cb) {
@@ -16,7 +16,24 @@ const storage = multer.diskStorage({
     }
 });
 
-const upload = multer({storage});
+const upload = multer({
+    storage: storage,
+    fileFilter: function (req, file, cb) {
+        User.findOne({
+            where: {
+                phoneNumber: req.body.phoneNumber
+            },
+        }).then(data => {
+            if (data) {
+                cb(null, false);
+            } else {
+                cb(null, true);
+            }
+        }).catch(err => {
+            cb(null, false);
+        });
+    }
+});
 
     router.get('/', (req, res) => {
         User.findAll({
@@ -53,11 +70,11 @@ const upload = multer({storage});
     });
 
     router.post('/', upload.single('avatar'), async (req, res) => {
-
         const user = {
             displayName: req.body.displayName,
             phoneNumber: req.body.phoneNumber,
-            password: req.body.password
+            password: req.body.password,
+            token: nanoid()
         };
 
         if (req.file) {
@@ -73,6 +90,7 @@ const upload = multer({storage});
         if(userFromDB) {
             return res.status(400).send({message: 'Пользователь уже существует'});
         }
+
 
         User.create(user)
             .then(data => {
