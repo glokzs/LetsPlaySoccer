@@ -30,12 +30,6 @@ module.exports = (sequelize, type) => {
                 defaultValue: null,
                 validate: { min: -180, max: 180 }
             },
-            typeField: {
-                type: type.STRING(30)
-            },
-            covering: {
-                type: type.STRING(100)
-            },
             phoneNumber: {
                 type: type.STRING,
                 validate: {
@@ -52,6 +46,9 @@ module.exports = (sequelize, type) => {
                 validate: {
                     isEmail: true
                 }
+            },
+            timetable: {
+              type: type.TEXT
             },
             webSite: {
                 type: type.STRING

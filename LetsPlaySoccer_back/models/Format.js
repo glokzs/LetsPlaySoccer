@@ -9,11 +9,6 @@ module.exports = (sequelize, type) => {
             },
             title: {
                 type: type.STRING,
-            },
-            disabled: {
-                type: type.BOOLEAN,
-                allowNull: false,
-                defaultValue: false
             }
         },
         {
