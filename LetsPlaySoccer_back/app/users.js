@@ -8,8 +8,8 @@ const config = require('../config');
 const nanoid = require('nanoid');
 
 const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, config.uploadPath);
+    destination: function (req, file, cb) { //тут есть req
+        cb(null, config.userPath);
     },
     filename: function (req, file, cb) {
         cb(null, nanoid() + path.extname(file.originalname));
@@ -53,6 +53,7 @@ const upload = multer({storage});
     });
 
     router.post('/', upload.single('avatar'), async (req, res) => {
+
         const user = {
             displayName: req.body.displayName,
             phoneNumber: req.body.phoneNumber,
@@ -62,7 +63,7 @@ const upload = multer({storage});
         if (req.file) {
             user.avatar = req.file.filename;
         }
-        user.token = nanoid();
+
         const userFromDB = await User.findOne({
             where: {
                 phoneNumber: req.body.phoneNumber
