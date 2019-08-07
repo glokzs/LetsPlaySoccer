@@ -2,7 +2,7 @@ const Sequelize = require('sequelize');
 const UserModel = require("./models/User");
 const FieldModel = require("./models/Field");
 const ImageModel = require('./models/Image');
-const sequelize = new Sequelize("LetsPlaySoccer", 'root', 'mypass', {
+const sequelize = new Sequelize("LetsPlaySoccer", 'root', '1qaz@WSX29', {
     host: 'localhost',
     dialect: 'mysql',
     operatorsAliases: false,

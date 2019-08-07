@@ -103,7 +103,7 @@ const upload = multer({
             });
     });
 
-    router.post('/sessions', async (req, res) => {
+    router.post('/sessions', upload.single('avatar'), async (req, res) => {
         const user = await User.findOne({
             where: {
                 phoneNumber: req.body.phoneNumber
