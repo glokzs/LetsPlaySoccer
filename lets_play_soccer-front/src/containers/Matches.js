@@ -21,7 +21,7 @@ class Matches extends Component {
             );
         }
         return (
-            <div>
+            <div className='matches'>
                 {form}
             </div>
         )
