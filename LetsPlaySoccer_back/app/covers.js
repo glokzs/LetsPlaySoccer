@@ -13,10 +13,16 @@ router.get('/:id', async (req, res) => {
     res.send(cover);
 });
 
-router.post('/',upload.single('image'), async (req, res) => {
-    const cover = req.body.cover;
-    const covers = Cover.create(cover);
+router.post('/', async (req, res) => {
+    const cover = req.body;
+    const covers = await Cover.create({name: cover.name});
+    res.send(covers);
+});
+router.put("/:id", async (req, res, next) => {
+    const cover = await Cover.update(
+        {name: req.body.name},
+        {where: {id: req.params.id}}
+    );
     res.send(cover);
 });
-
 module.exports = router;
