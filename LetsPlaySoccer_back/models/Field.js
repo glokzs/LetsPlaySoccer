@@ -53,6 +53,15 @@ module.exports = (sequelize, type) => {
             webSite: {
                 type: type.STRING
             },
+            covers: {
+                type: type.STRING,
+            },
+            formats: {
+                type: type.STRING,
+            },
+            types: {
+                type: type.STRING,
+            },
             disabled: {
                 type: type.BOOLEAN,
                 allowNull: false,

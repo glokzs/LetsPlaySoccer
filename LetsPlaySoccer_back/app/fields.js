@@ -42,8 +42,6 @@ router.get('/:id', async (req, res) => {
 router.post('/',upload.single('image'), async (req, res) => {
     const field = req.body;
     const timetable = JSON.stringify(field.timetable);
-    const covers = JSON.stringify(field.covers);
-    const types = JSON.stringify(field.types);
     const formats = JSON.stringify(field.formats);
 
     const fields = await Field.create({
@@ -53,8 +51,8 @@ router.post('/',upload.single('image'), async (req, res) => {
         longitude: field.longitude,
         latitude: field.latitude,
         timetable: timetable,
-        covers: covers,
-        types: types,
+        covers: field.covers,
+        types: field.types,
         formats: formats,
         phoneNumber: field.phoneNumber,
         email: field.email,
