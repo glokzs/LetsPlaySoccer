@@ -8,14 +8,14 @@ module.exports = (sequelize, type) => {
                 autoIncrement: true
             },
             name: {
-                type: type.STRING,
+                type: type.CHAR,
                 allowNull: false,
             },
             description: {
                 type: type.TEXT,
             },
             address: {
-                type: type.STRING,
+                type: type.CHAR,
                 allowNull: false,
             },
             latitude: {
@@ -30,12 +30,6 @@ module.exports = (sequelize, type) => {
                 defaultValue: null,
                 validate: { min: -180, max: 180 }
             },
-            typeField: {
-                type: type.STRING(30)
-            },
-            covering: {
-                type: type.STRING(100)
-            },
             phoneNumber: {
                 type: type.STRING,
                 validate: {
@@ -49,10 +43,12 @@ module.exports = (sequelize, type) => {
             email: {
                 type: type.STRING,
                 allowNull: false,
-                unique: true,
                 validate: {
                     isEmail: true
                 }
+            },
+            timetable: {
+              type: type.TEXT
             },
             webSite: {
                 type: type.STRING
@@ -75,6 +71,10 @@ module.exports = (sequelize, type) => {
                     }
                 }
             }
+        },
+        {
+            charset: 'utf8',
+            collate: 'utf8_unicode_ci'
         }
     );
     return Field;
