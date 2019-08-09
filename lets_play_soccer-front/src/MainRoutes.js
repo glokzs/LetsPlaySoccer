@@ -3,12 +3,10 @@ import { Route, Switch} from "react-router";
 import Matches from './containers/Matches';
 
 
-const Routes = () => (
+const MainRoutes = () => (
     <Switch>
         <Route exact path="/" component={Matches}/>
-
-
     </Switch>
 );
 
-export default Routes;
+export default MainRoutes;

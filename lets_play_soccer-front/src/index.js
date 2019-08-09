@@ -11,6 +11,7 @@ import userReducer from './store/reducers/userReducer'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-notifications/lib/notifications.css';
 import './assets/stylesheet/app.scss';
+import 'antd/dist/antd.css';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 

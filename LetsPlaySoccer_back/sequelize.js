@@ -21,9 +21,11 @@ const sequelize = new Sequelize("LetsPlaySoccer", 'root', '1qaz@WSX29', {
 });
 const User = UserModel(sequelize, Sequelize);
 const Field = FieldModel(sequelize, Sequelize);
+
 const Format = FormatModel(sequelize, Sequelize);
 const Cover = CoverModel(sequelize, Sequelize);
 const Type = TypeModel(sequelize, Sequelize);
+
 
 sequelize.sync();
 module.exports = {
