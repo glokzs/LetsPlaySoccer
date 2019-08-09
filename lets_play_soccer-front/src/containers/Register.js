@@ -24,13 +24,18 @@ class Register extends Component {
         this.props.clearUserErrors();
     };
 
+    fileChangeHandler = e => {
+        this.setState({avatar: e.target.files[0]})
+    };
+
     submitFormHandler = (e) => {
         e.preventDefault();
-        this.props.registration({
-            phoneNumber: '+7'+this.state.phone,
-            password: this.state.password,
-            displayName: this.state.displayName
-        });
+        const formData = new FormData();
+        formData.append('phoneNumber', '+7'+this.state.phone);
+        formData.append('password', this.state.password);
+        formData.append('displayName', this.state.displayName);
+        formData.append('avatar', this.state.avatar);
+        this.props.registration(formData);
     };
 
     render() {
@@ -40,7 +45,7 @@ class Register extends Component {
         } else {
             form = (
                 <div className="container-login" >
-                    <div className="logo text-center"></div>
+                    <div className="logo text-center" />
                     <h1 className="text-center title">Регистрация</h1>
                     <div>
                         <Form onSubmit={this.submitFormHandler} >
@@ -64,6 +69,14 @@ class Register extends Component {
                                 placeholder="Пароль"
                                 name="password"
                                 value={this.state.password}
+                            />
+                            <FormElement
+                                title="Image"
+                                type="file"
+                                name="avatar"
+                                placeholder="Enter image"
+                                value={this.state.avatar}
+                                onChange={this.fileChangeHandler}
                             />
                             <div>
                                 <Button type="submit" variant="primary" size="lg" block>Зарегистрироваться</Button>
