@@ -1,0 +1,71 @@
+.create-match {
+    &_container {
+        max-width: 600px;
+        margin: 0 auto;
+        background: #F1F5FF;
+        padding-bottom: 200px;
+    }
+    &_header {
+        box-sizing: border-box;
+        padding: 10px 15px;
+        background: white;
+        box-shadow: 0 2px 2px 0 #777;
+    }
+    &_main {
+        margin: 35px 10px;
+    }
+}
+.close-btn,
+.btn-search,
+.btn-map {
+    float: right;
+    background: none;
+    border: none;
+}
+.btn-search {
+    background: url("../../uploads/ic-search.png") center center no-repeat;
+}
+.btn-map {
+    background: url("../../uploads//ic-map.png") center center no-repeat;
+}
+.back-in-page {
+    float: left;
+    border: none;
+    background: url("../../uploads/ic-arrow.png") center center no-repeat;
+}
+.clearFix::after {
+    content: "";
+    display: table;
+    clear: both;
+}
+.form-label {
+    color: #95A0B6;
+}
+.price-per-person {
+    margin-top: 40px;
+    color: #404B69;
+}
+.bg--T {
+    position: relative;
+}
+.bg--T::after {
+    content: "₸";
+    display: inline-block;
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    z-index: 10;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.blackout {
+    background: rgba(0, 0, 0, 0.8);
+    position: absolute;
+    display: block;
+    top: 0;
+    
+}

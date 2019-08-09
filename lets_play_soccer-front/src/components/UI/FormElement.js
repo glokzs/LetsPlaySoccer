@@ -6,7 +6,7 @@ const FormElement = (props) => {
         <>
             <Form.Group>
                 <Form.Control
-                    className="input"
+                    className={"input " + props.className}
                     onChange={props.onChange}
                     type={props.type}
                     placeholder={props.placeholder}
