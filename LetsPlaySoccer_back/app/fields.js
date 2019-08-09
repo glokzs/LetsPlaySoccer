@@ -21,8 +21,6 @@ router.get('/', async (req, res) => {
     const fields = await Field.findAll();
     const formatedFields = fields.map(field => {
         field.timetable = JSON.parse(field.timetable);
-        field.covers = JSON.parse(field.covers);
-        field.types = JSON.parse(field.types);
         field.formats = JSON.parse(field.formats);
         return field;
     });
