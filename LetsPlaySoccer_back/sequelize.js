@@ -3,6 +3,8 @@ const UserModel = require("./models/User");
 const FieldModel = require("./models/Field");
 const FormatModel = require("./models/Format");
 const CoverModel = require("./models/Cover");
+const TypeModel = require("./models/Type");
+
 const sequelize = new Sequelize("LetsPlaySoccer", 'root', '1qaz@WSX29', {
     host: 'localhost',
     dialect: 'mysql',
@@ -19,20 +21,15 @@ const sequelize = new Sequelize("LetsPlaySoccer", 'root', '1qaz@WSX29', {
 });
 const User = UserModel(sequelize, Sequelize);
 const Field = FieldModel(sequelize, Sequelize);
-const FieldFormat = sequelize.define('field_format', {}, {timestamps: false});
 const Format = FormatModel(sequelize, Sequelize);
 const Cover = CoverModel(sequelize, Sequelize);
-const FieldCover = sequelize.define('field_cover', {}, {timestamps: false});
+const Type = TypeModel(sequelize, Sequelize);
 
-
-Field.belongsToMany(Format, { through: FieldFormat, unique: false });
-Format.belongsToMany(Field, { through: FieldFormat, unique: false });
-Field.belongsToMany(Cover, { through: FieldCover, unique: false });
-Cover.belongsToMany(Field, { through: FieldCover, unique: false });
 sequelize.sync();
 module.exports = {
     User,
     Field,
     Format,
     Cover,
+    Type
 };
