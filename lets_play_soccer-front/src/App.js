@@ -9,6 +9,8 @@ import Login from "./containers/Login";
 import Tutorial from "./containers/Tutorial";
 import {Redirect} from "react-router";
 import FontIcons from './containers/OnlyForDevelopment/FontIcons';
+import Menu from './components/Menu';
+import CreateMatch from './containers/CreateMatch';
 
 
 class App extends Component {
@@ -21,8 +23,7 @@ class App extends Component {
                     <Route exact path="/login" component={Login}/>
                     <Route exact path="/tutorial" component={Tutorial}/>
                     <Route exact path="/only_for_dev/icons" component={FontIcons}/>
-    
-                    
+                    <Route exact path="/createMatch" component={CreateMatch}/>
                     <Route exact path="/" render={props =>
                         this.props.user?
                          (
