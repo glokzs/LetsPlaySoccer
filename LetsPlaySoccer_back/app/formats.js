@@ -15,12 +15,12 @@ router.get('/:id', async (req, res) => {
 
 router.post('/', async (req, res) => {
     const format = req.body;
-    const formats = await Format.create({title: format.title});
+    const formats = await Format.create({name: format.name});
     res.send(formats);
 });
 router.put("/:id", async (req, res, next) => {
     const format = await Format.update(
-        {title: req.body.title},
+        {name: req.body.name},
         {where: {id: req.params.id}}
     );
     res.send(format);
