@@ -12,6 +12,12 @@ module.exports = (sequelize, type) => {
             password: {
                 type: type.STRING,
                 allowNull: false,
+                validate: {
+                    is: {
+                        args: "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})",
+                        msg: "Hello"
+                    }
+                }
             },
             phoneNumber: {
                 type: type.STRING,
