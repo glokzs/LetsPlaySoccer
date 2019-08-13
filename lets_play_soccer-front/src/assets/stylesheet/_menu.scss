@@ -66,4 +66,36 @@
         color: $danger;
         font-size: 12px;
     }
+    &__header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 50px;
+        background: white;
+        &__title {
+            flex: 0 0 33.33333%;
+            max-width: 33.33333%;
+            text-align: center;
+            font-size: 1rem;
+            color: grey;
+            font-weight: bold;
+        }
+        &__btn {
+            &--close {
+                background: transparent;
+                border: none;
+                &::before {
+                    font-size: 20px;
+                }
+                &:hover, &:focus {
+                    outline: none;
+                    color: $primary;
+                }
+            }
+        }
+    }
 }
