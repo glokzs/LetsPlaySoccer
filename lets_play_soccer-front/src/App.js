@@ -17,6 +17,7 @@ class App extends Component {
                 <Route exact path="/tutorial" component={Tutorial}/>
                 <Route exact path="/only_for_dev/icons" component={FontIcons}/>
                 <Route path="/" component={MainPrivate} />
+
             </Switch>
         );
     }
