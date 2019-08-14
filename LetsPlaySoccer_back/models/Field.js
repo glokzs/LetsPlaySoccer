@@ -62,6 +62,9 @@ module.exports = (sequelize, type) => {
             types: {
                 type: type.STRING,
             },
+            images: {
+                type: type.STRING,
+            },
             disabled: {
                 type: type.BOOLEAN,
                 allowNull: false,

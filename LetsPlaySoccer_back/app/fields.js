@@ -22,6 +22,7 @@ router.get('/', async (req, res) => {
     const formatedFields = fields.map(field => {
         field.timetable = JSON.parse(field.timetable);
         field.formats = JSON.parse(field.formats);
+        field.images = JSON.parse(field.images);
         return field;
     });
     res.send(formatedFields);
@@ -33,6 +34,7 @@ router.get('/:id', async (req, res) => {
     field.covers = JSON.parse(field.covers);
     field.types = JSON.parse(field.types);
     field.formats = JSON.parse(field.formats);
+    field.images = JSON.parse(field.images);
     res.send(field);
 
 });
@@ -41,6 +43,7 @@ router.post('/',upload.single('image'), async (req, res) => {
     const field = req.body;
     const timetable = JSON.stringify(field.timetable);
     const formats = JSON.stringify(field.formats);
+    const images = JSON.stringify(field.images);
 
     const fields = await Field.create({
         name: field.name,
@@ -48,10 +51,11 @@ router.post('/',upload.single('image'), async (req, res) => {
         description: field.description,
         longitude: field.longitude,
         latitude: field.latitude,
-        timetable: timetable,
+        timetable,
         covers: field.covers,
         types: field.types,
-        formats: formats,
+        formats,
+        images,
         phoneNumber: field.phoneNumber,
         email: field.email,
         site: field.site

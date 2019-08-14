@@ -3,7 +3,7 @@ const mysql = require('mysql2');
 const connection = mysql.createConnection({
     host: "localhost",
     user: "root",
-    password: "mypass",
+    password: "1qaz@WSX29",
     multipleStatements: true
 });
 
@@ -37,7 +37,8 @@ const query =
         webSite, 
         covers, 
         formats, 
-        types
+        types,
+        images
     ) 
     VALUES (
         'Жарыс Арена',
@@ -67,7 +68,8 @@ const query =
         'www.examle.com',
         'Трава',
         '["5x5", "7x7", "9x9"]',
-        'Крытое поле'
+        'Крытое поле',
+        '["qwerty1.jpg","qwerty2.jpeg","qwerty3.jpeg","qwerty4.jpeg"]'
     );
     INSERT INTO fields (
         name, 
@@ -81,7 +83,8 @@ const query =
         webSite, 
         covers, 
         formats, 
-        types
+        types,
+        images
     ) 
     VALUES (
         'Тестовое поле',
@@ -111,7 +114,8 @@ const query =
         'www.test.com',
         'Трава',
         '["5x5", "7x7", "9x9"]',
-        'Крытое поле'
+        'Крытое поле',
+        '["qwerty5.jpeg","qwerty6.jpeg","qwerty7.jpeg","qwerty8.jpeg"]'
     );
     INSERT INTO fields (
         name, 
@@ -125,7 +129,8 @@ const query =
         webSite, 
         covers, 
         formats, 
-        types
+        types,
+        images
     ) 
     VALUES (
         'Hello Арена Huge',
@@ -155,7 +160,8 @@ const query =
         'www.examle.com',
         'Каучуковое',
         '["5x5", "7x7", "9x9"]',
-        'Открытое поле'
+        'Открытое поле',
+        '["qwerty9.jpeg","qwerty10.jpeg","qwerty11.jpeg"]'
     );
 	
 `;
