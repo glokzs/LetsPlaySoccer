@@ -88,14 +88,20 @@
             &--close {
                 background: transparent;
                 border: none;
-                &::before {
-                    font-size: 20px;
-                }
+                font-size: 20px;
                 &:hover, &:focus {
                     outline: none;
                     color: $primary;
                 }
             }
+        }
+        .icon--search {
+            margin-right: 10px;
+            font-size: 25px;
+        }
+        .icon--arrow-right {
+            transform: rotate(180deg);
+            font-size: 25px;
         }
     }
 }
