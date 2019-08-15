@@ -27,7 +27,7 @@ const Cover = CoverModel(sequelize, Sequelize);
 const Type = TypeModel(sequelize, Sequelize);
 
 
-sequelize.sync();
+sequelize.sync(); //{force: true}
 module.exports = {
     User,
     Field,

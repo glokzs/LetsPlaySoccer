@@ -10,6 +10,7 @@ module.exports = (sequelize, type) => {
             name: {
                 type: type.CHAR,
                 allowNull: false,
+                // unique: true
             },
             description: {
                 type: type.TEXT,
@@ -43,9 +44,9 @@ module.exports = (sequelize, type) => {
             email: {
                 type: type.STRING,
                 allowNull: false,
-                validate: {
-                    isEmail: true
-                }
+                // validate: {
+                //     isEmail: true
+                // }
             },
             timetable: {
               type: type.TEXT
@@ -67,19 +68,13 @@ module.exports = (sequelize, type) => {
                 allowNull: false,
                 defaultValue: false
 
+            },
+            images: {
+                type: type.TEXT
             }
         },
         {
             timestamps: false
-        },
-        {
-            validate: {
-                bothCoordsOrNone() {
-                    if ((this.latitude === null) !== (this.longitude === null)) {
-                        throw new Error('Require either both latitude and longitude or neither');
-                    }
-                }
-            }
         },
         {
             charset: 'utf8',

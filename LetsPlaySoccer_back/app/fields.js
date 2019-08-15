@@ -1,3 +1,4 @@
+const fs = require('fs');
 const express = require('express');
 const router = express.Router();
 const {Format, Field} = require('../sequelize');
@@ -8,7 +9,7 @@ const config = require('../config');
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, config.uploadPath);
+        cb(null, config.fieldPath);
     },
     filename: function (req, file, cb) {
         cb(null, nanoid() + path.extname(file.originalname));
@@ -22,6 +23,7 @@ router.get('/', async (req, res) => {
     const formatedFields = fields.map(field => {
         field.timetable = JSON.parse(field.timetable);
         field.formats = JSON.parse(field.formats);
+        field.images = JSON.parse(field.images);
         return field;
     });
     res.send(formatedFields);
@@ -33,30 +35,47 @@ router.get('/:id', async (req, res) => {
     field.covers = JSON.parse(field.covers);
     field.types = JSON.parse(field.types);
     field.formats = JSON.parse(field.formats);
+    field.images = JSON.parse(field.images);
     res.send(field);
 
 });
 
-router.post('/',upload.single('image'), async (req, res) => {
-    const field = req.body;
-    const timetable = JSON.stringify(field.timetable);
-    const formats = JSON.stringify(field.formats);
+router.post('/',upload.array('images'), async (req, res) => {
+    const timetable = JSON.stringify(req.body.timetable);
 
-    const fields = await Field.create({
-        name: field.name,
-        address: field.address,
-        description: field.description,
-        longitude: field.longitude,
-        latitude: field.latitude,
+    const formats = JSON.stringify(req.body.formats);
+
+    const field = {
+        name: req.body.name,
+        address: req.body.address,
+        description: req.body.description,
+        longitude: req.body.longitude,
+        latitude: req.body.latitude,
         timetable: timetable,
-        covers: field.covers,
-        types: field.types,
+        covers: req.body.covers,
+        types: req.body.types,
         formats: formats,
-        phoneNumber: field.phoneNumber,
-        email: field.email,
-        site: field.site
+        phoneNumber: req.body.phoneNumber,
+        email: req.body.email,
+        site: req.body.site,
+    };
+
+    if (req.files) {
+        const dir = [];
+        req.files.map(file => {
+            dir.push(file.filename);
+        });
+
+        field.images = JSON.stringify(dir);
+    }
+
+
+    Field.create(field).then(data => {
+        const field = data.toJSON();
+        res.json(field);
+    }).catch(err => {
+        console.log(err)
     });
-    res.send(fields);
 });
 
 // router.delete('/', async (req, res) => {
