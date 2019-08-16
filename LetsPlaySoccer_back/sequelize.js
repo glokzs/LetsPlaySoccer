@@ -5,7 +5,7 @@ const FormatModel = require("./models/Format");
 const CoverModel = require("./models/Cover");
 const TypeModel = require("./models/Type");
 
-const sequelize = new Sequelize("LetsPlaySoccer", 'root', 'mypass', {
+const sequelize = new Sequelize("LetsPlaySoccer", 'root', '1qaz@WSX29', {
     host: 'localhost',
     dialect: 'mysql',
     charset: 'utf8',

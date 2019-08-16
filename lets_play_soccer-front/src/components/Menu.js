@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink } from "react-router-dom";
 import { Nav, NavItem } from 'react-bootstrap';
-import photo from '../uploads/Mask.png'
+import photo from '../assets/content_images/Mask.png'
 import Footer from './Footer';
 const Menu = props => {
     

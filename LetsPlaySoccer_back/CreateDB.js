@@ -3,7 +3,7 @@ const mysql = require('mysql2');
 const connection = mysql.createConnection({
     host: "localhost",
     user: "root",
-    password: "mypass",
+    password: "1qaz@WSX29",
     multipleStatements: true
 });
 
@@ -37,7 +37,9 @@ const query =
         webSite, 
         covers, 
         formats, 
-        types
+        types,
+        images,
+        minPrice
     ) 
     VALUES (
         'Жарыс Арена',
@@ -47,27 +49,123 @@ const query =
         0,
         '+77009998877',
         'email@test.test',
-        '[
-            {
-                "from":"9:00",
-                "to":"12:00",
-                "price":5000
-            },
-            {
-                "from":"12:00",
-                "to":"15:00",
-                "price":4000
-            },
-            {
-                "from":"15:00",
-                "to":"20:00",
-                "price":7000
-            }
-        ]',
+        '{
+            "monday":
+                [
+                    {
+                        "from":"9:00",
+                        "to":"12:00",
+                        "price":5000
+                    },
+                    {
+                        "from":"12:00",
+                        "to":"15:00",
+                        "price":4000
+                    },
+                    {
+                        "from":"15:00",
+                        "to":"20:00",
+                        "price":7000
+                    }
+                ],
+            "tuesday":
+                [
+                    {
+                        "from":"9:00",
+                        "to":"12:00",
+                        "price":5000
+                    },
+                    {
+                        "from":"12:00",
+                        "to":"15:00",
+                        "price":4000
+                    },
+                    {
+                        "from":"15:00",
+                        "to":"20:00",
+                        "price":7000
+                    }
+                ],
+            "wednesday":
+                [
+                    {
+                        "from":"9:00",
+                        "to":"12:00",
+                        "price":5000
+                    },
+                    {
+                        "from":"12:00",
+                        "to":"15:00",
+                        "price":4000
+                    },
+                    {
+                        "from":"15:00",
+                        "to":"20:00",
+                        "price":7000
+                    }
+                ],
+            "thursday":
+                [
+                    {
+                        "from":"9:00",
+                        "to":"12:00",
+                        "price":5000
+                    },
+                    {
+                        "from":"12:00",
+                        "to":"15:00",
+                        "price":4000
+                    },
+                    {
+                        "from":"15:00",
+                        "to":"20:00",
+                        "price":7000
+                    }
+                ],
+            "friday":
+                [
+                    {
+                        "from":"9:00",
+                        "to":"12:00",
+                        "price":5000
+                    },
+                    {
+                        "from":"12:00",
+                        "to":"15:00",
+                        "price":4000
+                    },
+                    {
+                        "from":"15:00",
+                        "to":"20:00",
+                        "price":7000
+                    }
+                ],
+            "saturday":
+                [
+                    {
+                        "from":"9:00",
+                        "to":"12:00",
+                        "price":5000
+                    },
+                    {
+                        "from":"12:00",
+                        "to":"15:00",
+                        "price":4000
+                    },
+                    {
+                        "from":"15:00",
+                        "to":"20:00",
+                        "price":7000
+                    }
+                ],
+            "sunday": "выходной"
+        }',
         'www.examle.com',
         'Трава',
         '["5x5", "7x7", "9x9"]',
-        'Крытое поле'
+        'Крытое поле',
+        '["qwerty1.jpg","qwerty2.jpeg","qwerty3.jpeg","qwerty4.jpeg"]',
+        5000
     );
     INSERT INTO fields (
         name, 
@@ -81,7 +179,9 @@ const query =
         webSite, 
         covers, 
         formats, 
-        types
+        types,
+        images,
+        minPrice
     ) 
     VALUES (
         'Тестовое поле',
@@ -91,27 +191,123 @@ const query =
         0,
         '+77778001020',
         'hello@fs.mail',
-        '[
-            {
-                "from":"9:00",
-                "to":"15:00",
-                "price":4000
-            },
-            {
-                "from":"15:00",
-                "to":"19:00",
-                "price":8000
-            },
-            {
-                "from":"19:00",
-                "to":"22:00",
-                "price":7000
-            }
-        ]',
+        '{
+            "monday":
+                [
+                    {
+                        "from":"9:00",
+                        "to":"12:00",
+                        "price":5000
+                    },
+                    {
+                        "from":"12:00",
+                        "to":"15:00",
+                        "price":4000
+                    },
+                    {
+                        "from":"15:00",
+                        "to":"20:00",
+                        "price":7000
+                    }
+                ],
+            "tuesday":
+                [
+                    {
+                        "from":"9:00",
+                        "to":"12:00",
+                        "price":5000
+                    },
+                    {
+                        "from":"12:00",
+                        "to":"15:00",
+                        "price":4000
+                    },
+                    {
+                        "from":"15:00",
+                        "to":"20:00",
+                        "price":7000
+                    }
+                ],
+            "wednesday":
+                [
+                    {
+                        "from":"9:00",
+                        "to":"12:00",
+                        "price":5000
+                    },
+                    {
+                        "from":"12:00",
+                        "to":"15:00",
+                        "price":4000
+                    },
+                    {
+                        "from":"15:00",
+                        "to":"20:00",
+                        "price":7000
+                    }
+                ],
+            "thursday":
+                [
+                    {
+                        "from":"9:00",
+                        "to":"12:00",
+                        "price":5000
+                    },
+                    {
+                        "from":"12:00",
+                        "to":"15:00",
+                        "price":4000
+                    },
+                    {
+                        "from":"15:00",
+                        "to":"20:00",
+                        "price":7000
+                    }
+                ],
+            "friday":
+                [
+                    {
+                        "from":"9:00",
+                        "to":"12:00",
+                        "price":5000
+                    },
+                    {
+                        "from":"12:00",
+                        "to":"15:00",
+                        "price":4000
+                    },
+                    {
+                        "from":"15:00",
+                        "to":"20:00",
+                        "price":7000
+                    }
+                ],
+            "saturday":
+                [
+                    {
+                        "from":"9:00",
+                        "to":"12:00",
+                        "price":5000
+                    },
+                    {
+                        "from":"12:00",
+                        "to":"15:00",
+                        "price":4000
+                    },
+                    {
+                        "from":"15:00",
+                        "to":"20:00",
+                        "price":7000
+                    }
+                ],
+            "sunday": "Выходной"
+        }',
         'www.test.com',
         'Трава',
         '["5x5", "7x7", "9x9"]',
-        'Крытое поле'
+        'Крытое поле',
+        '["qwerty5.jpeg","qwerty6.jpeg","qwerty7.jpeg","qwerty8.jpeg"]',
+        6000
     );
     INSERT INTO fields (
         name, 
@@ -125,7 +321,9 @@ const query =
         webSite, 
         covers, 
         formats, 
-        types
+        types,
+        images,
+        minPrice
     ) 
     VALUES (
         'Hello Арена Huge',
@@ -135,27 +333,135 @@ const query =
         0,
         '+77478901212',
         'hello@hello.kz',
-        '[
-            {
-                "from":"9:00",
-                "to":"12:00",
-                "price":6000
-            },
-            {
-                "from":"12:00",
-                "to":"15:00",
-                "price":5000
-            },
-            {
-                "from":"15:00",
-                "to":"20:00",
-                "price":7000
-            }
-        ]',
+        '{
+            "monday":
+                [
+                    {
+                        "from":"9:00",
+                        "to":"12:00",
+                        "price":5000
+                    },
+                    {
+                        "from":"12:00",
+                        "to":"15:00",
+                        "price":4000
+                    },
+                    {
+                        "from":"15:00",
+                        "to":"20:00",
+                        "price":7000
+                    }
+                ],
+            "tuesday":
+                [
+                    {
+                        "from":"9:00",
+                        "to":"12:00",
+                        "price":5000
+                    },
+                    {
+                        "from":"12:00",
+                        "to":"15:00",
+                        "price":4000
+                    },
+                    {
+                        "from":"15:00",
+                        "to":"20:00",
+                        "price":7000
+                    }
+                ],
+            "wednesday":
+                [
+                    {
+                        "from":"9:00",
+                        "to":"12:00",
+                        "price":5000
+                    },
+                    {
+                        "from":"12:00",
+                        "to":"15:00",
+                        "price":4000
+                    },
+                    {
+                        "from":"15:00",
+                        "to":"20:00",
+                        "price":7000
+                    }
+                ],
+            "thursday":
+                [
+                    {
+                        "from":"9:00",
+                        "to":"12:00",
+                        "price":5000
+                    },
+                    {
+                        "from":"12:00",
+                        "to":"15:00",
+                        "price":4000
+                    },
+                    {
+                        "from":"15:00",
+                        "to":"20:00",
+                        "price":7000
+                    }
+                ],
+            "friday":
+                [
+                    {
+                        "from":"9:00",
+                        "to":"12:00",
+                        "price":5000
+                    },
+                    {
+                        "from":"12:00",
+                        "to":"15:00",
+                        "price":4000
+                    },
+                    {
+                        "from":"15:00",
+                        "to":"20:00",
+                        "price":7000
+                    }
+                ],
+            "saturday":
+                [
+                    {
+                        "from":"9:00",
+                        "to":"12:00",
+                        "price":5000
+                    },
+                    {
+                        "from":"12:00",
+                        "to":"15:00",
+                        "price":4000
+                    },
+                    {
+                        "from":"15:00",
+                        "to":"20:00",
+                        "price":7000
+                    }
+                ],
+            "sunday": 
+                [
+                    {
+                        "from":"9:00",
+                        "to":"12:00",
+                        "price":5000
+                    },
+                    {
+                        "from":"12:00",
+                        "to":"15:00",
+                        "price":4000
+                    }
+                ]
+        }',
         'www.examle.com',
         'Каучуковое',
         '["5x5", "7x7", "9x9"]',
-        'Открытое поле'
+        'Открытое поле',
+        '["qwerty9.jpeg","qwerty10.jpeg","qwerty11.jpeg"]',
+        4500
     );
 	
 `;

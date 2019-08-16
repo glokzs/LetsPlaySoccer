@@ -12,13 +12,14 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-notifications/lib/notifications.css';
 import 'antd/dist/antd.css';
 import './assets/stylesheet/app.scss';
+import fieldsReducer from "./store/reducers/fieldsReducer";
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const history = createBrowserHistory();
 
 const rootReducer = combineReducers({
-//   products: userReducer,
+  fields: fieldsReducer,
   users: userReducer,
   router: connectRouter(history)
 });
