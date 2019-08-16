@@ -14,7 +14,6 @@ class Toolbar extends Component {
     this.setState({isMenuOpen: !this.state.isMenuOpen});
   };
     render() {
-      console.log(this.props);
       return (
         <Fragment>
           <div className='toolbar'>

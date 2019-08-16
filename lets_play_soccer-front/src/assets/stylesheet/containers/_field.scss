@@ -1,0 +1,10 @@
+.field {
+  &__card {
+    background: white;
+    margin-top: 1.5rem;
+  }
+  &__carousel {
+    height: 300px;
+    overflow: hidden;
+  }
+}
