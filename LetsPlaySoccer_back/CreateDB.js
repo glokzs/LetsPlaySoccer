@@ -50,7 +50,7 @@ const query =
         '+77009998877',
         'email@test.test',
         '{
-            monday:
+            "monday":
                 [
                     {
                         "from":"9:00",
@@ -67,8 +67,8 @@ const query =
                         "to":"20:00",
                         "price":7000
                     }
-                ]
-            tuesday:
+                ],
+            "tuesday":
                 [
                     {
                         "from":"9:00",
@@ -85,8 +85,8 @@ const query =
                         "to":"20:00",
                         "price":7000
                     }
-                ]
-            wednesday:
+                ],
+            "wednesday":
                 [
                     {
                         "from":"9:00",
@@ -103,8 +103,8 @@ const query =
                         "to":"20:00",
                         "price":7000
                     }
-                ]
-            thursday:
+                ],
+            "thursday":
                 [
                     {
                         "from":"9:00",
@@ -121,8 +121,8 @@ const query =
                         "to":"20:00",
                         "price":7000
                     }
-                ]
-            friday:
+                ],
+            "friday":
                 [
                     {
                         "from":"9:00",
@@ -139,8 +139,8 @@ const query =
                         "to":"20:00",
                         "price":7000
                     }
-                ]
-            saturday:
+                ],
+            "saturday":
                 [
                     {
                         "from":"9:00",
@@ -157,8 +157,8 @@ const query =
                         "to":"20:00",
                         "price":7000
                     }
-                ]
-            sunday: "выходной"
+                ],
+            "sunday": "выходной"
         }',
         'www.examle.com',
         'Трава',
@@ -192,7 +192,7 @@ const query =
         '+77778001020',
         'hello@fs.mail',
         '{
-            monday:
+            "monday":
                 [
                     {
                         "from":"9:00",
@@ -209,8 +209,8 @@ const query =
                         "to":"20:00",
                         "price":7000
                     }
-                ]
-            tuesday:
+                ],
+            "tuesday":
                 [
                     {
                         "from":"9:00",
@@ -227,8 +227,8 @@ const query =
                         "to":"20:00",
                         "price":7000
                     }
-                ]
-            wednesday:
+                ],
+            "wednesday":
                 [
                     {
                         "from":"9:00",
@@ -245,8 +245,8 @@ const query =
                         "to":"20:00",
                         "price":7000
                     }
-                ]
-            thursday:
+                ],
+            "thursday":
                 [
                     {
                         "from":"9:00",
@@ -263,8 +263,8 @@ const query =
                         "to":"20:00",
                         "price":7000
                     }
-                ]
-            friday:
+                ],
+            "friday":
                 [
                     {
                         "from":"9:00",
@@ -281,8 +281,8 @@ const query =
                         "to":"20:00",
                         "price":7000
                     }
-                ]
-            saturday:
+                ],
+            "saturday":
                 [
                     {
                         "from":"9:00",
@@ -299,20 +299,8 @@ const query =
                         "to":"20:00",
                         "price":7000
                     }
-                ]
-            sunday: 
-                [
-                    {
-                        "from":"9:00",
-                        "to":"12:00",
-                        "price":5000
-                    },
-                    {
-                        "from":"12:00",
-                        "to":"15:00",
-                        "price":4000
-                    }
-                ]
+                ],
+            "sunday": "Выходной"
         }',
         'www.test.com',
         'Трава',
@@ -346,7 +334,7 @@ const query =
         '+77478901212',
         'hello@hello.kz',
         '{
-            monday:
+            "monday":
                 [
                     {
                         "from":"9:00",
@@ -363,8 +351,8 @@ const query =
                         "to":"20:00",
                         "price":7000
                     }
-                ]
-            tuesday:
+                ],
+            "tuesday":
                 [
                     {
                         "from":"9:00",
@@ -381,8 +369,8 @@ const query =
                         "to":"20:00",
                         "price":7000
                     }
-                ]
-            wednesday:
+                ],
+            "wednesday":
                 [
                     {
                         "from":"9:00",
@@ -399,8 +387,8 @@ const query =
                         "to":"20:00",
                         "price":7000
                     }
-                ]
-            thursday:
+                ],
+            "thursday":
                 [
                     {
                         "from":"9:00",
@@ -417,8 +405,8 @@ const query =
                         "to":"20:00",
                         "price":7000
                     }
-                ]
-            friday:
+                ],
+            "friday":
                 [
                     {
                         "from":"9:00",
@@ -435,8 +423,8 @@ const query =
                         "to":"20:00",
                         "price":7000
                     }
-                ]
-            saturday:
+                ],
+            "saturday":
                 [
                     {
                         "from":"9:00",
@@ -453,8 +441,20 @@ const query =
                         "to":"20:00",
                         "price":7000
                     }
+                ],
+            "sunday": 
+                [
+                    {
+                        "from":"9:00",
+                        "to":"12:00",
+                        "price":5000
+                    },
+                    {
+                        "from":"12:00",
+                        "to":"15:00",
+                        "price":4000
+                    }
                 ]
-            sunday: "выходной"
         }',
         'www.examle.com',
         'Каучуковое',
