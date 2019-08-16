@@ -76,6 +76,7 @@
         align-items: center;
         height: 50px;
         background: white;
+        z-index: 2;
         &__title {
             flex: 0 0 33.33333%;
             max-width: 33.33333%;

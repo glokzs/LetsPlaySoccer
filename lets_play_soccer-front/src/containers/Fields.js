@@ -54,11 +54,13 @@ class Fields extends Component {
                                                 })
                                             }
                                         </Carousel>
-                                        <div className='d-flex justify-content-between'>
-                                            {field.name}
-                                            <span>от <b>5 000</b> ₸/час</span>
+                                        <div className='p-3'>
+                                            <div className='d-flex justify-content-between p-1'>
+                                                <b>{field.name}</b>
+                                                <span>от <b>5 000</b> ₸/час</span>
+                                            </div>
+                                            <div className='field__address'>{field.address}</div>
                                         </div>
-                                        <div>{field.address}</div>
                                     </div>
                                 );
                             })

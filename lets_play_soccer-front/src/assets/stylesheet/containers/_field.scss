@@ -1,10 +1,28 @@
 .field {
   &__card {
     background: white;
-    margin-top: 1.5rem;
+    color: #404B69;
+    font-size: 1rem;
+    margin: 1rem -15px;
+    @include media-breakpoint-up(sm) {
+      margin: 1rem 0;
+    }
+    .ant-carousel .slick-dots li button {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+    }
+    .ant-carousel .slick-dots li.slick-active button {
+      width: 6px;
+      height: 6px;
+    }
   }
   &__carousel {
-    height: 300px;
+    height: 130px;
     overflow: hidden;
+  }
+  &__address {
+    font-size: 13px;
+
   }
 }
