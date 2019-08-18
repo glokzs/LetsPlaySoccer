@@ -158,7 +158,7 @@ const query =
                         "price":7000
                     }
                 ],
-            "sunday": "выходной"
+            "sunday": []
         }',
         'www.examle.com',
         'Трава',
@@ -300,7 +300,7 @@ const query =
                         "price":7000
                     }
                 ],
-            "sunday": "Выходной"
+            "sunday": []
         }',
         'www.test.com',
         'Трава',
@@ -458,7 +458,7 @@ const query =
         }',
         'www.examle.com',
         'Каучуковое',
-        '["5x5", "7x7", "9x9"]',
+        '["5x5", "7x7"]',
         'Открытое поле',
         '["qwerty9.jpeg","qwerty10.jpeg","qwerty11.jpeg"]',
         4500

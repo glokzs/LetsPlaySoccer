@@ -5,6 +5,7 @@ import {getFields} from "../store/actions/fieldsAction";
 import LoadingWrapper from "../components/UI/LoadingWrapper";
 import {Carousel} from "antd";
 import config from "../config";
+import {Link} from "react-router-dom";
 
 class Fields extends Component {
     state = {
@@ -38,7 +39,14 @@ class Fields extends Component {
                         {this.props.fields.length?
                             this.props.fields.map((field, inx) => {
                                 return (
-                                    <div key={inx} className='field__card'>
+                                    <Link
+                                        key={inx}
+                                        className='field__card'
+                                        to={{
+                                            pathname: `/fields/${field.id}`,
+                                            state: field
+                                        }}
+                                    >
                                         <Carousel className='field__carousel'>
                                             {
                                                 field.images.map((image, inx) => {
@@ -54,14 +62,17 @@ class Fields extends Component {
                                                 })
                                             }
                                         </Carousel>
+                                        <div className='field__images icon--camera'>
+                                            {field.images.length}
+                                        </div>
                                         <div className='p-3'>
                                             <div className='d-flex justify-content-between p-1'>
                                                 <b>{field.name}</b>
-                                                <span>от <b>5 000</b> ₸/час</span>
+                                                <span>от <b>{field.minPrice}</b> ₸/час</span>
                                             </div>
                                             <div className='field__address'>{field.address}</div>
                                         </div>
-                                    </div>
+                                    </Link>
                                 );
                             })
                             :

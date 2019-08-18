@@ -12,7 +12,7 @@
     input {
         padding: 23px;
         font-size: 1rem;
-        color: #404B69;
+        color: $grey;
     }
     .ant-calendar-picker-icon {
         display: none;
@@ -22,7 +22,7 @@
 .match {
     &__label {
         font-size: 10px;
-        color: #95A0B6;
+        color: $secondary;
         margin-bottom: 3px;
         text-transform: uppercase;
     }
@@ -32,18 +32,18 @@
         left: 47px;
         top: 12px;
         font-size: 1rem;
-        color: #404B69;
+        color: $grey;
     }
     &__price {
         font-weight: bold;
         font-size: 1.12rem;
-        color: #404B69;
+        color: $grey;
         text-align: right;
     }
     &__input {
         padding: 23px;
         font-size: 1rem;
-        color: #404B69;
+        color: $grey;
         width: 100%;
         &__icon {
             &::before {
@@ -62,7 +62,7 @@
             input {
                 padding: 23px;
                 font-size: 1rem;
-                color: #404B69;
+                color: $grey;
             }
         }
         &--price {
@@ -87,7 +87,7 @@
     input {
         padding: 23px;
         font-size: 1rem;
-        color: #404B69;
+        color: $grey;
     }
     .ant-time-picker-icon {
         display: none;
@@ -98,7 +98,7 @@
         left: 61px;
         top: 12px;
         font-size: 1rem;
-        color: #404B69;
+        color: $grey;
     }
 }
 
@@ -113,5 +113,17 @@
         border: none;
         color: white;
         font-weight: bold;
+    }
+    &--map {
+        width: 100%;
+        background: url(../design_images/btn_map.jpg) center no-repeat;
+        background-size: cover;
+        padding: 12px;
+        color: white;
+        font-weight: bold;
+        border: none;
+        &:hover {
+            color: lighten($primary, 20%);
+        }
     }
 }
