@@ -20,16 +20,52 @@ const upload = multer({storage});
 
 router.get('/', async (req, res) => {
     try {
-        if(req.query) {
-            console.log(req.query.type);
+        if(req.query.type) {
             Field.findAll({
                 where: {
-                    types: req.query.type,
+                    types: req.query.type
+                }
+            })
+                .then(fields => {
+                    fields.map(field => {
+                        field.timetable = JSON.parse(field.timetable);
+                        field.formats = JSON.parse(field.formats);
+                        field.images = JSON.parse(field.images);
+                        return field;
+                    });
+                    res.send(fields);
+                })
+        } else if (req.query.cover) {
+            Field.findAll({
+                where: {
                     covers: req.query.cover
                 }
             })
-                .then(data => {
-                    res.send(data);
+                .then(fields => {
+                    fields.map(field => {
+                        field.timetable = JSON.parse(field.timetable);
+                        field.formats = JSON.parse(field.formats);
+                        field.images = JSON.parse(field.images);
+                        return field;
+                    });
+                    res.send(fields);
+                })
+        } else if (req.query.shower) {
+            let shower = true;
+            if (req.query.shower === 'false') shower = false;
+            Field.findAll({
+                where: {
+                    shower
+                }
+            })
+                .then(fields => {
+                    fields.map(field => {
+                        field.timetable = JSON.parse(field.timetable);
+                        field.formats = JSON.parse(field.formats);
+                        field.images = JSON.parse(field.images);
+                        return field;
+                    });
+                    res.send(fields);
                 })
         } else {
             const fields = await Field.findAll({where: {disabled: false}});
@@ -42,7 +78,7 @@ router.get('/', async (req, res) => {
             res.send(formatedFields);
         }
     }catch (e) {
-        res.status(500).send("Что-то пошло не так");
+        res.status(500).send({message: e});
     }
 
 });

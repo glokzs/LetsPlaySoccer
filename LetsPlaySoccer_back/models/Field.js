@@ -98,7 +98,8 @@ module.exports = (sequelize, type) => {
                 type: type.STRING,
             },
             shower: {
-                type: type.BOOLEAN
+                type: type.BOOLEAN,
+                defaultValue: false,
             },
             types: {
                 type: type.STRING,
