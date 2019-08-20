@@ -27,6 +27,11 @@ module.exports = (sequelize, type) => {
             address: {
                 type: type.CHAR,
                 allowNull: false,
+                validate: {
+                    notNull: {
+                        msg: "Введите адрес поля"
+                    }
+                }
             },
             latitude: {
                 type: type.INTEGER,
@@ -64,6 +69,9 @@ module.exports = (sequelize, type) => {
                     isMobilePhone: {
                         args: ['kk-KZ', {strictMode: true}],
                         msg: "Не правильный формат номера"
+                    },
+                    notNull: {
+                        msg: "Введите номер телефона"
                     }
                 },
                 allowNull: false,
@@ -72,7 +80,9 @@ module.exports = (sequelize, type) => {
                 type: type.STRING,
                 allowNull: false,
                 validate: {
-                    isEmail: true
+                    isEmail: {
+                        msg: "Некорректно указан почтовый адрес"
+                    }
                 }
             },
             timetable: {
@@ -86,6 +96,9 @@ module.exports = (sequelize, type) => {
             },
             formats: {
                 type: type.STRING,
+            },
+            shower: {
+                type: type.BOOLEAN
             },
             types: {
                 type: type.STRING,
@@ -102,16 +115,17 @@ module.exports = (sequelize, type) => {
                 allowNull: false,
                 defaultValue: false
 
+            },
+            images: {
+                type: type.TEXT
             }
         },
         {
-            timestamps: false
-        },
-        {
+            timestamps: false,
             validate: {
                 bothCoordsOrNone() {
                     if ((this.latitude === null) !== (this.longitude === null)) {
-                        throw new Error('Require either both latitude and longitude or neither');
+                        throw new Error('Укажите широту и долготу.');
                     }
                 }
             }

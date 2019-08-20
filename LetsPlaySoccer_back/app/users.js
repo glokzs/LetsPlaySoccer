@@ -69,7 +69,7 @@ const upload = multer({
 
     });
 
-    router.post('/', upload.single('avatar'), async (req, res) => {
+    router.post('/', upload.array('avatar'), async (req, res) => {
         const user = {
             displayName: req.body.displayName,
             phoneNumber: req.body.phoneNumber,

@@ -9,8 +9,19 @@ router.get('/', async (req, res) => {
 });
 //
 router.get('/:id', async (req, res) => {
-    const format = await Format.findOne({where: {id: req.params.id}});
-    res.send(format);
+    try{
+        Format.findOne({where: {id: req.params.id}})
+            .then(data => {
+                if(data) {
+                    const format = data.dataValues;
+                    res.send(format);
+                } else {
+                    res.status(404).send({message: "Некорректные данные"});
+                }
+            })
+    } catch (e) {
+        res.status(500).send("Что-то пошло не так");
+    }
 });
 
 router.post('/', async (req, res) => {
