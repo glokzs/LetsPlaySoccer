@@ -8,7 +8,7 @@ const config = require('../config');
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, config.uploadPath);
+        cb(null, config.fieldPath);
     },
     filename: function (req, file, cb) {
         cb(null, nanoid() + path.extname(file.originalname));
@@ -39,28 +39,41 @@ router.get('/:id', async (req, res) => {
 
 });
 
-router.post('/',upload.single('image'), async (req, res) => {
-    const field = req.body;
-    const timetable = JSON.stringify(field.timetable);
-    const formats = JSON.stringify(field.formats);
-    const images = JSON.stringify(field.images);
+router.post('/',upload.array('images'), async (req, res) => {
+    const timetable = JSON.stringify(req.body.timetable);
+    const formats = JSON.stringify(req.body.formats);
 
-    const fields = await Field.create({
-        name: field.name,
-        address: field.address,
-        description: field.description,
-        longitude: field.longitude,
-        latitude: field.latitude,
-        timetable,
-        covers: field.covers,
-        types: field.types,
-        formats,
-        images,
-        phoneNumber: field.phoneNumber,
-        email: field.email,
-        site: field.site
+    const field = {
+        name: req.body.name,
+        address: req.body.address,
+        description: req.body.description,
+        longitude: req.body.longitude,
+        latitude: req.body.latitude,
+        timetable: timetable,
+        covers: req.body.covers,
+        types: req.body.types,
+        formats: formats,
+        phoneNumber: req.body.phoneNumber,
+        email: req.body.email,
+        site: req.body.site,
+    };
+
+    if (req.files) {
+        const dir = [];
+        req.files.map(file => {
+            dir.push(file.filename);
+        });
+
+        field.images = JSON.stringify(dir);
+    }
+
+
+    Field.create(field).then(data => {
+        const field = data.toJSON();
+        res.json(field);
+    }).catch(err => {
+        res.json(err.errors[0].message);
     });
-    res.send(fields);
 });
 
 // router.delete('/', async (req, res) => {

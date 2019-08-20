@@ -10,9 +10,19 @@ module.exports = (sequelize, type) => {
             name: {
                 type: type.CHAR,
                 allowNull: false,
+                validate: {
+                    len: {
+                        args: [4,50],
+                        msg: "Не допустимое кол-во символов в имени"
+                    },
+                    notNull: {
+                        msg: "Не допустимое кол-во символов в имени"
+                    }
+                },
             },
             description: {
                 type: type.TEXT,
+
             },
             address: {
                 type: type.CHAR,
@@ -22,13 +32,31 @@ module.exports = (sequelize, type) => {
                 type: type.INTEGER,
                 allowNull: true,
                 defaultValue: null,
-                validate: { min: -90, max: 90 }
+                validate: {
+                    min:  {
+                        args: -90,
+                        msg: "Не допустимое значение ширины"
+                    },
+                    max: {
+                        args: 90,
+                        msg: "Не допустимое значение ширины"
+                    }
+                }
             },
             longitude: {
                 type: type.INTEGER,
                 allowNull: true,
                 defaultValue: null,
-                validate: { min: -180, max: 180 }
+                validate: {
+                    min:  {
+                        args: -180,
+                        msg: "Не допустимое значение долготы"
+                    },
+                    max: {
+                        args: 180,
+                        msg: "Не допустимое значение долготы"
+                    }
+                }
             },
             phoneNumber: {
                 type: type.STRING,
