@@ -4,6 +4,8 @@ const FieldModel = require("./models/Field");
 const FormatModel = require("./models/Format");
 const CoverModel = require("./models/Cover");
 const TypeModel = require("./models/Type");
+const MatchModel = require("./models/Match");
+const UserMatchModel = require('./models/UserMatch');
 
 const sequelize = new Sequelize("LetsPlaySoccer", 'root', 'mypass', {
     host: 'localhost',
@@ -26,6 +28,11 @@ const Format = FormatModel(sequelize, Sequelize);
 const Cover = CoverModel(sequelize, Sequelize);
 const Type = TypeModel(sequelize, Sequelize);
 
+const Match = MatchModel(sequelize, Sequelize);
+const UserMatch = UserMatchModel(sequelize, Sequelize);
+
+User.belongsToMany(Match, {through: UserMatch});
+Match.belongsToMany(User, {through: UserMatch});
 
 sequelize.sync(); //{force: true}
 module.exports = {
@@ -33,5 +40,6 @@ module.exports = {
     Field,
     Format,
     Cover,
-    Type
+    Type,
+    Match
 };

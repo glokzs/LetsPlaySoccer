@@ -74,7 +74,7 @@ router.post('/',upload.array('images'), async (req, res) => {
         const field = data.toJSON();
         res.json(field);
     }).catch(err => {
-        console.log(err)
+        res.json(err.errors[0].message);
     });
 });
 
