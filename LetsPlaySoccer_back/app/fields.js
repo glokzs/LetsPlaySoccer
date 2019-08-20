@@ -1,7 +1,7 @@
 const fs = require('fs');
 const express = require('express');
 const router = express.Router();
-const {Format, Field} = require('../sequelize');
+const {Field} = require('../sequelize');
 const nanoid = require('nanoid');
 const multer  = require('multer');
 const path = require('path');
@@ -19,25 +19,50 @@ const storage = multer.diskStorage({
 const upload = multer({storage});
 
 router.get('/', async (req, res) => {
-    const fields = await Field.findAll();
-    const formatedFields = fields.map(field => {
-        field.timetable = JSON.parse(field.timetable);
-        field.formats = JSON.parse(field.formats);
-        field.images = JSON.parse(field.images);
-        return field;
-    });
-    res.send(formatedFields);
+    try {
+        if(req.query) {
+            console.log(req.query.type);
+            Field.findAll({
+                where: {
+                    types: req.query.type,
+                    covers: req.query.cover
+                }
+            })
+                .then(data => {
+                    res.send(data);
+                })
+        } else {
+            const fields = await Field.findAll({where: {disabled: false}});
+            const formatedFields = fields.map(field => {
+                field.timetable = JSON.parse(field.timetable);
+                field.formats = JSON.parse(field.formats);
+                field.images = JSON.parse(field.images);
+                return field;
+            });
+            res.send(formatedFields);
+        }
+    }catch (e) {
+        res.status(500).send("Что-то пошло не так");
+    }
+
 });
 
 router.get('/:id', async (req, res) => {
-    const field = await Field.findOne({where: {id: req.params.id}});
-    field.timetable = JSON.parse(field.timetable);
-    field.covers = JSON.parse(field.covers);
-    field.types = JSON.parse(field.types);
-    field.formats = JSON.parse(field.formats);
-    field.images = JSON.parse(field.images);
-    res.send(field);
-
+    Field.findOne({where: {id: req.params.id}})
+        .then(data => {
+            if(data) {
+                const field = data.dataValues;
+                console.log(field.timetable);
+                field.timetable = JSON.parse(field.timetable);
+                // field.covers = JSON.parse(field.covers);
+                // field.types = JSON.parse(field.types);
+                field.formats = JSON.parse(field.formats);
+                field.images = JSON.parse(field.images);
+                res.send(field);
+            } else {
+                res.status(404).send("Некорректные данные");
+            }
+        })
 });
 
 router.post('/',upload.array('images'), async (req, res) => {
@@ -68,8 +93,6 @@ router.post('/',upload.array('images'), async (req, res) => {
 
         field.images = JSON.stringify(dir);
     }
-
-
     Field.create(field).then(data => {
         const field = data.toJSON();
         res.json(field);
