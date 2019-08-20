@@ -45,7 +45,7 @@ html, body {
 .ball {
   width: 40px;
   height: 40px;
-  background-image: url('https://image.flaticon.com/icons/svg/33/33736.svg');
+  background-image: url('../design_images/ball.svg');
   background-size: cover;
   animation: roll .6s linear infinite;
 }
@@ -63,4 +63,19 @@ html, body {
   0% {}
   50% { transform: scaleX(1); opacity: .8;}
   100% {}
+}
+
+.my-node-enter {
+  opacity: 0;
+}
+.my-node-enter-active {
+  opacity: 1;
+  transition: opacity 200ms;
+}
+.my-node-exit {
+  opacity: 1;
+}
+.my-node-exit-active {
+  opacity: 0;
+  transition: opacity 200ms;
 }

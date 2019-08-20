@@ -93,6 +93,13 @@ module.exports = (sequelize, type) => {
             types: {
                 type: type.STRING,
             },
+            images: {
+                type: type.STRING,
+            },
+            minPrice: {
+                type: type.INTEGER,
+                validate: { min: 0 }
+            },
             disabled: {
                 type: type.BOOLEAN,
                 allowNull: false,

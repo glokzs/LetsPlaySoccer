@@ -1,5 +1,5 @@
 import React, {Component, Fragment} from 'react';
-import photo from '../../uploads/Mask.png';
+import photo from '../../assets/content_images/Mask.png';
 import {Nav, NavItem} from 'react-bootstrap';
 import {NavLink} from 'react-router-dom';
 import Footer from '../Footer';
@@ -14,7 +14,6 @@ class Toolbar extends Component {
     this.setState({isMenuOpen: !this.state.isMenuOpen});
   };
     render() {
-      console.log(this.props);
       return (
         <Fragment>
           <div className='toolbar'>
