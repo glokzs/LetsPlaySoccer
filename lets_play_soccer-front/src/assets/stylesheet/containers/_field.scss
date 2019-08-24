@@ -75,6 +75,9 @@
         background: $primary;
         color: white;
       }
+      .ant-collapse-borderless > .ant-collapse-item {
+        position: relative;
+      }
     }
   }
   &__carousel {
@@ -109,6 +112,14 @@
   &__text {
     font-size: 14px;
     color: $black;
+    &--phone {
+      a {
+        color: $black;
+      }
+    }
+    &--site {
+      color: $primary;
+    }
   }
   &__format {
     display: flex;
@@ -125,5 +136,40 @@
       font-size: 14px;
       margin-left: 5px;
     }
+  }
+  &__icon {
+    &--description {
+      &::before {
+        @extend %field__icons;
+        left: 107px;
+      }
+    }
+    &--timetable {
+      &::before {
+        @extend %field__icons;
+        left: 147px;
+      }
+    }
+    &--contacts {
+      &::before {
+        @extend %field__icons;
+        left: 107px;
+      }
+    }
+  }
+}
+
+%field__icons {
+  content: "";
+  font-family: 'icomoon';
+  font-size: inherit;
+  position: absolute;
+  top: 17px;
+  color: $primary;
+  transition: all 0.4s ease-in;
+}
+.rotate-icon {
+  &::before {
+    transform: rotate(180deg);
   }
 }

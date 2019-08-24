@@ -31,6 +31,7 @@ router.get('/', async (req, res) => {
                         field.timetable = JSON.parse(field.timetable);
                         field.formats = JSON.parse(field.formats);
                         field.images = JSON.parse(field.images);
+                        field.phoneNumber = JSON.parse(field.phoneNumber);
                         return field;
                     });
                     res.send(fields);
@@ -46,6 +47,7 @@ router.get('/', async (req, res) => {
                         field.timetable = JSON.parse(field.timetable);
                         field.formats = JSON.parse(field.formats);
                         field.images = JSON.parse(field.images);
+                        field.phoneNumber = JSON.parse(field.phoneNumber);
                         return field;
                     });
                     res.send(fields);
@@ -63,6 +65,7 @@ router.get('/', async (req, res) => {
                         field.timetable = JSON.parse(field.timetable);
                         field.formats = JSON.parse(field.formats);
                         field.images = JSON.parse(field.images);
+                        field.phoneNumber = JSON.parse(field.phoneNumber);
                         return field;
                     });
                     res.send(fields);
@@ -94,6 +97,7 @@ router.get('/:id', async (req, res) => {
                 // field.types = JSON.parse(field.types);
                 field.formats = JSON.parse(field.formats);
                 field.images = JSON.parse(field.images);
+                field.phoneNumber = JSON.parse(field.phoneNumber);
                 res.send(field);
             } else {
                 res.status(404).send("Некорректные данные");
@@ -103,8 +107,9 @@ router.get('/:id', async (req, res) => {
 
 router.post('/',upload.array('images'), async (req, res) => {
     const timetable = JSON.stringify(req.body.timetable);
-
     const formats = JSON.stringify(req.body.formats);
+    const phoneNumber = JSON.stringify(field.phoneNumber);
+    const images = JSON.stringify(field.images);
 
     const field = {
         name: req.body.name,
@@ -112,13 +117,14 @@ router.post('/',upload.array('images'), async (req, res) => {
         description: req.body.description,
         longitude: req.body.longitude,
         latitude: req.body.latitude,
-        timetable: timetable,
         covers: req.body.covers,
         types: req.body.types,
-        formats: formats,
-        phoneNumber: req.body.phoneNumber,
         email: req.body.email,
         site: req.body.site,
+        timetable,
+        images,
+        phoneNumber,
+        formats,
     };
 
     if (req.files) {
@@ -138,8 +144,5 @@ router.post('/',upload.array('images'), async (req, res) => {
     });
 });
 
-// router.delete('/', async (req, res) => {
-//
-// });
 
 module.exports = router;

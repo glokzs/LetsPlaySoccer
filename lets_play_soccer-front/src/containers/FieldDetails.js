@@ -8,7 +8,10 @@ const { TabPane } = Tabs;
 
 class FieldDetails extends Component {
     state = {
-        loading: false
+        loading: false,
+        isDescriptionOpen: true,
+        isTimetableOpen: false,
+        isContactsOpen: false
     };
     getFormatText = format => {
         if (format === 1) {
@@ -20,6 +23,23 @@ class FieldDetails extends Component {
         }
     };
 
+    onDescriptionChange = () => {
+        this.setState({isDescriptionOpen: !this.state.isDescriptionOpen});
+    };
+    onTimetableChange = () => {
+        this.setState({isTimetableOpen: !this.state.isTimetableOpen});
+    };
+    onContactsChange = e => {
+        console.log(e);
+        if (e.length) {
+            e.forEach(item => {
+                if (item === '1') {
+
+                }
+            });
+        }
+        this.setState({isContactsOpen: !this.state.isContactsOpen});
+    };
     render() {
         const field = this.props.location.state;
         return (
@@ -57,8 +77,17 @@ class FieldDetails extends Component {
                                 </div>
                             </div>
                             <button className='btn--map'>Показать на карте</button>
-                            <Collapse bordered={false} defaultActiveKey={['1']}>
-                                <Panel header="Описание" key="1" className='icon--arrow-down'>
+                            <Collapse
+                                bordered={false}
+                                defaultActiveKey={['1']}
+                                onChange={this.onContactsChange}
+                            >
+                                <Panel
+                                    header="Описание"
+                                    key="1"
+                                    className='field__icon--description mt-2'
+                                    onChange={this.onDescriptionChange}
+                                >
                                     <div>
                                         <p>{field.description}</p>
                                         <div className='field__format'>
@@ -94,7 +123,12 @@ class FieldDetails extends Component {
                                         </div>
                                     </div>
                                 </Panel>
-                                <Panel header="Режим работы" key="2">
+                                <Panel
+                                    header="Режим работы"
+                                    key="2"
+                                    className='field__icon--timetable mt-2'
+                                    onChange={this.onTimetableChange}
+                                >
                                     <div>
                                         <Tabs defaultActiveKey="1" type="card">
                                             <TabPane tab="Пн" key="1">
@@ -198,8 +232,39 @@ class FieldDetails extends Component {
                                         </Tabs>
                                     </div>
                                 </Panel>
-                                <Panel header="Контакты" key="3">
-                                    <p>dsf</p>
+                                <Panel
+                                    header="Контакты"
+                                    key="3"
+                                    className={'field__icon--contacts mt-2 ' + (this.state.isContactsOpen? null : 'rotate-icon')}
+                                >
+                                    <div>
+                                        <div className='mt-3'>
+                                            <div className="field__label">Телефон</div>
+                                            <div className="field__text field__text--phone">
+                                                {field.phoneNumber.length > 0?
+                                                    field.phoneNumber.map((number, index) => {
+                                                        return (
+                                                            <a href={'tel:'+number} key={index}>
+                                                                {number}
+                                                                {index === (field.phoneNumber.length - 1) ? null : ','}
+                                                                &nbsp;
+                                                            </a>
+                                                        );
+                                                    })
+                                                    :
+                                                    'Не имеется'
+                                                }
+                                            </div>
+                                        </div>
+                                        <div className='mt-3'>
+                                            <div className="field__label">Почта</div>
+                                            <a href={'mailto:'+field.email} className="field__text">{field.email}</a>
+                                        </div>
+                                        <div className='mt-3 mb-5'>
+                                            <div className="field__label">Сайт</div>
+                                            <a href={'http://'+field.webSite} className="field__text field__text--site">{field.webSite}</a>
+                                        </div>
+                                    </div>
                                 </Panel>
                             </Collapse>
                         </div> : null
