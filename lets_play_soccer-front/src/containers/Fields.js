@@ -25,11 +25,11 @@ class Fields extends Component {
         return (
             <Fragment>
                 <header className='toolbar__header'>
-                    <div className='col-4'>
+                    <div className='col-3'>
                         <button className='icon--arrow-right toolbar__header__btn--close'/>
                     </div>
-                    <div className='toolbar__header__title'>Площадки</div>
-                    <div className='col-4 d-flex align-items-center justify-content-end'>
+                    <div className='col-6 toolbar__header__title'>Площадки</div>
+                    <div className='col-3 d-flex align-items-center justify-content-end'>
                         <button className='icon--search toolbar__header__btn--close'/>
                         <button className='icon--map-o toolbar__header__btn--close'/>
                     </div>

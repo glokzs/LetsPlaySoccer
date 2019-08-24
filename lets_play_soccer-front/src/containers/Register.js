@@ -70,14 +70,14 @@ class Register extends Component {
                                 name="password"
                                 value={this.state.password}
                             />
-                            <FormElement
-                                title="Image"
-                                type="file"
-                                name="avatar"
-                                placeholder="Enter image"
-                                value={this.state.avatar}
-                                onChange={this.fileChangeHandler}
-                            />
+                            {/*<FormElement*/}
+                            {/*    title="Image"*/}
+                            {/*    type="file"*/}
+                            {/*    name="avatar"*/}
+                            {/*    placeholder="Enter image"*/}
+                            {/*    value={this.state.avatar}*/}
+                            {/*    onChange={this.fileChangeHandler}*/}
+                            {/*/>*/}
                             <div>
                                 <Button type="submit" variant="primary" size="lg" block>Зарегистрироваться</Button>
                             </div>
