@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from "react-redux";
 import {Form, Button, Alert} from 'react-bootstrap';
-import { loginUser } from '../store/actions/userAction';
+import {clearUserErrors, loginUser} from '../store/actions/userAction';
 import { NavLink } from "react-router-dom";
 import FormElement from '../components/UI/FormElement';
 import MobileInput from "../components/UI/MobileInput";
@@ -18,9 +18,11 @@ class Login extends Component {
     updateInput = (e) => {
         e.preventDefault();
         this.setState({ [e.target.name]: e.target.value });
+        this.props.clearUserErrors()
     };
     updatePhoneInput = phone => {
         this.setState({phone});
+        this.props.clearUserErrors()
     };
 
     onSubmitHandler = e => {
@@ -43,7 +45,7 @@ class Login extends Component {
                     <div className="logo text-center" />
                     <h1 className="text-center title">Вход в систему</h1>
                     {
-                        this.props.error ? <Alert variant={'danger'}>Введён неверный логин или пароль</Alert> : null
+                        this.props.error ? <Alert variant={'danger'}>{this.props.error.message}</Alert> : null
                     }
                     <Form onSubmit={this.onSubmitHandler} >
                         <MobileInput
@@ -86,7 +88,8 @@ const mapStateToProps = state => {
 };
 const mapDispatchToProps = dispatch => {
     return {
-        loginUser: (userData) => dispatch(loginUser(userData))
+        loginUser: (userData) => dispatch(loginUser(userData)),
+        clearUserErrors: () => dispatch(clearUserErrors()),
     };
 };
 

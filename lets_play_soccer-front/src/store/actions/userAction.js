@@ -65,10 +65,10 @@ export const logoutUser = () => {
         const token = getState().users.user.token;
         const headers = {Token: token};
 
-        return axios.delete('/users/session', {headers}).then(
+        return axios.delete('/users/sessions', {headers}).then(
             response => {
                 dispatch({type: LOGOUT_USER});
-                dispatch(push('/'));
+                dispatch(push('/login'));
             }
         );
     }
