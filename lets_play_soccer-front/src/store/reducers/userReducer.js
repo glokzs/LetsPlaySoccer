@@ -24,9 +24,9 @@ const userReducer = (state = initialState, action) => {
         case LOGIN_USER_ERROR:
             return {...state, loginError: action.error};
         case LOGOUT_USER:
-            return {...state, user: null};
+            return {...state, user: null, loginError: null, registerError: null};
         case CLEAR_USER_ERRORS:
-            return {...state, registerError: null};
+            return {...state, registerError: null, loginError: null};
         default:
             return state;
     }

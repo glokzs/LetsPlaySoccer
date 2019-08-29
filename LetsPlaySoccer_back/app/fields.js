@@ -20,16 +20,55 @@ const upload = multer({storage});
 
 router.get('/', async (req, res) => {
     try {
-        if(req.query) {
-            console.log(req.query.type);
+        if(req.query.type) {
             Field.findAll({
                 where: {
-                    types: req.query.type,
+                    types: req.query.type
+                }
+            })
+                .then(fields => {
+                    fields.map(field => {
+                        field.timetable = JSON.parse(field.timetable);
+                        field.formats = JSON.parse(field.formats);
+                        field.images = JSON.parse(field.images);
+                        field.phoneNumber = JSON.parse(field.phoneNumber);
+                        return field;
+                    });
+                    res.send(fields);
+                })
+        } else if (req.query.cover) {
+            Field.findAll({
+                where: {
                     covers: req.query.cover
                 }
             })
-                .then(data => {
-                    res.send(data);
+                .then(fields => {
+                    fields.map(field => {
+                        field.timetable = JSON.parse(field.timetable);
+                        field.formats = JSON.parse(field.formats);
+                        field.images = JSON.parse(field.images);
+                        field.phoneNumber = JSON.parse(field.phoneNumber);
+                        return field;
+                    });
+                    res.send(fields);
+                })
+        } else if (req.query.shower) {
+            let shower = true;
+            if (req.query.shower === 'false') shower = false;
+            Field.findAll({
+                where: {
+                    shower
+                }
+            })
+                .then(fields => {
+                    fields.map(field => {
+                        field.timetable = JSON.parse(field.timetable);
+                        field.formats = JSON.parse(field.formats);
+                        field.images = JSON.parse(field.images);
+                        field.phoneNumber = JSON.parse(field.phoneNumber);
+                        return field;
+                    });
+                    res.send(fields);
                 })
         } else {
             const fields = await Field.findAll({where: {disabled: false}});
@@ -42,7 +81,7 @@ router.get('/', async (req, res) => {
             res.send(formatedFields);
         }
     }catch (e) {
-        res.status(500).send("Что-то пошло не так");
+        res.status(500).send({message: e});
     }
 
 });
@@ -58,6 +97,7 @@ router.get('/:id', async (req, res) => {
                 // field.types = JSON.parse(field.types);
                 field.formats = JSON.parse(field.formats);
                 field.images = JSON.parse(field.images);
+                field.phoneNumber = JSON.parse(field.phoneNumber);
                 res.send(field);
             } else {
                 res.status(404).send("Некорректные данные");
@@ -67,8 +107,9 @@ router.get('/:id', async (req, res) => {
 
 router.post('/',upload.array('images'), async (req, res) => {
     const timetable = JSON.stringify(req.body.timetable);
-
     const formats = JSON.stringify(req.body.formats);
+    const phoneNumber = JSON.stringify(field.phoneNumber);
+    const images = JSON.stringify(field.images);
 
     const field = {
         name: req.body.name,
@@ -76,13 +117,14 @@ router.post('/',upload.array('images'), async (req, res) => {
         description: req.body.description,
         longitude: req.body.longitude,
         latitude: req.body.latitude,
-        timetable: timetable,
         covers: req.body.covers,
         types: req.body.types,
-        formats: formats,
-        phoneNumber: req.body.phoneNumber,
         email: req.body.email,
         site: req.body.site,
+        timetable,
+        images,
+        phoneNumber,
+        formats,
     };
 
     if (req.files) {
@@ -103,8 +145,5 @@ router.post('/',upload.array('images'), async (req, res) => {
     });
 });
 
-// router.delete('/', async (req, res) => {
-//
-// });
 
 module.exports = router;
