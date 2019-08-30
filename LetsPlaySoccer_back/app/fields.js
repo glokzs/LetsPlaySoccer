@@ -135,12 +135,13 @@ router.post('/',upload.array('images'), async (req, res) => {
 
         field.images = JSON.stringify(dir);
     }
+
+
     Field.create(field).then(data => {
         const field = data.toJSON();
         res.json(field);
     }).catch(err => {
         res.json(err.errors[0].message);
-
     });
 });
 
