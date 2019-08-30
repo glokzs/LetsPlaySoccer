@@ -13,8 +13,12 @@ module.exports = (sequelize, type) => {
         type: type.STRING,
         allowNull: false,
         validate: {
+          len: {
+            args: [8, 40],
+            msg: "Пароль должен быть не короче 8 символов."
+          },
           is: {
-            args: "[0-9a-zA-Z!@#$%^&*]{6,}",
+            args: "[0-9a-zA-Z!@#$%^&*]",
             msg: "Пароль должен содержать только латинские буквы и специальные символы."
           }
         }
@@ -24,7 +28,7 @@ module.exports = (sequelize, type) => {
         validate: {
           isMobilePhone: {
             args: ['kk-KZ', {strictMode: true}],
-            msg: "Не правильный формат номера"
+            msg: "Не правильный формат номера."
           }
         },
         unique: true,
@@ -33,6 +37,23 @@ module.exports = (sequelize, type) => {
       displayName: {
         type: type.STRING(100),
         allowNull: false,
+        validate: {
+          notNull: {
+            msg: "Введите ваше имя."
+          },
+          notEmpty: {
+            msg: "Введите ваше имя."
+          }
+        }
+      },
+      email: {
+        type: type.STRING,
+
+        validate: {
+          isEmail: {
+            msg: "Некорректный почтовый адрес."
+          }
+        }
       },
       avatar: {
         type: type.STRING
