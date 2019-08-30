@@ -69,7 +69,7 @@ const upload = multer({
 
     });
 
-    router.post('/', upload.array('avatar'), async (req, res) => {
+    router.post('/', upload.single('avatar'), async (req, res) => {
         const user = {
             displayName: req.body.displayName,
             phoneNumber: req.body.phoneNumber,
@@ -99,36 +99,39 @@ const upload = multer({
                 res.json(user);
             })
             .catch(err => {
-                res.json('error: ' + err)
+                res.json({message: err.errors[0].message})
             });
     });
 
-    router.post('/sessions', upload.single('avatar'), async (req, res) => {
+    router.post('/sessions', async (req, res) => {
+      try {
         const user = await User.findOne({
-            where: {
-                phoneNumber: req.body.phoneNumber
-            },
+          where: {
+            phoneNumber: req.body.phoneNumber
+          },
         });
 
         if(!user) {
-            return res.status(400).send({message: 'Такого пользователя нет'});
+          return res.status(400).send({message: 'Такого пользователя нет'});
         }
 
         const isMatch = await user.checkPassword(req.body.password);
 
         if(!isMatch) {
-            return res.status(400).send({message: 'Неверный пароль'});
+          return res.status(400).send({message: 'Неверный пароль'});
         }
 
         user.update({token: nanoid()});
         const copyUser = user.toJSON();
         delete copyUser.password;
         res.status(200).json(copyUser);
-
+      }catch (e) {
+        res.status(404).send({message: "Что-то пошло не так"});
+      }
     });
 
     router.delete('/sessions', async (req, res) => {
-        const token = req.get("Token");
+        const token = req.get("Authorization");
         const success = {message: "Вы вышли из сессии"};
         if(!token) return res.send(success);
 
@@ -143,7 +146,8 @@ const upload = multer({
 
         if(!user) return res.send(success);
 
-        user.update({token: null});
+
+        user.update({token: nanoid()});
 
         res.send(success);
     });
