@@ -10,6 +10,9 @@ module.exports = (sequelize, type) => {
       name: {
         type: type.STRING,
         allowNull: false,
+        unique: {
+          msg: "Такое покрытие уже сущесвует"
+        },
         validate: {
           notNull: {
             msg: "Введите покрытие"

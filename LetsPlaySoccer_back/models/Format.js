@@ -20,7 +20,10 @@ module.exports = (sequelize, type) => {
               throw new Error("Формат должен быть в таком виде, например 7x7.");
             }
           }
-        }
+        },
+        unique: {
+          msg: "Такой формат уже сущесвует."
+        },
       }
     },
     {
