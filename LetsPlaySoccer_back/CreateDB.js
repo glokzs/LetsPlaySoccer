@@ -35,11 +35,11 @@ const query =
         email, 
         timetable, 
         webSite, 
-        covers, 
-        formats, 
-        types,
+        formats,
         images,
-        minPrice
+        minPrice,
+        typeId,
+        coverId
     ) 
     VALUES (
         'Жарыс Арена',
@@ -161,11 +161,11 @@ const query =
             "sunday": []
         }',
         'www.examle.com',
-        'Трава',
         '["5x5", "7x7", "9x9"]',
-        'Крытое поле',
         '["qwerty1.jpg","qwerty2.jpeg","qwerty3.jpeg","qwerty4.jpeg"]',
-        5000
+        5000,
+        1,
+        2
     );
     INSERT INTO fields (
         name, 
@@ -177,11 +177,11 @@ const query =
         email, 
         timetable, 
         webSite, 
-        covers, 
         formats, 
-        types,
         images,
-        minPrice
+        minPrice,
+        typeId,
+        coverId
     ) 
     VALUES (
         'Тестовое поле',
@@ -303,11 +303,11 @@ const query =
             "sunday": []
         }',
         'www.test.com',
-        'Трава',
         '["5x5", "7x7", "9x9"]',
-        'Крытое поле',
         '["qwerty5.jpeg","qwerty6.jpeg","qwerty7.jpeg","qwerty8.jpeg"]',
-        6000
+        6000,
+        2,
+        1
     );
     INSERT INTO fields (
         name, 
@@ -319,11 +319,11 @@ const query =
         email, 
         timetable, 
         webSite, 
-        covers, 
         formats, 
-        types,
         images,
-        minPrice
+        minPrice,
+        typeId,
+        coverId
     ) 
     VALUES (
         'Hello Арена Huge',
@@ -457,11 +457,11 @@ const query =
                 ]
         }',
         'www.examle.com',
-        'Каучуковое',
         '["5x5", "7x7"]',
-        'Открытое поле',
         '["qwerty9.jpeg","qwerty10.jpeg","qwerty11.jpeg"]',
-        4500
+        4500,
+        1,
+        4
     );
 	
 `;

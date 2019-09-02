@@ -33,6 +33,10 @@ const UserMatch = UserMatchModel(sequelize, Sequelize);
 
 User.belongsToMany(Match, {through: UserMatch});
 Match.belongsToMany(User, {through: UserMatch});
+Match.belongsTo(Field);
+
+Field.belongsTo(Type);
+Field.belongsTo(Cover);
 
 sequelize.sync();
 module.exports = {
