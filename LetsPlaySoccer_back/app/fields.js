@@ -34,12 +34,18 @@ router.get('/', async (req, res) => {
       query = {...query, shower}
     }
     if (req.query.search) {
-      search = {name: {[Op.like]: `%${req.query.search}%` }}
+      query = {name: {[Op.like]: `%${req.query.search}%` }}
     }
     if(req.query.type) {
       query = {...query, typeId: req.query.type}
     }
-      const fields = await Field.findAll({where: search, query, include: [Cover, Type], limit: 10, offset: fieldOffset});
+      const fields = await Field.findAll({
+        group: "id",
+        where: query,
+        include: [Cover, Type],
+        limit: 10,
+        offset: fieldOffset,
+      });
       const formatedFields = fields.map(field => {
         field.timetable = JSON.parse(field.timetable);
         field.formats = JSON.parse(field.formats);
