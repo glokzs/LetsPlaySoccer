@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 // import 'moment/locale/ru';
 import {connect} from "react-redux";
-import {getFields} from "../store/actions/fieldsAction";
+import {getFields, getLoadedFields} from "../store/actions/fieldsAction";
 import LoadingWrapper from "../components/UI/LoadingWrapper";
 import {Carousel} from "antd";
 import config from "../config";
@@ -9,9 +9,16 @@ import {Link} from "react-router-dom";
 
 class Fields extends Component {
     state = {
-        loading: true
+        loading: true,
+        offset: 0
     };
+    loadWithOffset = () => {
+      let state = {...this.state};
+      let offset = state.offset;
+      offset += 10;
+      this.setState({offset}, () => {this.props.getLoadedFields(this.state.offset)});
 
+    };
     setLoadingFalse = () => {
         this.setState({loading: false});
     };
@@ -21,7 +28,6 @@ class Fields extends Component {
 
 
     render() {
-
         return (
             <Fragment>
                 <header className='toolbar__header'>
@@ -78,6 +84,7 @@ class Fields extends Component {
                             :
                             <div className='text-center'>Список полей пока пуст</div>
                         }
+                       { !this.props.isEmpty ? <button onClick={this.loadWithOffset} type="button" className="btn btn-primary">See more</button> : null}
                     </Fragment>
                 </LoadingWrapper>
             </Fragment>
@@ -88,12 +95,14 @@ class Fields extends Component {
 const mapStateToProps = state => {
     return {
         fields: state.fields.fields,
-        fieldsError: state.fields.fieldsError
+        fieldsError: state.fields.fieldsError,
+        isEmpty: state.fields.isEmpty
     };
 };
 const mapDispatchToProps = dispatch => {
     return {
-        getFields: (cb) => dispatch(getFields(cb))
+        getFields: (cb) => dispatch(getFields(cb)),
+        getLoadedFields: (offset) => dispatch(getLoadedFields(offset))
     };
 };
 
