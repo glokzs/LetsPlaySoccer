@@ -3,8 +3,8 @@ const password = require('./mysqlpass');
 
 const connection = mysql.createConnection({
     host: "localhost",
-    user: "root",
-    password: password,
+    user: "soccer",
+    password: "1qaz@WSX29",
     multipleStatements: true
 });
 
