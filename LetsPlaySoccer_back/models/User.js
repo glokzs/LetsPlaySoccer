@@ -61,6 +61,15 @@ module.exports = (sequelize, type) => {
       token: {
         type: type.STRING
       },
+      role: {
+        type: type.STRING,
+        defaultValue: "user",
+        validate: {
+          isIn: {
+            args: [['user', 'admin']]
+          }
+        }
+      }
     },
     {
       timestamps: false

@@ -22,7 +22,16 @@ module.exports = (sequelize, type) => {
       },
       description: {
         type: type.TEXT,
-
+        allowNull: false,
+        validate: {
+          len: {
+            args: [50, 5000],
+            msg: "Описание слишком короткое"
+          },
+          notNull: {
+            msg: "Описание слишком короткое"
+          }
+        },
       },
       address: {
         type: type.CHAR,
@@ -65,15 +74,6 @@ module.exports = (sequelize, type) => {
       },
       phoneNumber: {
         type: type.STRING,
-        validate: {
-          isMobilePhone: {
-            args: ['kk-KZ', {strictMode: true}],
-            msg: "Не правильный формат номера"
-          },
-          notNull: {
-            msg: "Введите номер телефона"
-          }
-        },
         allowNull: false,
       },
       email: {
@@ -91,18 +91,12 @@ module.exports = (sequelize, type) => {
       webSite: {
         type: type.STRING
       },
-      covers: {
-        type: type.STRING,
-      },
       formats: {
         type: type.STRING,
       },
       shower: {
         type: type.BOOLEAN,
         defaultValue: false,
-      },
-      types: {
-        type: type.STRING,
       },
       minPrice: {
         type: type.INTEGER,
