@@ -111,7 +111,7 @@ class FieldDetails extends Component {
                                         </div>
                                         <div className='mt-3'>
                                             <div className="field__label">Тип</div>
-                                            <div className="field__text">{field.types}</div>
+                                            <div className="field__text">{field.type.name}</div>
                                         </div>
                                         <div className='mt-3'>
                                             <div className="field__label">Душ</div>
@@ -119,7 +119,7 @@ class FieldDetails extends Component {
                                         </div>
                                         <div className='mt-3'>
                                             <div className="field__label">Покрытие</div>
-                                            <div className="field__text">{field.covers}</div>
+                                            <div className="field__text">{field.cover.name}</div>
                                         </div>
                                     </div>
                                 </Panel>
