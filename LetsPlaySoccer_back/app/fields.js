@@ -19,7 +19,9 @@ const upload = multer({storage});
 
 router.get('/', async (req, res) => {
   let query = {disabled: false};
+  let fieldOffset = 0;
   try {
+    if(req.query.offset) fieldOffset = parseInt(req.query.offset);
     if(req.query.cover) {
       query = {...query, coverId: req.query.cover}
     }
@@ -31,11 +33,12 @@ router.get('/', async (req, res) => {
     if(req.query.type) {
       query = {...query, typeId: req.query.type}
     }
-      const fields = await Field.findAll({where: query, include: [Type, Cover], limit: 2});
+      const fields = await Field.findAll({where: query, include: [Cover, Type], limit: 10, offset: fieldOffset});
       const formatedFields = fields.map(field => {
         field.timetable = JSON.parse(field.timetable);
         field.formats = JSON.parse(field.formats);
         field.images = JSON.parse(field.images);
+        field.phoneNumber = JSON.parse(field.phoneNumber);
         return field;
       });
       res.send(formatedFields);
