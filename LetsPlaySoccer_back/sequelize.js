@@ -8,6 +8,7 @@ const MatchModel = require("./models/Match");
 const UserMatchModel = require('./models/UserMatch');
 
 const sequelize = new Sequelize("LetsPlaySoccer", 'soccer', '1qaz@WSX29', {
+
     host: 'localhost',
     dialect: 'mysql',
     charset: 'utf8',
