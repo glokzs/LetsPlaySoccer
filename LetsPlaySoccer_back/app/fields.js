@@ -5,7 +5,8 @@ const nanoid = require('nanoid');
 const multer  = require('multer');
 const path = require('path');
 const config = require('../config');
-
+const Sequelize = require("sequelize");
+const Op = Sequelize.Op;
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, config.fieldPath);
@@ -20,6 +21,8 @@ const upload = multer({storage});
 router.get('/', async (req, res) => {
   let query = {disabled: false};
   let fieldOffset = 0;
+  let search = {};
+  ;
   try {
     if(req.query.offset) fieldOffset = parseInt(req.query.offset);
     if(req.query.cover) {
@@ -30,10 +33,13 @@ router.get('/', async (req, res) => {
       if (req.query.shower === 'false') shower = false;
       query = {...query, shower}
     }
+    if (req.query.search) {
+      search = {name: {[Op.like]: `%${req.query.search}%` }}
+    }
     if(req.query.type) {
       query = {...query, typeId: req.query.type}
     }
-      const fields = await Field.findAll({where: query, include: [Cover, Type], limit: 10, offset: fieldOffset});
+      const fields = await Field.findAll({where: search, query, include: [Cover, Type], limit: 10, offset: fieldOffset});
       const formatedFields = fields.map(field => {
         field.timetable = JSON.parse(field.timetable);
         field.formats = JSON.parse(field.formats);
