@@ -3,9 +3,11 @@ import React, { Component, Fragment } from 'react';
 import {connect} from "react-redux";
 import {getFields, getLoadedFields} from "../store/actions/fieldsAction";
 import LoadingWrapper from "../components/UI/LoadingWrapper";
-import {Carousel} from "antd";
+import {Carousel, Input} from "antd";
 import config from "../config";
 import {Link} from "react-router-dom";
+
+const {Search} = Input;
 
 class Fields extends Component {
     state = {
@@ -38,6 +40,11 @@ class Fields extends Component {
                     <div className='col-3 d-flex align-items-center justify-content-end'>
                         <button className='icon--search toolbar__header__btn--close'/>
                         <button className='icon--map-o toolbar__header__btn--close'/>
+                        <Search
+                          placeholder="input search text"
+                          onSearch={value => console.log(value)}
+                          style={{ width: 200 }}
+                        />
                     </div>
                 </header>
                 <LoadingWrapper loading={this.state.loading}>
