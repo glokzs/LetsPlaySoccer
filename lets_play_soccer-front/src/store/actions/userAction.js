@@ -53,7 +53,7 @@ export const loginUser = userData => {
                 if (error.response && error.response.data) {
                     dispatch(loginUserError(error.response.data));
                 } else {
-                    dispatch(loginUserError({global: "No internet connection"}));
+                    dispatch(loginUserError({global: "Что-то пошло не так"}));
                 }
             }
         );

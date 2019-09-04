@@ -5,6 +5,7 @@ import {clearUserErrors, loginUser, registerUser} from '../store/actions/userAct
 import FormElement from '../components/UI/FormElement';
 import MobileInput from "../components/UI/MobileInput";
 import Spinner from "../components/UI/Spinner";
+import {Redirect} from "react-router";
 
 class Register extends Component {
     state = {
@@ -87,15 +88,21 @@ class Register extends Component {
             );
         }
         return (
-            <div>
-                {form}
-            </div>
+          (this.props.user ?
+              <Redirect to={{ pathname: '/', state: { from: this.props.location } }} />
+              :
+              <div>
+                  {form}
+              </div>
+          )
+
         );
     };
 }
 
 const mapStateToProps = state => {
     return {
+        user: state.users.user,
         registerError: state.users.registerError
     };
 };

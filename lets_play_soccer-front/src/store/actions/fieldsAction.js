@@ -14,7 +14,6 @@ export const getLoadedFields = (offset) => {
         axios.get("fields?offset=" + offset).then(response => {
             dispatch(getFieldsSuccess(response.data));
             if(response.data.length < 10) {
-                console.log("sdasdasdasd");
                 dispatch({type: IS_FIELD_LIST_EMPTY});
             }
         },error => {
