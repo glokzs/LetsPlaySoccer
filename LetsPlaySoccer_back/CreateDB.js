@@ -1,10 +1,18 @@
 const mysql = require('mysql2');
-// const password = require('./mysqlpass');
+// create locally file, name it 'mysqlpass.js'
+// write following in it:
+//-----------------------------------------------
+//module.exports = {
+//     _user: 'your_sql_user',
+//     _password: 'your_sql_password'
+// };
+//------------------------------------------------
+const {_user, _password} = require('./mysqlpass');
 
 const connection = mysql.createConnection({
     host: "localhost",
-    user: "soccer",
-    password: '1qaz@WSX29',
+    user: _user,
+    password: _password,
     multipleStatements: true
 });
 

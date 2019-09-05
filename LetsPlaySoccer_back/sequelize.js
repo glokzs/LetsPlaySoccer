@@ -6,8 +6,19 @@ const CoverModel = require("./models/Cover");
 const TypeModel = require("./models/Type");
 const MatchModel = require("./models/Match");
 const UserMatchModel = require('./models/UserMatch');
+const {_user, _password} = require('./mysqlpass');
 
-const sequelize = new Sequelize("LetsPlaySoccer", 'root', '1qaz@WSX29', {
+// create locally file, name it 'mysqlpass.js'
+// write following in it:
+//-----------------------------------------------
+//module.exports = {
+//     _user: 'your_sql_user',
+//     _password: 'your_sql_password'
+// };
+//------------------------------------------------
+
+
+const sequelize = new Sequelize("LetsPlaySoccer", _user, _password, {
 
     host: 'localhost',
     dialect: 'mysql',
