@@ -7,7 +7,7 @@ const TypeModel = require("./models/Type");
 const MatchModel = require("./models/Match");
 const UserMatchModel = require('./models/UserMatch');
 
-const sequelize = new Sequelize("LetsPlaySoccer", 'soccer', '1qaz@WSX29', {
+const sequelize = new Sequelize("LetsPlaySoccer", 'root', '1qaz@WSX29', {
 
     host: 'localhost',
     dialect: 'mysql',
@@ -34,8 +34,8 @@ const UserMatch = UserMatchModel(sequelize, Sequelize);
 
 User.belongsToMany(Match, {through: UserMatch});
 Match.belongsToMany(User, {through: UserMatch});
-Match.belongsTo(Field);
 
+Match.belongsTo(Field);
 Field.belongsTo(Type);
 Field.belongsTo(Cover);
 
@@ -46,5 +46,6 @@ module.exports = {
     Format,
     Cover,
     Type,
-    Match
+    Match,
+    UserMatch
 };

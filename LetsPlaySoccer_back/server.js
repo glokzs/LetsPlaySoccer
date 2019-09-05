@@ -6,6 +6,8 @@ const fields = require('./app/fields');
 const covers = require('./app/covers');
 const types = require("./app/types");
 const formats = require("./app/formats");
+const matches = require("./app/matches");
+
 const cors = require('cors');
 
 const PORT = 8000;
@@ -25,6 +27,8 @@ app.use('/fields', fields);
 app.use('/covers', covers);
 app.use('/types', types);
 app.use('/formats', formats);
+app.use('/matches', matches);
+
 app.use(express.json());
 
 

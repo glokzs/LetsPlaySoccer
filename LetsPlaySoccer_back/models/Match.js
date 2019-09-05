@@ -1,5 +1,5 @@
 module.exports = (sequelize, type) => {
-    const Match = sequelize.define(
+    return sequelize.define(
         'match',
         {
             id: {
@@ -16,10 +16,9 @@ module.exports = (sequelize, type) => {
                 allowNull: false
             },
             status: {
-                type: type.STRING
-            },
-            organizer: {
-                type: type.TEXT
+                type: type.STRING,
+                allowNull: false,
+                defaultValue: 'В ожидании' // values: В ожидании, Игра началась, Игра Завершена | changes in backend
             },
             playersInTeam: {
                 type: type.INTEGER
@@ -31,7 +30,12 @@ module.exports = (sequelize, type) => {
                 type: type.INTEGER
             },
             private: {
-                type: type.BOOLEAN
+                type: type.BOOLEAN,
+                defaultValue: false
+            },
+            organizer: {
+                type: type.INTEGER,
+                allowNull: false
             }
         },
         {
@@ -42,5 +46,4 @@ module.exports = (sequelize, type) => {
             collate: 'utf8_unicode_ci'
         }
     );
-    return Match;
 };

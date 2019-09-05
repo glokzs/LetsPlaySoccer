@@ -1,19 +1,22 @@
 module.exports = (sequelize, type) => {
-  const UserMatch = sequelize.define(
+    return sequelize.define(
     'user_match',
-    {
-      id: {
-        type: type.INTEGER,
-        primaryKey: true,
-        autoIncrement: true
-      },
-      confirmed: {
-        type: type.BOOLEAN,
-      }
-    },
-    {
-      timestamps: false
-    }
-  );
-  return UserMatch;
+        {
+            id: {
+                type: type.INTEGER,
+                primaryKey: true,
+                autoIncrement: true
+            },
+            confirmed: {
+                type: type.BOOLEAN,
+            },
+            organizer: {
+                type: type.BOOLEAN,
+                defaultValue: false
+            }
+        },
+        {
+            timestamps: false
+        }
+    );
 };
