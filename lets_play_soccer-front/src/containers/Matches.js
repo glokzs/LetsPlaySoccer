@@ -1,31 +1,37 @@
 import React, {Component, Fragment} from 'react';
 import {connect} from "react-redux";
 import Spinner from "../components/UI/Spinner";
-import {myMatches, matches} from '../mockup';
+import {myMatches} from '../mockup';
 import photo from '../assets/content_images/Mask.png';
+import {getMatches, getMyMatches} from "../store/actions/matchAction";
 
 
 class Matches extends Component {
     state = {
-        loading: false
+        loading: false,
     };
 
+    componentDidMount() {
+        this.props.getMatches();
+    }
+
     calculateEndTime = (startTime, hours) => {
-        const startTimeHours = startTime.toString().split(':')[0];
-        const startTimeMinutes = startTime.toString().split(':')[1];
-        const endTimeHours = parseInt(hours);
-        const endTimeMinutes = hours % 10;
+        // const startTimeHours = startTime.toString().split(':')[0];
+        // const startTimeMinutes = startTime.toString().split(':')[1];
+        // const endTimeHours = parseInt(hours);
+        // const endTimeMinutes = hours % 10;
+        //
+        // const newTime = new Date();
 
-        const newTime = new Date();
-
-        console.log(startTime, hours, startTimeHours, startTimeMinutes, endTimeHours, endTimeMinutes, newTime);
+        // console.log(startTime, hours, startTimeHours, startTimeMinutes, endTimeHours, endTimeMinutes, newTime);
         return 'dsdsd';
     };
 
     render() {
-
+        console.log(this.props.matches);
         return (
             <div className='matches'>
+
                 {this.state.loading?
                     <Spinner />
                 :(
@@ -74,13 +80,15 @@ class Matches extends Component {
 
 const mapStateToProps = state => {
     return {
+        matches: state.matches.matches,
+        myMatches: state.matches.myMatches
     };
 };
 const mapDispatchToProps = dispatch => {
     return {
+        getMatches: () => dispatch(getMatches()),
+        getMyMatches: () => dispatch(getMyMatches())
     };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Matches);
-
-//тикет для middleware auth, role
