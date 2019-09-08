@@ -16,17 +16,21 @@ const getMatchesError = (error) => {
 };
 
 
-export const getMatches = () => {
+export const getMatches = (cb) => {
+    console.log(cb);
     return dispatch => {
-        axios.get("/matches").then(response => {
-            dispatch(getMatchesSuccess(response.data));
-        },error => {
-            if (error.response && error.response.data) {
-                dispatch(getMatchesError(error.response.data));
-            } else {
-                dispatch(getMatchesError({global: "No internet connection"}));
-            }
-        })
+        axios.get("/matches")
+            .then(response => {
+                dispatch(getMatchesSuccess(response.data));
+                cb();
+            }, error => {
+                if (error.response && error.response.data) {
+                    dispatch(getMatchesError(error.response.data));
+                } else {
+                    dispatch(getMatchesError({global: "No internet connection"}));
+                }
+                cb();
+            })
     };
 };
 export const getMyMatches = () => {

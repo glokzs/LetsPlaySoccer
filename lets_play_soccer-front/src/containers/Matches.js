@@ -1,30 +1,35 @@
 import React, {Component, Fragment} from 'react';
 import {connect} from "react-redux";
 import Spinner from "../components/UI/Spinner";
-import {myMatches} from '../mockup';
 import photo from '../assets/content_images/Mask.png';
 import {getMatches, getMyMatches} from "../store/actions/matchAction";
+import moment from "moment";
 
 
 class Matches extends Component {
     state = {
-        loading: false,
+        loading: true,
     };
 
     componentDidMount() {
-        this.props.getMatches();
+        this.props.getMatches(
+            () => this.setState({loading: false})
+        );
     }
 
-    calculateEndTime = (startTime, hours) => {
-        // const startTimeHours = startTime.toString().split(':')[0];
-        // const startTimeMinutes = startTime.toString().split(':')[1];
-        // const endTimeHours = parseInt(hours);
-        // const endTimeMinutes = hours % 10;
-        //
-        // const newTime = new Date();
+    getConfirmedUsersNumber = users => {
+        return users.reduce((acc, count) => {
+            return acc + !!count.user_match.confirmed;
+        }, 0);
+    };
 
-        // console.log(startTime, hours, startTimeHours, startTimeMinutes, endTimeHours, endTimeMinutes, newTime);
-        return 'dsdsd';
+    getHours = hours => moment(hours).format('HH:mm');
+    getDate = datetime => moment(datetime).format('DD MMMM');
+    getDayOfTheWeek = datetime => moment(datetime).format('dddd');
+    getTimeDiff = (startTime, endTime) => {
+        const hours = moment(endTime).diff(startTime, 'hours');
+        const minutes = moment.utc(moment(endTime, "HH:mm").diff(moment(startTime, "HH:mm"))).format("mm");
+        return (hours < 10 ? '0'+ hours : hours) + ':' + minutes;
     };
 
     render() {
@@ -37,32 +42,50 @@ class Matches extends Component {
                 :(
                     <Fragment>
                         {
-                            myMatches.length > 0 ?
+                            this.props.matches.length > 0 ?
                                 (<Fragment>
                                     <h6 className='matches__heading'>Мои матчи</h6>
-                                    {myMatches.map(match => {
+                                    {this.props.matches.map(match => {
                                         return (
                                             <div className='matches__card' key={match.id}>
                                                 <div className='matches__card__head'>
                                                     <img className='matches__avatar' src={photo} alt="avatar"/>
                                                     <div>
-                                                        <div className='matches__text--main'>{match.organizer}</div>
+                                                        <div className='matches__text--main'>match.organizer}</div>
                                                         <span className='matches__text--primary'>Мой матч</span>
                                                     </div>
                                                 </div>
                                                 <div className='matches__card__body'>
                                                     <div className='row'>
                                                         <div className='col-8'>
-                                                            <div className='matches__text--main icon--map-b'>
-                                                                {match.field.name}
+                                                            <div className='icon--map-b'>
+                                                                &nbsp;&nbsp;<span className='matches__text--main'>{match.field.name}</span>
                                                             </div>
-                                                            <div>
-                                                                {match.startTime} - {this.calculateEndTime(match.startTime, match.duration)}
+                                                            <div className='icon--clock'>
+                                                                &nbsp;&nbsp;<span className='matches__text--main'>{this.getHours(match.start)}</span>
+                                                                - {this.getTimeDiff(match.start, match.end)}
+                                                            </div>
+                                                            <div className='icon--calendar-b'>
+                                                                &nbsp;&nbsp;<span className='matches__text--main'>{this.getDate(match.start)}</span>,
+                                                                &nbsp;<span className='day-of-the-week'>{this.getDayOfTheWeek(match.start)}</span>
                                                             </div>
                                                         </div>
-                                                        <div className='col-4'>
-
+                                                        <div className='col-4 text-right'>
+                                                            <span className='matches__format--t-shirt'>
+                                                                {match.playersInTeam}x{match.playersInTeam}&nbsp;<span className='icon--t-shirt'/>
+                                                            </span>
                                                         </div>
+                                                    </div>
+                                                    <div>
+                                                        <div className="col-8 d-flex">
+                                                            <div className='position-relative'>
+                                                                {match.users[0]? <img src={photo} alt="avatar" className='matches__users'/> : null}
+                                                                {match.users[1]? <img src={photo} alt="avatar" className='matches__users'/> : null}
+                                                                {match.users[2]? <img src={photo} alt="avatar" className='matches__users'/> : null}
+                                                            </div>
+                                                            <div>{this.getConfirmedUsersNumber(match.users)}</div>
+                                                        </div>
+                                                        <div className="col-4"></div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -86,7 +109,7 @@ const mapStateToProps = state => {
 };
 const mapDispatchToProps = dispatch => {
     return {
-        getMatches: () => dispatch(getMatches()),
+        getMatches: (cb) => dispatch(getMatches(cb)),
         getMyMatches: () => dispatch(getMyMatches())
     };
 };

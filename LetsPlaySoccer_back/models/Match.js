@@ -34,6 +34,10 @@ module.exports = (sequelize, type) => {
                 defaultValue: false
             },
             organizer: {
+                type: type.STRING,
+                allowNull: false
+            },
+            organizerId: {
                 type: type.INTEGER,
                 allowNull: false
             }
