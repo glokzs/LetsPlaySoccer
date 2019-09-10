@@ -10,18 +10,66 @@ const mysql = require('mysql2');
 const {_user, _password} = require('./mysqlpass');
 
 const connection = mysql.createConnection({
-    host: "localhost",
-    user: _user,
-    password: _password,
-    multipleStatements: true
+  host: "localhost",
+  user: _user,
+  password: _password,
+  multipleStatements: true
 });
 
 const query =
-    `
+  `
 	CREATE DATABASE IF NOT EXISTS LetsPlaySoccer;
 	
 	use LetsPlaySoccer;
 	
+	INSERT INTO users (
+    password,
+    phoneNumber,
+    displayName,
+    email,
+    avatar,
+    role
+  ) VALUES (
+    '12',
+    '+77779996633',
+    'John Doe',
+    'asda@sdf.sf',
+    'sdfds.jpg',
+    'user'
+  );
+	
+	INSERT INTO users (
+    password,
+    phoneNumber,
+    displayName,
+    email,
+    avatar,
+    role
+  ) VALUES (
+    '12',
+    '+77007894512',
+    'Harry Potter',
+    'asda@sdf.sf',
+    'qwer.jpg',
+    'user'
+  );
+  
+  INSERT INTO users (
+    password,
+    phoneNumber,
+    displayName,
+    email,
+    avatar,
+    role
+  ) VALUES (
+    '12',
+    '+77011234578',
+    'Billy Clang',
+    'asdddddddd@sdf.sf',
+    'qwer3.jpg',
+    'user'
+  );
+  
 	INSERT INTO covers (name) VALUES ('Трава');
 	INSERT INTO covers (name) VALUES ('Каучуковое');
 	INSERT INTO covers (name) VALUES ('Исскуственная трава');
@@ -35,21 +83,21 @@ const query =
 	INSERT INTO formats (name) VALUES ('9x9');
 
     INSERT INTO fields (
-        name, 
-        description, 
-        address, 
-        latitude, 
-        longitude, 
-        phoneNumber, 
-        email, 
-        timetable, 
-        webSite, 
+        name,
+        description,
+        address,
+        latitude,
+        longitude,
+        phoneNumber,
+        email,
+        timetable,
+        webSite,
         formats,
         images,
         minPrice,
         typeId,
         coverId
-    ) 
+    )
     VALUES (
         'Жарыс Арена',
         'Жарыс Арена — это воздухоопорный комплекс, открывшийся в сентябре 2017 года, с двумя полями для мини-футбола, которые при желании можно объединить в одно. На полях уложен искусственный газон. Комплекс работает круглосуточно.',
@@ -177,21 +225,21 @@ const query =
         2
     );
     INSERT INTO fields (
-        name, 
-        description, 
-        address, 
-        latitude, 
-        longitude, 
-        phoneNumber, 
-        email, 
-        timetable, 
-        webSite, 
-        formats, 
+        name,
+        description,
+        address,
+        latitude,
+        longitude,
+        phoneNumber,
+        email,
+        timetable,
+        webSite,
+        formats,
         images,
         minPrice,
         typeId,
         coverId
-    ) 
+    )
     VALUES (
         'Тестовое поле',
         'Жарыс Арена — это воздухоопорный комплекс, открывшийся в сентябре 2017 года, с двумя полями для мини-футбола, которые при желании можно объединить в одно. На полях уложен искусственный газон. Комплекс работает круглосуточно.',
@@ -319,21 +367,21 @@ const query =
         1
     );
     INSERT INTO fields (
-        name, 
-        description, 
-        address, 
-        latitude, 
-        longitude, 
-        phoneNumber, 
-        email, 
-        timetable, 
-        webSite, 
-        formats, 
+        name,
+        description,
+        address,
+        latitude,
+        longitude,
+        phoneNumber,
+        email,
+        timetable,
+        webSite,
+        formats,
         images,
         minPrice,
         typeId,
         coverId
-    ) 
+    )
     VALUES (
         'Hello Арена Huge',
         'Hello Арена Huge — это воздухоопорный комплекс, открывшийся в сентябре 2017 года, с двумя полями для мини-футбола, которые при желании можно объединить в одно. На полях уложен искусственный газон. Комплекс работает круглосуточно.',
@@ -451,7 +499,7 @@ const query =
                         "price":7000
                     }
                 ],
-            "sunday": 
+            "sunday":
                 [
                     {
                         "from":"9:00",
@@ -476,10 +524,10 @@ const query =
 `;
 
 connection.connect(function(err) {
+  if (err) throw err;
+  console.log("Connected!");
+  connection.query(query, function (err, result) {
     if (err) throw err;
-    console.log("Connected!");
-    connection.query(query, function (err, result) {
-        if (err) throw err;
-        console.log("Result: " , result);
-    });
+    console.log("Result: " , result);
+  });
 });
