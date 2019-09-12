@@ -3,7 +3,10 @@ import {
     LOGIN_USER_SUCCESS,
     LOGIN_USER_ERROR,
     LOGOUT_USER,
-    REGISTER_USER_ERROR, CLEAR_USER_ERRORS
+    REGISTER_USER_ERROR, 
+    CLEAR_USER_ERRORS,
+    UPDATE_USER_SUCCESS,
+    UPDATE_USER_ERROR
 } from './action-type';
 import axios from "../../axios-api";
 import {push} from "connected-react-router";
@@ -78,4 +81,29 @@ export const clearUserErrors = () => {
     return (dispatch) => {
         dispatch({type: CLEAR_USER_ERRORS});
     }
+};
+
+
+const updateUserError = (error) => {
+    return {type: UPDATE_USER_ERROR, error};
+};
+const updateUserSuccess = (user) => {
+    return {type: UPDATE_USER_SUCCESS, user};
+};
+export const updateUser = (updateDataUser) => {
+    console.log(updateDataUser);
+    return dispatch => {
+        return axios.post('/users', updateDataUser).then(
+            response => {
+                dispatch(updateUserSuccess(response.data));
+            },
+            error => {
+                if (error.response && error.response.data) {
+                    dispatch(updateUserError(error.response.data));
+                } else {
+                    dispatch(updateUserError({global: "Что-то пошло не так"}));
+                };
+            }
+        );
+    };
 };
