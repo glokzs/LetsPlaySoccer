@@ -16,10 +16,9 @@ const getMatchesError = (error) => {
 };
 
 
-export const getMatches = (cb) => {
-    console.log(cb);
+export const getMatches = (id, cb) => {
     return dispatch => {
-        axios.get("/matches")
+        axios.get("/matches", {params: {organizerId: id}})
             .then(response => {
                 dispatch(getMatchesSuccess(response.data));
                 cb();
@@ -33,14 +32,16 @@ export const getMatches = (cb) => {
             })
     };
 };
-export const getMyMatches = () => {
+export const getMyMatches = (id) => {
     return dispatch => {
-        axios.get("/matches/mine").then(response => {
-            const data = response.data;
-            dispatch({type: GET_MY_MATCHES_SUCCESS, data});
-        },error => {
-            dispatch({type: GET_MY_MATCHES_ERROR, error})
-        })
+        axios.get("/matches", {params: {organizerId: id, mine: true}})
+            .then(response => {
+                const data = response.data;
+                console.log(data);
+                dispatch({type: GET_MY_MATCHES_SUCCESS, data});
+            }, error => {
+                dispatch({type: GET_MY_MATCHES_ERROR, error})
+            })
     };
 };
 export const postMatch = (data) => {

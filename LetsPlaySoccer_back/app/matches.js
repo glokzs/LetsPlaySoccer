@@ -1,3 +1,5 @@
+const sequelize = require('sequelize');
+
 const fs = require('fs');
 const express = require('express');
 const router = express.Router();
@@ -5,8 +7,10 @@ const {Match, User, Field, UserMatch} = require('../sequelize');
 
 router.get('/', async (req, res) => {
     let query = {};
-    if(req.query.organizerId) {
+     if(req.query.organizerId && req.query.mine) {
         query = {organizerId: req.query.organizerId};
+    } else if(req.query.organizerId && !req.query.mine) {
+        query = {organizerId: {[sequelize.Op.not]: req.query.organizerId}};
     }
     const matches = await Match.findAll({
         where : query,
@@ -42,6 +46,7 @@ router.get('/', async (req, res) => {
     res.send(matches);
 });
 
+
 router.get('/:id', async (req, res) => {
     const match = await Match.findOne({
         where: {id: req.params.id}
@@ -57,8 +62,7 @@ router.post('/', async (req, res) => {
             attributes: {
                 exclude: ['password', 'role', 'id', 'token']
             }
-        })
-        .then(data => JSON.stringify(data));
+        });
     const match = {
         start: req.body.start,
         end: req.body.end,
