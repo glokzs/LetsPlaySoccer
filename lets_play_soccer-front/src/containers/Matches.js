@@ -31,6 +31,25 @@ class Matches extends Component {
         const minutes = moment.utc(moment(endTime, "HH:mm").diff(moment(startTime, "HH:mm"))).format("mm");
         return (hours < 10 ? '0'+ hours : hours) + ':' + minutes;
     };
+    getPlayerWord = number => {
+      switch (number) {
+          case 1:
+              return 'игрок';
+          case 2:
+          case 3:
+          case 4:
+              return 'игрока';
+          default:
+              return 'игроков';
+
+      }
+    };
+
+    getPricePerPerson = (priceTotal, format, team) => {
+        const price = Math.round(priceTotal / (format * team));
+        if (price === Infinity) return 0;
+        return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ') || 0;
+    };
 
     render() {
         console.log(this.props.matches);
@@ -76,16 +95,22 @@ class Matches extends Component {
                                                             </span>
                                                         </div>
                                                     </div>
-                                                    <div>
-                                                        <div className="col-8 d-flex">
+                                                    <div className='d-flex mt-3'>
+                                                        <div className="col-8 d-flex align-items-center">
                                                             <div className='position-relative'>
                                                                 {match.users[0]? <img src={photo} alt="avatar" className='matches__users'/> : null}
                                                                 {match.users[1]? <img src={photo} alt="avatar" className='matches__users'/> : null}
                                                                 {match.users[2]? <img src={photo} alt="avatar" className='matches__users'/> : null}
                                                             </div>
-                                                            <div>{this.getConfirmedUsersNumber(match.users)}</div>
+                                                            <div className='matches__text--number'>
+                                                                <b>{this.getConfirmedUsersNumber(match.users)}&nbsp;</b>
+                                                                {this.getPlayerWord(this.getConfirmedUsersNumber(match.users))}&nbsp;из&nbsp;
+                                                                {match.playersInTeam * match.numOfTeams}
+                                                            </div>
                                                         </div>
-                                                        <div className="col-4"></div>
+                                                        <div className="col-4 text-right font-weight-bold">{this.getPricePerPerson(
+                                                            match.price, match.playersInTeam, match.numOfTeams
+                                                        )}&nbsp;₸</div>
                                                     </div>
                                                 </div>
                                             </div>

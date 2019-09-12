@@ -49,6 +49,11 @@
       font-size: 10px;
       font-weight: normal;
     }
+    &--number {
+      color: #404B69;
+      font-size: 12px;
+      text-transform: uppercase;
+    }
   }
   &__avatar {
     display: block;
