@@ -12,7 +12,8 @@ const {Search} = Input;
 class Fields extends Component {
     state = {
         loading: true,
-        offset: 0
+        offset: 0,
+        searchMode: false
     };
     loadWithOffset = () => {
       let state = {...this.state};
@@ -28,6 +29,17 @@ class Fields extends Component {
         this.props.getFields(this.setLoadingFalse);
     }
 
+    activeSearchMode = () => {
+        this.setState({searchMode: true});
+    };
+    deactiveSearchMode = (e) => {
+        if(e.target.className === "search-block") {
+            this.setState({searchMode: false});
+        };
+    };
+    searchStart = (e) => {
+        this.setState({searchMode: false});
+    };
 
     render() {
         return (
@@ -38,17 +50,30 @@ class Fields extends Component {
                     </div>
                     <div className='col-6 toolbar__header__title'>Площадки</div>
                     <div className='col-3 d-flex align-items-center justify-content-end'>
-                        <button className='icon--search toolbar__header__btn--close'/>
+                        <button onClick={this.activeSearchMode} className='icon--search toolbar__header__btn--close search-mobile'/>
                         <button className='icon--map-o toolbar__header__btn--close'/>
                         <Search
+                          className="search-desktop"
                           placeholder="input search text"
                           onSearch={value => console.log(value)}
                           style={{ width: 200 }}
                         />
                     </div>
                 </header>
+                {
+                    this.state.searchMode ? 
+                    <div className="search-block" onClick={this.deactiveSearchMode}> {/*при добавлении нового класса добавьте его и в функцию deactiveSearchMode*/}
+                        <Search
+                            className="search-input"
+                            placeholder="Поиск..."
+                            onSearch={value => console.log(value)}
+                            onSearch={this.searchStart}
+                        />
+                    </div>
+                    : null
+                }
                 <LoadingWrapper loading={this.state.loading}>
-                    <Fragment>
+                    <div className="text-center padding-top">
                         {this.props.fields.length?
                             this.props.fields.map((field, inx) => {
                                 return (
@@ -91,8 +116,8 @@ class Fields extends Component {
                             :
                             <div className='text-center'>Список полей пока пуст</div>
                         }
-                       { !this.props.isEmpty ? <button onClick={this.loadWithOffset} type="button" className="btn btn-primary">See more</button> : null}
-                    </Fragment>
+                       { !this.props.isEmpty ? <button onClick={this.loadWithOffset} type="button" className="btn btn-primary mt-2">See more</button> : null}
+                    </div>
                 </LoadingWrapper>
             </Fragment>
         );
