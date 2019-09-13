@@ -66,7 +66,7 @@ class CreateMatch extends Component {
         }
     };
     getPricePerPerson = () => {
-        const price = Math.round(this.state.price / this.state.format);
+        const price = Math.round(this.state.price / (this.state.format * this.state.team));
         if (price === Infinity) return 0;
         return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ') || 0;
     };

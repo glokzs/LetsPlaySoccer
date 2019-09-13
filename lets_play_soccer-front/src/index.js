@@ -13,6 +13,7 @@ import 'react-notifications/lib/notifications.css';
 import 'antd/dist/antd.css';
 import './assets/stylesheet/app.scss';
 import fieldsReducer from "./store/reducers/fieldsReducer";
+import matchReducer from "./store/reducers/matchReducer";
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -21,6 +22,7 @@ const history = createBrowserHistory();
 const rootReducer = combineReducers({
   fields: fieldsReducer,
   users: userReducer,
+  matches : matchReducer,
   router: connectRouter(history)
 });
 

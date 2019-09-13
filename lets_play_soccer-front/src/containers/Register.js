@@ -5,6 +5,7 @@ import {clearUserErrors, loginUser, registerUser} from '../store/actions/userAct
 import FormElement from '../components/UI/FormElement';
 import MobileInput from "../components/UI/MobileInput";
 import Spinner from "../components/UI/Spinner";
+import {Redirect} from "react-router";
 
 class Register extends Component {
     state = {
@@ -24,17 +25,12 @@ class Register extends Component {
         this.props.clearUserErrors();
     };
 
-    fileChangeHandler = e => {
-        this.setState({avatar: e.target.files[0]})
-    };
-
     submitFormHandler = (e) => {
         e.preventDefault();
         const formData = new FormData();
         formData.append('phoneNumber', '+7'+this.state.phone);
         formData.append('password', this.state.password);
         formData.append('displayName', this.state.displayName);
-        formData.append('avatar', this.state.avatar);
         this.props.registration(formData);
     };
 
@@ -70,14 +66,6 @@ class Register extends Component {
                                 name="password"
                                 value={this.state.password}
                             />
-                            {/*<FormElement*/}
-                            {/*    title="Image"*/}
-                            {/*    type="file"*/}
-                            {/*    name="avatar"*/}
-                            {/*    placeholder="Enter image"*/}
-                            {/*    value={this.state.avatar}*/}
-                            {/*    onChange={this.fileChangeHandler}*/}
-                            {/*/>*/}
                             <div>
                                 <Button type="submit" variant="primary" size="lg" block>Зарегистрироваться</Button>
                             </div>
@@ -87,15 +75,21 @@ class Register extends Component {
             );
         }
         return (
-            <div>
-                {form}
-            </div>
+          (this.props.user ?
+              <Redirect to={{ pathname: '/', state: { from: this.props.location } }} />
+              :
+              <div>
+                  {form}
+              </div>
+          )
+
         );
     };
 }
 
 const mapStateToProps = state => {
     return {
+        user: state.users.user,
         registerError: state.users.registerError
     };
 };

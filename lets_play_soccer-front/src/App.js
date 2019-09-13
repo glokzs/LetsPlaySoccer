@@ -5,6 +5,8 @@ import Login from "./containers/Login";
 import Tutorial from "./containers/Tutorial";
 import MainPrivate from "./containers/MainPrivate";
 import FontIcons from './containers/OnlyForDevelopment/FontIcons';
+import Profile from './containers/Profile';
+import Fields from './containers/Fields';
 
 
 class App extends Component {
@@ -16,7 +18,8 @@ class App extends Component {
                 <Route exact path="/login" component={Login}/>
                 <Route exact path="/tutorial" component={Tutorial}/>
                 <Route exact path="/only_for_dev/icons" component={FontIcons}/>
-                <Route path="/" component={MainPrivate} />
+                <Route exact path="/profile" component={Profile}/>
+                <Route path="/" component={Fields} />
 
             </Switch>
         );

@@ -5,7 +5,7 @@ import {withRouter} from "react-router-dom";
 import {connect} from 'react-redux';
 // import { Upload } from 'antd';
 import { Upload, Icon, message, Input } from 'antd';
-import MobileInput from '../components/UI/MobileInput';
+// import MobileInput from '../components/UI/MobileInput';
 
 class Profile extends Component {
     state = {
@@ -51,10 +51,10 @@ class Profile extends Component {
         };
     };
 
-    updatePhoneInput = phone => {
-        this.setState({phone});
-        this.props.clearUserErrors();
-    };
+    // updatePhoneInput = phone => {
+    //     this.setState({phone});
+    //     this.props.clearUserErrors();
+    // };
 
     updateInput = e => {
         e.preventDefault();
@@ -84,8 +84,7 @@ class Profile extends Component {
             </div>
         );
         const { imageUrl } = this.state.image ? this.state.image : this.state;
-        console.log(this.props);
-        
+        console.log(this.state);
         return(
             <>
                 <div className="profile-container" >
@@ -127,9 +126,7 @@ class Profile extends Component {
                         <div className="profile-main-contacktDetails" >
                             <div className="profile-main-contacktDetails-title" >Контактные данные</div>
                             <div className="profile-main-contacktDetails-phoneTitle" >Номер телефона</div>
-                            {
-                                this.state.edit ? <MobileInput value={this.state.phone} onChange={this.updatePhoneInput} name="phone" /> : <div>8 {this.state.phone}</div>
-                            }
+                            <div>8 {this.state.phone}</div>
                             <div className="profile-main-contacktDetails-mailTitle" >Адрес почты</div>
                             {
                                 this.state.edit ? <Input onChange={this.updateInput} className="input" name="email" type="email" /> : <div>{this.state.email}</div> 

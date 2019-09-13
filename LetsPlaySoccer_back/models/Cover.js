@@ -1,19 +1,32 @@
 module.exports = (sequelize, type) => {
-    const Cover = sequelize.define(
-        'cover',
-        {
-            id: {
-                type: type.INTEGER,
-                primaryKey: true,
-                autoIncrement: true
-            },
-            name: {
-                type: type.STRING,
-            }
+  const Cover = sequelize.define(
+    'cover',
+    {
+      id: {
+        type: type.INTEGER,
+        primaryKey: true,
+        autoIncrement: true
+      },
+      name: {
+        type: type.STRING,
+        allowNull: false,
+        unique: {
+          msg: "Такое покрытие уже сущесвует"
         },
-        {
-            timestamps: false
+        validate: {
+          notNull: {
+            msg: "Введите покрытие"
+          },
+          isIn: {
+            args: [["Трава", "Каучуковое", "Исскуственная трава", "Резиновое"]],
+            msg: "Такого поля не сущесвует"
+          }
         }
-    );
-    return Cover;
+      }
+    },
+    {
+      timestamps: false
+    }
+  );
+  return Cover;
 };

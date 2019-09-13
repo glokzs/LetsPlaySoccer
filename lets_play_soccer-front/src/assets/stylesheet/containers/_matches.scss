@@ -1,0 +1,78 @@
+.matches {
+  &__heading {
+    font-size: 10px;
+    color: $secondary;
+    margin-top: 20px;
+  }
+  &__card {
+    background: white;
+    box-shadow: 0 2px 4px rgba(2, 4, 51, 0.08);
+    border-radius: 5px;
+    margin-bottom: 15px;
+    &__head {
+      display: flex;
+      align-items: center;
+      padding: 10px;
+      border-bottom: 1px solid $light-grey;
+    }
+    &__body {
+      padding: 10px;
+    }
+  }
+  &__users {
+    display: inline-block;
+    width: 27px;
+    height: 27px;
+    border-radius: 50%;
+    border: 3px solid white;
+    position: relative;
+    &:first-child {
+      left: -20px;
+      z-index: 2;
+    }
+    &:nth-child(2) {
+      left: -34px;
+      z-index: 1;
+    }
+    &:nth-child(3) {
+      left: -48px;
+    }
+  }
+  &__text {
+    &--main {
+      color: $grey;
+      font-size: 14px;
+      font-weight: bold;
+    }
+    &--primary {
+      color: $primary;
+      font-size: 10px;
+      font-weight: normal;
+    }
+  }
+  &__avatar {
+    display: block;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+  &__format--t-shirt {
+    padding: 3px;
+    background: $primary;
+    color: white;
+    border-radius: 2px;
+  }
+  .icon--clock,
+  .icon--calendar-b,
+  .icon--map-b {
+    &::before {
+      font-size: 14px;
+      color: $secondary;
+    }
+  }
+}
+
+.day-of-the-week {
+  text-transform: capitalize;
+}

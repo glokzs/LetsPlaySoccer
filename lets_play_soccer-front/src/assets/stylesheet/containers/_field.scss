@@ -173,3 +173,35 @@
     transform: rotate(180deg);
   }
 }
+.padding-top {
+  padding: 60px;
+}
+.search-desktop {
+  display: none;
+}
+.search-input {
+  width: 65%;
+  padding: 4px;
+  border-radius: 4px;
+  margin-top: 20px;
+}
+.search-block {
+  position: absolute;
+  box-sizing: border-box;
+  padding: 20px 10px;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 10;
+  text-align: center;
+  background: rgba(20, 20, 20, 0.8);
+}
+@media (min-width: 705px) {
+  .search-mobile {
+    display: none;
+  }
+  .search-desktop {
+    display: inline-block;
+  }
+}

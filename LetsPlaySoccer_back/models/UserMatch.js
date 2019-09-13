@@ -1,6 +1,6 @@
 module.exports = (sequelize, type) => {
-    const UserMatch = sequelize.define(
-        'user_match',
+    return sequelize.define(
+    'user_match',
         {
             id: {
                 type: type.INTEGER,
@@ -9,11 +9,14 @@ module.exports = (sequelize, type) => {
             },
             confirmed: {
                 type: type.BOOLEAN,
+            },
+            organizer: {
+                type: type.BOOLEAN,
+                defaultValue: false
             }
         },
         {
             timestamps: false
         }
     );
-    return UserMatch;
 };
