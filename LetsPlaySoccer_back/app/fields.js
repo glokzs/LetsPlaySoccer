@@ -21,8 +21,6 @@ const upload = multer({storage});
 router.get('/', async (req, res) => {
   let query = {disabled: false};
   let fieldOffset = 0;
-  let search = {};
-  ;
   try {
     if(req.query.offset) fieldOffset = parseInt(req.query.offset);
     if(req.query.cover) {
@@ -46,14 +44,7 @@ router.get('/', async (req, res) => {
         limit: 10,
         offset: fieldOffset,
       });
-      const formatedFields = fields.map(field => {
-        field.timetable = JSON.parse(field.timetable);
-        field.formats = JSON.parse(field.formats);
-        field.images = JSON.parse(field.images);
-        field.phoneNumber = JSON.parse(field.phoneNumber);
-        return field;
-      });
-      res.send(formatedFields);
+      res.send(fields);
   }catch (error) {
     res.status(500).send({message: "Что-то пошло не так"});
   }
@@ -65,10 +56,6 @@ router.get('/:id', async (req, res) => {
     .then(data => {
       if(data) {
         const field = data.dataValues;
-        field.timetable = JSON.parse(field.timetable);
-        field.formats = JSON.parse(field.formats);
-        field.images = JSON.parse(field.images);
-        field.phoneNumber = JSON.parse(field.phoneNumber);
         res.send(field);
       } else {
         res.status(404).send({message: "Некорректный запрос"});
@@ -76,10 +63,7 @@ router.get('/:id', async (req, res) => {
     })
 });
 
-router.post('/',upload.array('images'), async (req, res) => {
-  const timetable = JSON.stringify(req.body.timetable);
-  const formats = JSON.stringify(req.body.formats);
-  const phoneNumber = JSON.stringify(req.body.phoneNumber);
+router.post('/', upload.array('images'), async (req, res) => {
 
   const field = {
     name: req.body.name,
@@ -91,19 +75,12 @@ router.post('/',upload.array('images'), async (req, res) => {
     site: req.body.site,
     typeId: req.body.typeId,
     coverId: req.body.coverId,
-    phoneNumber,
-    timetable,
-    formats,
+    phoneNumber: req.body.phoneNumber,
+    timetable: req.body.timetable,
+    formats: req.body.formats,
+    images: req.body.images
   };
 
-  if (req.files) {
-    const dir = [];
-    req.files.map(file => {
-      dir.push(file.filename);
-    });
-
-    field.images = JSON.stringify(dir);
-  }
   Field.create(field)
     .then(data => {res.send(data)}).catch(error => {
       res.status(400).send({message: error.errors[0].message});

@@ -1,7 +1,5 @@
 import React, {Component, Fragment} from 'react';
-import {connect} from "react-redux";
 import photo from '../assets/content_images/Mask.png';
-import {getMatches, getMyMatches} from "../store/actions/matchAction";
 import moment from "moment";
 
 

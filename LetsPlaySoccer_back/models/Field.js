@@ -73,8 +73,14 @@ module.exports = (sequelize, type) => {
         }
       },
       phoneNumber: {
-        type: type.STRING,
-        allowNull: false,
+        type: type.JSON,
+        defaultValue: '{}',
+        get() {
+            return (JSON.parse(this.getDataValue('phoneNumber')))
+        },
+        set(value) {
+            this.setDataValue('phoneNumber', JSON.stringify(value))
+        }
       },
       email: {
         type: type.STRING,
@@ -86,13 +92,27 @@ module.exports = (sequelize, type) => {
         }
       },
       timetable: {
-        type: type.TEXT
+        type: type.JSON,
+        defaultValue: '{}',
+        get() {
+          return (JSON.parse(this.getDataValue('timetable')))
+        },
+        set(value) {
+          this.setDataValue('timetable', JSON.stringify(value))
+        }
       },
       webSite: {
         type: type.STRING
       },
       formats: {
-        type: type.STRING,
+        type: type.JSON,
+        defaultValue: '{}',
+        get() {
+          return (JSON.parse(this.getDataValue('formats')))
+        },
+        set(value) {
+          this.setDataValue('formats', JSON.stringify(value))
+        }
       },
       shower: {
         type: type.BOOLEAN,
@@ -109,7 +129,14 @@ module.exports = (sequelize, type) => {
 
       },
       images: {
-        type: type.TEXT
+        type: type.JSON,
+        defaultValue: '{}',
+        get() {
+          return (JSON.parse(this.getDataValue('images')))
+        },
+        set(value) {
+          this.setDataValue('images', JSON.stringify(value))
+        }
       }
     },
     {
