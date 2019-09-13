@@ -1,6 +1,7 @@
 import React, {Component, Fragment} from 'react';
 import photo from '../assets/content_images/Mask.png';
 import moment from "moment";
+import {Link} from "react-router-dom";
 
 
 class MatchesList extends Component {
@@ -50,7 +51,14 @@ class MatchesList extends Component {
                                 <h6 className='matches__heading'>{this.props.header}</h6>
                                 {this.props.matches.map(match => {
                                     return (
-                                        <div className='matches__card' key={match.id}>
+                                        <Link
+                                            className='matches__card'
+                                            key={match.id}
+                                            to={{
+                                                pathname: `/matches/${match.id}`,
+                                                state: match
+                                            }}
+                                        >
                                             <div className='matches__card__head'>
                                                 <img className='matches__avatar' src={photo} alt="avatar"/>
                                                 <div>
@@ -97,7 +105,7 @@ class MatchesList extends Component {
                                                     )}&nbsp;₸</div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </Link>
                                     );
                                 })}
                             </Fragment>) : null
