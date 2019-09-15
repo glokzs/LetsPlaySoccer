@@ -12,10 +12,18 @@ import {
 
 class MatchesList extends Component {
 
-
+    getUsersAvatars = users => {
+        const confirmedUsers = users.filter(user => user.user_match.confirmed);
+        return (
+            <div className='position-relative'>
+                {confirmedUsers[0]? <img src={photo} alt="avatar" className='matches__users'/> : null}
+                {confirmedUsers[1]? <img src={photo} alt="avatar" className='matches__users'/> : null}
+                {confirmedUsers[2]? <img src={photo} alt="avatar" className='matches__users'/> : null}
+            </div>
+        );
+    };
 
     render() {
-        // console.log(this.props.userId);
         return (
             <div className='matches'>
                 <Fragment>
@@ -40,7 +48,10 @@ class MatchesList extends Component {
                                                 <img className='matches__avatar' src={photo} alt="avatar"/>
                                                 <div>
                                                     <div className='matches__text--main'>{match.organizer.displayName}</div>
-                                                    <span className='matches__text--primary'>Мой матч</span>
+                                                    <span className='matches__text--primary'>
+                                                        {this.props.userId == match.organizerId? 'Мой матч' : null}
+
+                                                    </span>
                                                 </div>
                                             </div>
                                             <div className='matches__card__body'>
@@ -66,11 +77,7 @@ class MatchesList extends Component {
                                                 </div>
                                                 <div className='d-flex mt-3'>
                                                     <div className="col-8 d-flex align-items-center">
-                                                        <div className='position-relative'>
-                                                            {match.users[0]? <img src={photo} alt="avatar" className='matches__users'/> : null}
-                                                            {match.users[1]? <img src={photo} alt="avatar" className='matches__users'/> : null}
-                                                            {match.users[2]? <img src={photo} alt="avatar" className='matches__users'/> : null}
-                                                        </div>
+                                                        {this.getUsersAvatars(match.users)}
                                                         <div className='matches__text--number'>
                                                             <b>{getConfirmedUsersNumber(match.users)}&nbsp;</b>
                                                             {getPlayerWord(getConfirmedUsersNumber(match.users))}&nbsp;из&nbsp;

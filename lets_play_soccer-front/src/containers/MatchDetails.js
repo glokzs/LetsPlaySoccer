@@ -109,18 +109,20 @@ class MatchDetails extends Component {
                                 </div>
                                 <ul>
                                     {match.users.map(user => {
-                                        return (
-                                            <li className='matches__card__head'>
-                                                <img className='matches__avatar' src={photo} alt="avatar"/>
-                                                <div>
-                                                    <div className='matches__text--player'>{match.organizer.displayName}</div>
-                                                    {user.user_match.organizer ?
-                                                        <span className='matches__text--green'>Организатор!</span>
-                                                        : null
-                                                    }
-                                                </div>
-                                            </li>
-                                        );
+                                        if (user.user_match.confirmed) {
+                                            return (
+                                                <li className='matches__card__head'>
+                                                    <img className='matches__avatar' src={photo} alt="avatar"/>
+                                                    <div>
+                                                        <div className='matches__text--player'>{match.organizer.displayName}</div>
+                                                        {user.user_match.organizer ?
+                                                            <span className='matches__text--green'>Организатор!</span>
+                                                            : null
+                                                        }
+                                                    </div>
+                                                </li>
+                                            );
+                                        }
                                     })}
                                 </ul>
                             </div>
