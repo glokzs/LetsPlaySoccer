@@ -13,7 +13,7 @@ import config from "../config";
 import {Carousel} from "antd";
 import photo from "../assets/content_images/Mask.png";
 import {connect} from "react-redux";
-import {becomeMatchMember} from "../store/actions/matchAction";
+import {becomeMatchMember, removeUserFromMatch} from "../store/actions/matchAction";
 
 class MatchDetails extends Component {
     state = {
