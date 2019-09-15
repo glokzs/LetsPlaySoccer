@@ -36,13 +36,7 @@ class MatchesList extends Component {
                                         <Link
                                             className='matches__card'
                                             key={match.id}
-                                            to={{
-                                                pathname: `/matches/${match.id}`,
-                                                state: {
-                                                    match,
-                                                    isThisUserOrganizer: this.props.userId === match.organizerId
-                                                }
-                                            }}
+                                            to={`/matches/${match.id}`}
                                         >
                                             <div className='matches__card__head'>
                                                 <img className='matches__avatar' src={photo} alt="avatar"/>

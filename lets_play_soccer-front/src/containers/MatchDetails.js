@@ -13,7 +13,7 @@ import config from "../config";
 import {Carousel} from "antd";
 import photo from "../assets/content_images/Mask.png";
 import {connect} from "react-redux";
-import {becomeMatchMember, removeUserFromMatch} from "../store/actions/matchAction";
+import {becomeMatchMember, getMatchById, removeUserFromMatch} from "../store/actions/matchAction";
 
 class MatchDetails extends Component {
     state = {
@@ -23,15 +23,24 @@ class MatchDetails extends Component {
         isContactsOpen: false
     };
 
+    componentDidMount() {
+        this.setState({loading: true}, () => {
+            this.props.getMatchById(
+                this.props.match.params.id,
+                () => this.setState({loading: false})
+            );
+        })
+    }
+
     checkThisUser = (users, thisUser) => {
         return users.filter(user => user.phoneNumber === thisUser.phoneNumber);
     };
 
     render() {
-        const match = this.props.location.state.match;
-        const isThisUserOrganizer = this.props.location.state.isThisUserOrganizer;
+        const match = this.props.oneMatch;
+        const isThisUserOrganizer = (match? this.props.oneMatch.organizerId === this.props.user.id : null);
         const thisUserInThisMatch = (match? this.checkThisUser(match.users, this.props.user) : []);
-        // console.log(thisUserInThisMatch);
+
         return (
             <Fragment>
                 <LoadingWrapper loading={this.state.loading}>
@@ -175,12 +184,14 @@ class MatchDetails extends Component {
 const mapStateToProps = state => {
     return {
         user: state.users.user,
+        oneMatch: state.matches.oneMatch,
     };
 };
 const mapDispatchToProps = dispatch => {
     return {
         becomeMatchMember: data => dispatch(becomeMatchMember(data)),
-        removeUserFromMatch: data => dispatch(removeUserFromMatch(data))
+        removeUserFromMatch: data => dispatch(removeUserFromMatch(data)),
+        getMatchById: (id, cb) => dispatch(getMatchById(id, cb))
     };
 };
 

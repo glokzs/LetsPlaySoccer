@@ -4,7 +4,7 @@ import {
     GET_MY_MATCHES_SUCCESS,
     GET_MY_MATCHES_ERROR,
     POST_MATCH_ERROR,
-    POST_MATCH_SUCCESS
+    POST_MATCH_SUCCESS, GET_MATCH_SUCCESS, GET_MATCH_ERROR
 } from "./action-type";
 import axios from "../../axios-api";
 
@@ -15,6 +15,20 @@ const getMatchesError = (error) => {
     return {type: GET_MATCHES_ERROR, error};
 };
 
+export const getMatchById = (id, cb) => {
+    return dispatch => {
+        axios.get("/matches", {params: {id}})
+            .then(response => {
+                const data = response.data[0];
+                dispatch({type: GET_MATCH_SUCCESS, data});
+                console.log(cb);
+                if(cb) cb();
+            }, error => {
+                dispatch({type: GET_MATCH_ERROR, error});
+                if(cb) cb();
+            })
+    };
+};
 
 export const getMatches = (id, cb) => {
     return dispatch => {
@@ -57,12 +71,14 @@ export const postMatch = (data) => {
         )
     }
 };
+
+
+//user_match routes
 export const becomeMatchMember = (data) => {
     return dispatch => {
         return axios.post("/user_match", data).then(
             response => {
-                dispatch(getMatches(response.data.matchId));
-                dispatch(getMyMatches(response.data.matchId));
+                dispatch(getMatchById(response.data.matchId));
             },
             error => {
                 console.log(error);
@@ -74,8 +90,7 @@ export const removeUserFromMatch = (data) => {
     return dispatch => {
         return axios.delete("/user_match", {data}).then(
             response => {
-                dispatch(getMatches(response.data.matchId));
-                dispatch(getMyMatches(response.data.matchId));
+                dispatch(getMatchById(response.data.matchId));
             },
             error => {
                 console.log(error);
