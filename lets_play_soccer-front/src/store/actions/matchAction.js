@@ -72,7 +72,7 @@ export const becomeMatchMember = (data) => {
 };
 export const removeUserFromMatch = (data) => {
     return dispatch => {
-        return axios.delete("/user_match", data).then(
+        return axios.delete("/user_match", {data}).then(
             response => {
                 dispatch(getMatches(response.data.matchId));
                 dispatch(getMyMatches(response.data.matchId));

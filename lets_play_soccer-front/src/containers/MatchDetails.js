@@ -31,7 +31,7 @@ class MatchDetails extends Component {
         const match = this.props.location.state.match;
         const isThisUserOrganizer = this.props.location.state.isThisUserOrganizer;
         const thisUserInThisMatch = (match? this.checkThisUser(match.users, this.props.user) : []);
-        console.log(thisUserInThisMatch);
+        // console.log(thisUserInThisMatch);
         return (
             <Fragment>
                 <LoadingWrapper loading={this.state.loading}>
@@ -53,7 +53,7 @@ class MatchDetails extends Component {
                                                         <span className='matches__text--grey'>Ваш запрос в обработке</span>
                                                 )
                                                 :
-                                                <button
+                                                <span><button
                                                     className='btn--primary'
                                                     onClick={() => this.props.becomeMatchMember({
                                                         userId: this.props.user.id,
@@ -61,7 +61,7 @@ class MatchDetails extends Component {
                                                     })}
                                                 >
                                                     Участвовать
-                                                </button>
+                                                </button></span>
                                         )
                                     }
                                 </div>
@@ -86,9 +86,15 @@ class MatchDetails extends Component {
                                     </div>
                                 </div>
                             </div>
-                            {thisUserInThisMatch[0].user_match.confirmed?
+                            {thisUserInThisMatch.length && thisUserInThisMatch[0].user_match.confirmed && !isThisUserOrganizer?
                                 <button
                                     className='btn--exit'
+                                    onClick={() => {
+                                        this.props.removeUserFromMatch({
+                                            userId: this.props.user.id,
+                                            matchId: match.id
+                                        })
+                                    }}
                                 >
                                     Выйти из матча
                                 </button>
