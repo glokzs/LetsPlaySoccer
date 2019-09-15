@@ -4,7 +4,7 @@ import Spinner from "./Spinner";
 
 export  default class LoadingWrapper extends Component{
     render() {
-        console.log(this.props);
+        // console.log(this.props);
         return (
             <Fragment>
                 <CSSTransition

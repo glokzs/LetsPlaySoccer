@@ -73,7 +73,7 @@ module.exports = (sequelize, type) => {
         }
       },
       phoneNumber: {
-        type: type.JSON,
+        type: type.TEXT,
         defaultValue: '{}',
         get() {
             return (JSON.parse(this.getDataValue('phoneNumber')))
@@ -92,7 +92,7 @@ module.exports = (sequelize, type) => {
         }
       },
       timetable: {
-        type: type.JSON,
+        type: type.TEXT,
         defaultValue: '{}',
         get() {
           return (JSON.parse(this.getDataValue('timetable')))
@@ -105,7 +105,7 @@ module.exports = (sequelize, type) => {
         type: type.STRING
       },
       formats: {
-        type: type.JSON,
+        type: type.TEXT,
         defaultValue: '{}',
         get() {
           return (JSON.parse(this.getDataValue('formats')))
@@ -129,7 +129,7 @@ module.exports = (sequelize, type) => {
 
       },
       images: {
-        type: type.JSON,
+        type: type.TEXT,
         defaultValue: '{}',
         get() {
           return (JSON.parse(this.getDataValue('images')))

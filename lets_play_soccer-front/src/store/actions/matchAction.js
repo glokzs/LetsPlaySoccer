@@ -37,7 +37,7 @@ export const getMyMatches = (id) => {
         axios.get("/matches", {params: {organizerId: id, mine: true}})
             .then(response => {
                 const data = response.data;
-                console.log(data);
+                // console.log(data);
                 dispatch({type: GET_MY_MATCHES_SUCCESS, data});
             }, error => {
                 dispatch({type: GET_MY_MATCHES_ERROR, error})

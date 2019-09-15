@@ -34,7 +34,7 @@ module.exports = (sequelize, type) => {
                 defaultValue: false
             },
             organizer: {
-                type: type.JSON,
+                type: type.TEXT,
                 defaultValue: '{}',
                 get() {
                     return (JSON.parse(this.getDataValue('organizer')))

@@ -25,7 +25,7 @@ class Matches extends Component {
     }
 
     render() {
-        console.log(this.props.matches);
+        // console.log(this.props.matches);
         return (
             <div className='matches'>
 
@@ -36,11 +36,13 @@ class Matches extends Component {
                         <MatchesList
                             header={'Мои матчи'}
                             matches={this.props.myMatches}
+                            userId={this.props.user.id}
                         />
                         <br/>
                         <MatchesList
                             header={'другие матчи'}
                             matches={this.props.matches}
+                            userId={this.props.user.id}
                         />
                     </Fragment>
                 )}

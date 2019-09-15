@@ -2,6 +2,10 @@ import React, { Component, Fragment } from 'react';
 import {DatePicker, Input, InputNumber, TimePicker} from 'antd';
 import 'moment/locale/ru';
 import moment from 'moment';
+// import waitingStatusImg from '../assets/design_images/waiting.svg';
+// import goingStatusImg from '../assets/design_images/waiting.svg';
+// import StatusImg from '../assets/design_images/waiting.svg';
+
 
 class CreateMatch extends Component {
     state = {

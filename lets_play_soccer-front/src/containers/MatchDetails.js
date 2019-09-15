@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import LoadingWrapper from "../components/UI/LoadingWrapper";
+import {getMatchStatusImg} from "../helpers/helperMatch";
 
 class MatchDetails extends Component {
     state = {
@@ -10,14 +11,27 @@ class MatchDetails extends Component {
     };
 
     render() {
-        const match = this.props.location.state;
+        console.log(this.props.location.state.isThisUserOrganizer);
+        const match = this.props.location.state.match;
+        const isThisUserOrganizer = this.props.location.state.isThisUserOrganizer;
         return (
             <Fragment>
                 <LoadingWrapper loading={this.state.loading}>
                     {match?
-                        <div>
-                            here will be matches details
-                        </div>
+                        <Fragment>
+                            <div>
+                                <div className='d-flex align-items-center justify-content-between'>
+                                    <span>
+                                        <img src={require('../assets/design_images/'+getMatchStatusImg(match.status))} alt='icon'/>
+                                        &nbsp;{match.status}
+                                    </span>
+                                    {isThisUserOrganizer?
+                                        <button>Отменить матч</button> :
+                                        <button>Участвовать</button>
+                                    }
+                                </div>
+                            </div>
+                        </Fragment>
                         : null
                     }
                 </LoadingWrapper>
