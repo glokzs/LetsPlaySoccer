@@ -46,7 +46,34 @@ router.get('/', async (req, res) => {
 
 router.get('/:id', async (req, res) => {
     const match = await Match.findOne({
-        where: {id: req.params.id}
+        where: {id: req.params.id},
+        include: [
+            {
+                model: Field,
+                attributes: {
+                    exclude: [
+                        'coverId',
+                        'description',
+                        'disabled',
+                        'email',
+                        'formats',
+                        'id',
+                        'minPrice',
+                        'phoneNumber',
+                        'shower',
+                        'timetable',
+                        'typeId',
+                        'webSite'
+                    ]
+                }
+            },
+            {
+                model: User,
+                attributes: {
+                    exclude: ['password', 'role', 'id', 'token']
+                }
+            }
+        ]
     });
     res.send(match);
 
