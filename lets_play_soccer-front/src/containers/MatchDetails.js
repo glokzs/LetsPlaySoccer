@@ -23,10 +23,15 @@ class MatchDetails extends Component {
         isContactsOpen: false
     };
 
+    checkThisUser = (users, thisUser) => {
+        return users.filter(user => user.phoneNumber === thisUser.phoneNumber);
+    };
+
     render() {
-        // console.log(this.props.location.state.isThisUserOrganizer);
         const match = this.props.location.state.match;
         const isThisUserOrganizer = this.props.location.state.isThisUserOrganizer;
+        const thisUserInThisMatch = (match? this.checkThisUser(match.users, this.props.user) : []);
+        console.log(thisUserInThisMatch);
         return (
             <Fragment>
                 <LoadingWrapper loading={this.state.loading}>
@@ -39,16 +44,25 @@ class MatchDetails extends Component {
                                         <span className={'matches__status--'+getMatchStatusImg(match.status)}>&nbsp;{match.status}</span>
                                     </span>
                                     {isThisUserOrganizer?
-                                        <span><button>Отменить матч</button></span> :
-                                        <span><button
-                                            className='btn--primary'
-                                            onClick={() => this.props.becomeMatchMember({
-                                                userId: this.props.user.id,
-                                                matchId: match.id
-                                            })}
-                                        >
-                                            Участвовать
-                                        </button></span>
+                                        <span><button>Отменить матч</button></span>
+                                        :
+                                        (thisUserInThisMatch.length?
+                                                (thisUserInThisMatch[0].user_match.confirmed?
+                                                        <span className='matches__text--blue'>Вы участвуете в игре</span>
+                                                        :
+                                                        <span className='matches__text--grey'>Ваш запрос в обработке</span>
+                                                )
+                                                :
+                                                <button
+                                                    className='btn--primary'
+                                                    onClick={() => this.props.becomeMatchMember({
+                                                        userId: this.props.user.id,
+                                                        matchId: match.id
+                                                    })}
+                                                >
+                                                    Участвовать
+                                                </button>
+                                        )
                                     }
                                 </div>
                                 <div className='row pt-4'>
@@ -147,14 +161,10 @@ class MatchDetails extends Component {
 const mapStateToProps = state => {
     return {
         user: state.users.user,
-        // matches: state.matches.matches,
-        // myMatches: state.matches.myMatches
     };
 };
 const mapDispatchToProps = dispatch => {
     return {
-        // getMatches: (id, cb) => dispatch(getMatches(id, cb)),
-        // getMyMatches: (id) => dispatch(getMyMatches(id)),
         becomeMatchMember: (data => dispatch(becomeMatchMember(data)))
     };
 };
