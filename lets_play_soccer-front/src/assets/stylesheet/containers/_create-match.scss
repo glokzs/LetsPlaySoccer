@@ -129,6 +129,17 @@
             color: lighten($primary, 20%);
         }
     }
+    &--exit {
+        background: $light-blue;
+        color: $danger;
+        font-size: 14px;
+        border: none;
+        width: 100%;
+        margin-bottom: 1rem;
+        &:hover {
+            color: darken($danger, 15%);
+        }
+    }
 }
 .team__word {
     @extend .match__people;

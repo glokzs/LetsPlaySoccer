@@ -86,6 +86,14 @@ class MatchDetails extends Component {
                                     </div>
                                 </div>
                             </div>
+                            {thisUserInThisMatch[0].user_match.confirmed?
+                                <button
+                                    className='btn--exit'
+                                >
+                                    Выйти из матча
+                                </button>
+                                : null
+                            }
                             <div className='matches__field'>
                                 <div className='row p-3'>
                                     <div className='col-8'>
@@ -165,7 +173,8 @@ const mapStateToProps = state => {
 };
 const mapDispatchToProps = dispatch => {
     return {
-        becomeMatchMember: (data => dispatch(becomeMatchMember(data)))
+        becomeMatchMember: data => dispatch(becomeMatchMember(data)),
+        removeUserFromMatch: data => dispatch(removeUserFromMatch(data))
     };
 };
 
