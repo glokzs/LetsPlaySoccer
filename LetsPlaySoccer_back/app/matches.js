@@ -1,6 +1,4 @@
 const sequelize = require('sequelize');
-
-const fs = require('fs');
 const express = require('express');
 const router = express.Router();
 const {Match, User, Field, UserMatch} = require('../sequelize');
@@ -46,7 +44,6 @@ router.get('/', async (req, res) => {
     res.send(matches);
 });
 
-
 router.get('/:id', async (req, res) => {
     const match = await Match.findOne({
         where: {id: req.params.id}
@@ -63,6 +60,7 @@ router.post('/', async (req, res) => {
                 exclude: ['password', 'role', 'id', 'token']
             }
         });
+    if(!organizer) res.status(400).send({message: 'Такого пользователя нет'});
     const match = {
         start: req.body.start,
         end: req.body.end,
@@ -73,51 +71,51 @@ router.post('/', async (req, res) => {
         fieldId: req.body.fieldId,
         organizerId: req.body.userId,
         organizer
-        // organizer: req.user.id
-
     };
 
-    Match.create(match).then(match => UserMatch.create({
-        matchId: match.id,
-        userId: req.body.userId,
-        confirmed: true,
-        organizer: true
-    }))
-        .then(userMatch => {
-            Match.findOne({
-                where: {
-                    id: userMatch.matchId
-                },
-                include: [
-                    {
-                        model: Field,
-                        attributes: {
-                            exclude: [
-                                'coverId',
-                                'description',
-                                'disabled',
-                                'email',
-                                'formats',
-                                'id',
-                                'minPrice',
-                                'phoneNumber',
-                                'shower',
-                                'timetable',
-                                'typeId',
-                                'webSite'
-                            ]
-                        }
+    if(organizer) {
+        Match.create(match).then(match => UserMatch.create({
+            matchId: match.id,
+            userId: req.body.userId,
+            confirmed: true,
+            organizer: true
+        }))
+            .then(userMatch => {
+                Match.findOne({
+                    where: {
+                        id: userMatch.matchId
                     },
-                    {
-                        model: User,
-                        attributes: {
-                            exclude: ['password', 'role', 'id', 'token']
+                    include: [
+                        {
+                            model: Field,
+                            attributes: {
+                                exclude: [
+                                    'coverId',
+                                    'description',
+                                    'disabled',
+                                    'email',
+                                    'formats',
+                                    'id',
+                                    'minPrice',
+                                    'phoneNumber',
+                                    'shower',
+                                    'timetable',
+                                    'typeId',
+                                    'webSite'
+                                ]
+                            }
+                        },
+                        {
+                            model: User,
+                            attributes: {
+                                exclude: ['password', 'role', 'id', 'token']
+                            }
                         }
-                    }
-                ]
-            }).then((data => res.json(data)))
-        })
-        .catch(err => res.json(err.errors));
+                    ]
+                }).then((data => res.json(data)))
+            })
+            .catch(err => res.json(err.errors));
+    }
 });
 
 module.exports = router;

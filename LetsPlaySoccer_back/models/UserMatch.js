@@ -13,10 +13,24 @@ module.exports = (sequelize, type) => {
             organizer: {
                 type: type.BOOLEAN,
                 defaultValue: false
+            },
+            matchId: {
+                type: type.BOOLEAN,
+                allowNull: false
+            },
+            userId: {
+                type: type.BOOLEAN,
+                allowNull: false
             }
         },
         {
-            timestamps: false
+            timestamps: false,
+            indexes: [
+                {
+                    unique: true,
+                    fields: ['matchId', 'userId']
+                }
+            ]
         }
     );
 };

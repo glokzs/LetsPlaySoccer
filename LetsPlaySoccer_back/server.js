@@ -7,6 +7,8 @@ const covers = require('./app/covers');
 const types = require("./app/types");
 const formats = require("./app/formats");
 const matches = require("./app/matches");
+const user_match = require("./app/user_match");
+
 
 const cors = require('cors');
 
@@ -28,6 +30,8 @@ app.use('/covers', covers);
 app.use('/types', types);
 app.use('/formats', formats);
 app.use('/matches', matches);
+app.use('/user_match', user_match);
+
 
 app.use(express.json());
 
