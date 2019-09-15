@@ -66,7 +66,7 @@ class Fields extends Component {
                         <Search
                             className="search-input"
                             placeholder="Поиск..."
-                            onSearch={value => console.log(value)}
+                            // onSearch={value => console.log(value)}
                             onSearch={this.searchStart}
                         />
                     </div>

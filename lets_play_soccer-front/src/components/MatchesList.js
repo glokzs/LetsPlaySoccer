@@ -51,7 +51,7 @@ class MatchesList extends Component {
                                                         </div>
                                                         <div className='icon--clock'>
                                                             &nbsp;&nbsp;<span className='matches__text--main'>{getHours(match.start)}</span>
-                                                            - {getTimeDiff(match.start, match.end)}
+                                                            &nbsp;- {getTimeDiff(match.start, match.end)}
                                                         </div>
                                                         <div className='icon--calendar-b'>
                                                             &nbsp;&nbsp;<span className='matches__text--main'>{getDate(match.start)}</span>,

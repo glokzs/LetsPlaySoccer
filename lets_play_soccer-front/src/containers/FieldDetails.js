@@ -30,7 +30,7 @@ class FieldDetails extends Component {
         this.setState({isTimetableOpen: !this.state.isTimetableOpen});
     };
     onContactsChange = e => {
-        console.log(e);
+        // console.log(e);
         if (e.length) {
             e.forEach(item => {
                 if (item === '1') {

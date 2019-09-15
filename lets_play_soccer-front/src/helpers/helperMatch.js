@@ -37,12 +37,12 @@ export const getPricePerPerson = (priceTotal, format, team) => {
 export const getMatchStatusImg = (status) => {
     switch (status) {
         case 'В ожидании':
-            return 'waiting.svg';
+            return 'waiting';
         case 'Игра началась':
-            return 'going.svg';
+            return 'going';
         case 'Игра Завершена':
-            return 'waiting.svg';
+            return 'finished';
         default:
-            return 'waiting.svg';
+            return 'waiting';
     }
 };

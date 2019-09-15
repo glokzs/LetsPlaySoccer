@@ -1,6 +1,17 @@
 import React, { Component, Fragment } from 'react';
 import LoadingWrapper from "../components/UI/LoadingWrapper";
-import {getMatchStatusImg} from "../helpers/helperMatch";
+import {
+    getConfirmedUsersNumber,
+    getDate,
+    getDayOfTheWeek,
+    getHours,
+    getMatchStatusImg, getPlayerWord,
+    getPricePerPerson,
+    getTimeDiff
+} from "../helpers/helperMatch";
+import config from "../config";
+import {Carousel} from "antd";
+import photo from "../assets/content_images/Mask.png";
 
 class MatchDetails extends Component {
     state = {
@@ -11,7 +22,7 @@ class MatchDetails extends Component {
     };
 
     render() {
-        console.log(this.props.location.state.isThisUserOrganizer);
+        // console.log(this.props.location.state.isThisUserOrganizer);
         const match = this.props.location.state.match;
         const isThisUserOrganizer = this.props.location.state.isThisUserOrganizer;
         return (
@@ -19,18 +30,101 @@ class MatchDetails extends Component {
                 <LoadingWrapper loading={this.state.loading}>
                     {match?
                         <Fragment>
-                            <div>
-                                <div className='d-flex align-items-center justify-content-between'>
-                                    <span>
-                                        <img src={require('../assets/design_images/'+getMatchStatusImg(match.status))} alt='icon'/>
-                                        &nbsp;{match.status}
+                            <div className='matches__header'>
+                                <div className='d-flex justify-content-between align-items-center'>
+                                    <span className='d-flex align-items-center'>
+                                        <img src={require('../assets/design_images/'+getMatchStatusImg(match.status)+'.svg')} alt='icon'/>
+                                        <span className={'matches__status--'+getMatchStatusImg(match.status)}>&nbsp;{match.status}</span>
                                     </span>
                                     {isThisUserOrganizer?
-                                        <button>Отменить матч</button> :
-                                        <button>Участвовать</button>
+                                        <span><button>Отменить матч</button></span> :
+                                        <span><button className='btn--primary'>Участвовать</button></span>
                                     }
                                 </div>
+                                <div className='row pt-4'>
+                                    <div className='col-8'>
+                                        <div className='icon--clock'>
+                                            &nbsp;&nbsp;<span className='matches__text--main'>{getHours(match.start)}</span>
+                                            &nbsp;- {getTimeDiff(match.start, match.end)}
+                                        </div>
+                                        <div className='icon--calendar-b'>
+                                            &nbsp;&nbsp;<span className='matches__text--main'>{getDate(match.start)}</span>,
+                                            &nbsp;<span className='day-of-the-week'>{getDayOfTheWeek(match.start)}</span>
+                                        </div>
+                                    </div>
+                                    <div className="col-4 text-right d-flex flex-column justify-content-end">
+                                        <div>
+                                            <span className='matches__text--muted'>Взнос за игру</span>
+                                            <span className='font-weight-bold'>
+                                                {getPricePerPerson(match.price, match.playersInTeam, match.numOfTeams)}&nbsp;₸
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
+                            <div className='matches__field'>
+                                <div className='row p-3'>
+                                    <div className='col-8'>
+                                        <div className='icon--map-b'>
+                                            &nbsp;&nbsp;<span className='matches__text--main'>{match.field.name}</span>
+                                        </div>
+                                    </div>
+                                    <div className='col-4 text-right'>
+                                        <span className='matches__format--t-shirt'>
+                                            {match.playersInTeam}x{match.playersInTeam}&nbsp;<span className='icon--t-shirt'/>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div className='field__card'>
+                                    <Carousel className='field__carousel'>
+                                        {
+                                            match.field.images.map((image, inx) => {
+                                                return (
+                                                    <div key={inx} className='w-100'>
+                                                        <img
+                                                            src={config.publicFieldFolder + image}
+                                                            alt="field"
+                                                            className='w-100 d-block'
+                                                        />
+                                                    </div>
+                                                )
+                                            })
+                                        }
+                                    </Carousel>
+                                    <div className='field__images icon--camera'>
+                                        {match.field.images.length}
+                                    </div>
+                                    <button className='btn--map'>Показать на карте</button>
+                                </div>
+                            </div>
+
+                            <div className='matches__players'>
+                                <div className='d-flex justify-content-between align-items-center'>
+                                    <span className='matches__text--main'>Участники</span>
+                                    <div className='matches__text--number'>
+                                        <b>{getConfirmedUsersNumber(match.users)}&nbsp;</b>
+                                        {getPlayerWord(getConfirmedUsersNumber(match.users))}&nbsp;из&nbsp;
+                                        {match.playersInTeam * match.numOfTeams}
+                                    </div>
+                                </div>
+                                <ul>
+                                    {match.users.map(user => {
+                                        return (
+                                            <li className='matches__card__head'>
+                                                <img className='matches__avatar' src={photo} alt="avatar"/>
+                                                <div>
+                                                    <div className='matches__text--player'>{match.organizer.displayName}</div>
+                                                    {user.user_match.organizer ?
+                                                        <span className='matches__text--green'>Организатор!</span>
+                                                        : null
+                                                    }
+                                                </div>
+                                            </li>
+                                        );
+                                    })}
+                                </ul>
+                            </div>
+
                         </Fragment>
                         : null
                     }
