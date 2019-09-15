@@ -12,6 +12,8 @@ import {
 import config from "../config";
 import {Carousel} from "antd";
 import photo from "../assets/content_images/Mask.png";
+import {connect} from "react-redux";
+import {becomeMatchMember} from "../store/actions/matchAction";
 
 class MatchDetails extends Component {
     state = {
@@ -38,7 +40,15 @@ class MatchDetails extends Component {
                                     </span>
                                     {isThisUserOrganizer?
                                         <span><button>Отменить матч</button></span> :
-                                        <span><button className='btn--primary'>Участвовать</button></span>
+                                        <span><button
+                                            className='btn--primary'
+                                            onClick={() => this.props.becomeMatchMember({
+                                                userId: this.props.user.id,
+                                                matchId: match.id
+                                            })}
+                                        >
+                                            Участвовать
+                                        </button></span>
                                     }
                                 </div>
                                 <div className='row pt-4'>
@@ -108,21 +118,19 @@ class MatchDetails extends Component {
                                     </div>
                                 </div>
                                 <ul>
-                                    {match.users.map(user => {
-                                        if (user.user_match.confirmed) {
-                                            return (
-                                                <li className='matches__card__head'>
-                                                    <img className='matches__avatar' src={photo} alt="avatar"/>
-                                                    <div>
-                                                        <div className='matches__text--player'>{match.organizer.displayName}</div>
-                                                        {user.user_match.organizer ?
-                                                            <span className='matches__text--green'>Организатор!</span>
-                                                            : null
-                                                        }
-                                                    </div>
-                                                </li>
-                                            );
-                                        }
+                                    {match.users.filter(user => user.user_match.confirmed).map(user => {
+                                        return (
+                                            <li className='matches__card__head' key={user.phoneNumber}>
+                                                <img className='matches__avatar' src={photo} alt="avatar"/>
+                                                <div>
+                                                    <div className='matches__text--player'>{match.organizer.displayName}</div>
+                                                    {user.user_match.organizer ?
+                                                        <span className='matches__text--green'>Организатор!</span>
+                                                        : null
+                                                    }
+                                                </div>
+                                            </li>
+                                        );
                                     })}
                                 </ul>
                             </div>
@@ -136,5 +144,19 @@ class MatchDetails extends Component {
     }
 }
 
+const mapStateToProps = state => {
+    return {
+        user: state.users.user,
+        // matches: state.matches.matches,
+        // myMatches: state.matches.myMatches
+    };
+};
+const mapDispatchToProps = dispatch => {
+    return {
+        // getMatches: (id, cb) => dispatch(getMatches(id, cb)),
+        // getMyMatches: (id) => dispatch(getMyMatches(id)),
+        becomeMatchMember: (data => dispatch(becomeMatchMember(data)))
+    };
+};
 
-export default MatchDetails;
+export default connect(mapStateToProps, mapDispatchToProps)(MatchDetails);

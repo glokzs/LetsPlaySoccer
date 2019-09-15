@@ -40,7 +40,7 @@ class MatchesList extends Component {
                                                 pathname: `/matches/${match.id}`,
                                                 state: {
                                                     match,
-                                                    isThisUserOrganizer: this.props.userId == match.organizerId
+                                                    isThisUserOrganizer: this.props.userId === match.organizerId
                                                 }
                                             }}
                                         >
@@ -49,8 +49,7 @@ class MatchesList extends Component {
                                                 <div>
                                                     <div className='matches__text--main'>{match.organizer.displayName}</div>
                                                     <span className='matches__text--primary'>
-                                                        {this.props.userId == match.organizerId? 'Мой матч' : null}
-
+                                                        {this.props.userId === match.organizerId? 'Мой матч' : null}
                                                     </span>
                                                 </div>
                                             </div>

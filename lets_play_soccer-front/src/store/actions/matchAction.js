@@ -21,14 +21,14 @@ export const getMatches = (id, cb) => {
         axios.get("/matches", {params: {organizerId: id}})
             .then(response => {
                 dispatch(getMatchesSuccess(response.data));
-                cb();
+                if(cb) cb();
             }, error => {
                 if (error.response && error.response.data) {
                     dispatch(getMatchesError(error.response.data));
                 } else {
                     dispatch(getMatchesError({global: "No internet connection"}));
                 }
-                cb();
+                if(cb) cb();
             })
     };
 };
@@ -53,6 +53,19 @@ export const postMatch = (data) => {
             },
             error => {
                 dispatch({type: POST_MATCH_ERROR, error})
+            }
+        )
+    }
+};
+export const becomeMatchMember = (data) => {
+    return dispatch => {
+        return axios.post("/user_match", data).then(
+            response => {
+                dispatch(getMatches(response.data.matchId));
+                dispatch(getMyMatches(response.data.matchId));
+            },
+            error => {
+                console.log(error);
             }
         )
     }

@@ -83,8 +83,8 @@ class Profile extends Component {
                 <div className="ant-upload-text">Upload</div>
             </div>
         );
-        const { imageUrl } = this.state.image ? this.state.image : this.state;
-        console.log(this.state);
+        // const { imageUrl } = this.state.image ? this.state.image : this.state;
+        // console.log(this.state);
         return(
             <>
                 <div className="profile-container" >
@@ -113,7 +113,7 @@ class Profile extends Component {
                                     </Upload> :
                                     <span className="avatar-uploader ant-upload-picture-card-wrapper" >
                                         <div className="ant-upload ant-upload-select ant-upload-select-picture-card border-none">
-                                            <img className="ant-upload" src={this.state.image} ></img>
+                                            <img className="ant-upload" src={this.state.image} alt='user'/>
                                         </div>
                                     </span>
                                 }
