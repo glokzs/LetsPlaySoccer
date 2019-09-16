@@ -1,7 +1,6 @@
 .logo {
     margin-bottom: 40px;
-    margin-top: 100px;
-    background: url('/content_images/LogoBig.png') center no-repeat;
+    background: url('../../content_images/LogoBig.png') center no-repeat;
     height: 45px;
 }
 .title {
@@ -16,18 +15,28 @@
 .container-login {
     max-width: 400px;
     margin: 0 auto;
+    // border: 1px solid rgba(105, 180, 250, 0.4);
+    box-sizing: border-box;
+    border-radius: 5px;
+    box-shadow: 0px 0px 20px 4px #00000024;
+    padding: 60px 20px;
+    background: white;
+    margin-top: 60px;
 }
 @media (max-width: 576px) {
     .title {
         font-size: 20px;
+        margin-bottom: 20px;
     }
     .container-login {
+        padding: 20px 10px;
+        border: none;
         max-width: 320px;
     }
     .logo {
-        margin-top: 40px;
+        margin-top: 10px;
         margin-bottom: 20px;
-        background: url('/content_images/LogoSmall.png') center no-repeat;
+        background: url('../../content_images/LogoSmall.png') center no-repeat;
     }
 }
 @media (max-width: 370px) {
