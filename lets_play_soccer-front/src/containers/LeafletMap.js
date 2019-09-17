@@ -8,7 +8,10 @@ class LeafletMap extends Component {
         lat: 51.505,
         lng: -0.09,
         zoom: 12,
-        markers: [[43.24812998918575, 76.90917719621213]]
+        markers: [{
+            lat: 43.24812998918575,
+            lng: 76.90917719621213
+        }]
     };
 
     onClick = e => {
