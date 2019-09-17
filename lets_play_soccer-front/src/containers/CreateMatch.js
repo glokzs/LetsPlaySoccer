@@ -2,9 +2,8 @@ import React, { Component, Fragment } from 'react';
 import {DatePicker, Input, InputNumber, TimePicker} from 'antd';
 import 'moment/locale/ru';
 import moment from 'moment';
-// import waitingStatusImg from '../assets/design_images/waiting.svg';
-// import goingStatusImg from '../assets/design_images/waiting.svg';
-// import StatusImg from '../assets/design_images/waiting.svg';
+import {postMatch} from "../store/actions/matchAction";
+import {connect} from "react-redux";
 
 
 class CreateMatch extends Component {
@@ -12,14 +11,48 @@ class CreateMatch extends Component {
         date: moment(new Date()),
         time: null,
         duration: 2.5,
-        team: 2,
-        format: 5,
-        price: null
+
+        price: 0,
+
+        start: '',
+        end: '',
+        fieldId: '',
+        playersInTeam: 5,
+        numOfTeams: 2,
+    };
+
+    createMatch = () => {
+        if (this.state.date && this.state.time && this.state.duration && this.state.price && this.state.fieldId && this.state.playersInTeam && this.state.numOfTeams) {
+            const start = new Date(this.state.date.format('YYYY-MM-DD') + ' ' + this.state.time.format('HH:mm:ss')).toISOString();
+            const duration = moment.duration({'minutes' : this.state.duration * 60});
+            console.log(start.add(duration).toISOString());
+            this.props.postMatch({
+                private: false,
+
+                start,
+                end: this.state.date.toISOString(),
+                fieldId: this.state.fieldId,
+                playersInTeam: this.state.playersInTeam,
+                numOfTeams: this.state.numOfTeams,
+                price: this.state.price,
+
+                userId: this.props.user.id
+            });
+        } else {
+            console.log('dsfsdfdfs');
+            this.setState({error: 'Поля не заполнены'});
+        }
+
     };
 
     onDateChange = (date, dateString) => {
-        // console.log(moment(date).format('YYYY-MM-DD hh:mm:ss'));
-        this.setState({date})
+
+
+        this.setState({
+            date,
+            start: this.state.date.format('YYYY-MM-DD'),
+            end: this.state.date.toISOString()
+        });
     };
     onTimeChange = time => this.setState({time});
     onTeamChange = team => this.setState({team});
@@ -70,8 +103,8 @@ class CreateMatch extends Component {
         }
     };
     getPricePerPerson = () => {
-        const price = Math.round(this.state.price / (this.state.format * this.state.team));
-        if (price === Infinity) return 0;
+        const price = Math.round(this.state.price / (this.state.playersInTeam * this.state.numOfTeams));
+        if (price === Infinity || isNaN(price)) return 0;
         return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ') || 0;
     };
 
@@ -79,8 +112,8 @@ class CreateMatch extends Component {
 
     render() {
         const timeWord = this.getHours(this.state.duration);
-        const teamWord = this.getTeams(this.state.team);
-        const people = this.getFormat(this.state.format);
+        const teamWord = this.getTeams(this.state.numOfTeams);
+        const people = this.getFormat(this.state.playersInTeam);
         return (
             <Fragment>
                 <header className='toolbar__header'>
@@ -121,7 +154,7 @@ class CreateMatch extends Component {
                         />
                     </div>
                     <div className="col-6">
-                        <div className="match__label">Длительность игры</div>
+                        <label className="match__label">Длительность игры</label>
                         <div className='position-relative'>
                             <span className='timepicker__word'>
                                 {timeWord}
@@ -164,7 +197,7 @@ class CreateMatch extends Component {
                                 min={1}
                                 max={11}
                                 onChange={this.onFormatChange}
-                                value={this.state.format}
+                                value={this.state.playersInTeam}
                                 className='match__input--number'
                                 placeholder='Количество игроков'
                                 precision={0}
@@ -182,7 +215,7 @@ class CreateMatch extends Component {
                                 max={5}
                                 placeholder='Количество команд'
                                 onChange={this.onTeamChange}
-                                value={this.state.team}
+                                value={this.state.numOfTeams}
                                 className='match__input--number'
                                 precision={0}
                             />
@@ -213,7 +246,14 @@ class CreateMatch extends Component {
                 </div>
                 <div className="row mt-5">
                     <div className="col">
-                        <button className='btn--primary'>Создать матч</button>
+                        <button
+                            className='btn--primary'
+                            onClick={() => {
+                                this.createMatch()
+                            }}
+                        >
+                            Создать матч
+                        </button>
                     </div>
                 </div>
             </Fragment>
@@ -221,4 +261,16 @@ class CreateMatch extends Component {
     }
 }
 
-export default CreateMatch;
+
+const mapStateToProps = state => {
+    return {
+        user: state.users.user,
+    };
+};
+const mapDispatchToProps = dispatch => {
+    return {
+        postMatch: data => dispatch(postMatch(data)),
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(CreateMatch);

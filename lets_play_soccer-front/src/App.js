@@ -7,8 +7,6 @@ import MainPrivate from "./containers/MainPrivate";
 import FontIcons from './containers/OnlyForDevelopment/FontIcons';
 import Profile from './containers/Profile';
 import ConfirmPhone from './containers/ConfirmPhone';
-// import ConfirmPhone from './containers/ConfirmPhone';
-// import ConfirmPhone from './containers/ConfirmPhone';
 
 
 class App extends Component {
@@ -20,9 +18,9 @@ class App extends Component {
                 <Route exact path="/login" component={Login}/>
                 <Route exact path="/tutorial" component={Tutorial}/>
                 <Route exact path="/only_for_dev/icons" component={FontIcons}/>
-                <Route exact path="/profile:id" component={Profile}/>
-                <Route path="/" component={ConfirmPhone} />
-
+                <Route exact path="/profile/:id" component={Profile}/>
+                <Route exact path="/confirm" component={ConfirmPhone} />
+                <Route path="/:page" component={MainPrivate} />
             </Switch>
         );
     }

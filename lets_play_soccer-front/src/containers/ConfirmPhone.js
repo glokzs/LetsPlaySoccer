@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {Form, Button, Alert} from 'react-bootstrap';
-import {NavLink, Redirect} from "react-router-dom";
+import {Redirect} from "react-router-dom";
 import Spinner from "../components/UI/Spinner";
 
 const CODE_LENGTH = new Array(4).fill(0);
@@ -94,7 +94,7 @@ class ConfirmPhone extends Component {
                                 const filled = values.length === CODE_LENGTH.length && index === CODE_LENGTH.length - 1;
 
                                 return (
-                                    <div className="display">
+                                    <div className="display" key={index}>
                                         {values[index]}
                                         {(selected || filled) && focused && <div className="shadows" />}
                                     </div>

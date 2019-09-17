@@ -63,7 +63,9 @@ export const postMatch = (data) => {
         return axios.post("/matches", data).then(
             response => {
                 const data = response.data;
-                dispatch({type: POST_MATCH_SUCCESS, data})
+                dispatch({type: POST_MATCH_SUCCESS, data});
+                // dispatch(getMyMatches(data.id));
+                console.log(data);
             },
             error => {
                 dispatch({type: POST_MATCH_ERROR, error})
