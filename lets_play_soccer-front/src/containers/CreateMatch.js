@@ -4,6 +4,7 @@ import 'moment/locale/ru';
 import moment from 'moment';
 import {postMatch} from "../store/actions/matchAction";
 import {connect} from "react-redux";
+import LeafletMap from "./LeafletMap";
 
 
 class CreateMatch extends Component {
@@ -19,43 +20,44 @@ class CreateMatch extends Component {
         fieldId: '',
         playersInTeam: 5,
         numOfTeams: 2,
+
+        openMap: false,
+        fieldName: ''
+    };
+
+    toggleMap = (fieldId, fieldName) => {
+        if (fieldId) this.setState({openMap: !this.state.openMap, fieldId, fieldName});
+        else this.setState({openMap: !this.state.openMap});
     };
 
     createMatch = () => {
         if (this.state.date && this.state.time && this.state.duration && this.state.price && this.state.fieldId && this.state.playersInTeam && this.state.numOfTeams) {
             const start = new Date(this.state.date.format('YYYY-MM-DD') + ' ' + this.state.time.format('HH:mm:ss')).toISOString();
             const duration = moment.duration({'minutes' : this.state.duration * 60});
-            // console.log(start.add(duration).toISOString());
-            this.props.postMatch({
-                private: false,
-
-                start,
-                end: this.state.date.toISOString(),
-                fieldId: this.state.fieldId,
-                playersInTeam: this.state.playersInTeam,
-                numOfTeams: this.state.numOfTeams,
-                price: this.state.price,
-
-                userId: this.props.user.id
-            });
+            console.log(start.add(duration).toISOString());
+            console.log(start);
+            // this.props.postMatch({
+            //     private: false,
+            //
+            //     start,
+            //     end: this.state.date.toISOString(),
+            //     fieldId: this.state.fieldId,
+            //     playersInTeam: this.state.playersInTeam,
+            //     numOfTeams: this.state.numOfTeams,
+            //     price: this.state.price,
+            //
+            //     userId: this.props.user.id
+            // });
         } else {
             this.setState({error: 'Поля не заполнены'});
         }
 
     };
 
-    onDateChange = (date, dateString) => {
-
-
-        this.setState({
-            date,
-            start: this.state.date.format('YYYY-MM-DD'),
-            end: this.state.date.toISOString()
-        });
-    };
+    onDateChange = date => this.setState({date});
     onTimeChange = time => this.setState({time});
-    onTeamChange = team => this.setState({team});
-    onFormatChange = format => this.setState({format});
+    onTeamChange = numOfTeams => this.setState({numOfTeams});
+    onFormatChange = playersInTeam => this.setState({playersInTeam});
     onPriceChange = price => this.setState({price});
     onDurationChange = duration => this.setState({duration});
 
@@ -180,6 +182,8 @@ class CreateMatch extends Component {
                             <Input
                                 placeholder='Выберите поле'
                                 className='match__input'
+                                onFocus={this.toggleMap}
+                                value={this.state.fieldName}
                             />
                         </div>
                     </div>
@@ -243,6 +247,7 @@ class CreateMatch extends Component {
                         <div className='match__label text-right'>С каждого игрока по</div>
                     </div>
                 </div>
+
                 <div className="row mt-5">
                     <div className="col">
                         <button
@@ -255,6 +260,17 @@ class CreateMatch extends Component {
                         </button>
                     </div>
                 </div>
+
+
+                {this.state.openMap?
+                    <div className='map'>
+                        <LeafletMap
+                            sendFieldId={this.toggleMap}
+                        />
+                    </div> : null
+                }
+
+
             </Fragment>
         );
     }
