@@ -34,20 +34,15 @@ class CreateMatch extends Component {
         if (this.state.date && this.state.time && this.state.duration && this.state.price && this.state.fieldId && this.state.playersInTeam && this.state.numOfTeams) {
             const start = new Date(this.state.date.format('YYYY-MM-DD') + ' ' + this.state.time.format('HH:mm:ss')).toISOString();
             const duration = moment.duration({'minutes' : this.state.duration * 60});
-            console.log(start.add(duration).toISOString());
-            console.log(start);
-            // this.props.postMatch({
-            //     private: false,
-            //
-            //     start,
-            //     end: this.state.date.toISOString(),
-            //     fieldId: this.state.fieldId,
-            //     playersInTeam: this.state.playersInTeam,
-            //     numOfTeams: this.state.numOfTeams,
-            //     price: this.state.price,
-            //
-            //     userId: this.props.user.id
-            // });
+            this.props.postMatch({
+                private: false,
+                start,
+                end: moment(start).add(duration).toISOString(),
+                fieldId: this.state.fieldId,
+                playersInTeam: this.state.playersInTeam,
+                numOfTeams: this.state.numOfTeams,
+                price: this.state.price,
+            });
         } else {
             this.setState({error: 'Поля не заполнены'});
         }

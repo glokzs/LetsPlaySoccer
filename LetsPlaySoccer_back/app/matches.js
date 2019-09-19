@@ -2,6 +2,7 @@ const sequelize = require('sequelize');
 const express = require('express');
 const router = express.Router();
 const {Match, User, Field, UserMatch} = require('../sequelize');
+const auth = require('../middlewares/auth');
 
 router.get('/', async (req, res) => {
     let query = {};
@@ -79,10 +80,10 @@ router.get('/:id', async (req, res) => {
 
 });
 
-router.post('/', async (req, res) => {
+router.post('/', auth, async (req, res) => {
     const organizer = await User.findOne(
         {
-            where: {id: req.body.userId},
+            where: {id: req.user.id},
             attributes: {
                 exclude: ['password', 'role', 'id', 'token']
             }
@@ -96,7 +97,7 @@ router.post('/', async (req, res) => {
         price: req.body.price,
         private: req.body.private,
         fieldId: req.body.fieldId,
-        organizerId: req.body.userId,
+        organizerId: req.user.id,
         organizer
     };
 
