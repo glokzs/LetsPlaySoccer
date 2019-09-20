@@ -3,6 +3,8 @@ import {connect} from "react-redux";
 import Spinner from "../components/UI/Spinner";
 import {getMatches, getMyMatches} from "../store/actions/matchAction";
 import MatchesList from "../components/MatchesList";
+import Toolbar from "../components/UI/Toolbar";
+import {logoutUser} from "../store/actions/userAction";
 
 
 class Matches extends Component {
@@ -26,26 +28,33 @@ class Matches extends Component {
 
     render() {
         return (
-            <div className='matches'>
+            <Fragment>
+                <header>
+                    <Toolbar user={this.props.user} logout={this.props.onLogoutUser} />
+                </header>
+                <div className='container'>
+                    <div className='matches'>
 
-                {this.state.loading?
-                    <Spinner />
-                :(
-                    <Fragment>
-                        <MatchesList
-                            header={'Мои матчи'}
-                            matches={this.props.myMatches}
-                            userId={this.props.user.id}
-                        />
-                        <br/>
-                        <MatchesList
-                            header={'другие матчи'}
-                            matches={this.props.matches}
-                            userId={this.props.user.id}
-                        />
-                    </Fragment>
-                )}
-            </div>
+                        {this.state.loading?
+                            <Spinner />
+                            :(
+                                <Fragment>
+                                    <MatchesList
+                                        header={'Мои матчи'}
+                                        matches={this.props.myMatches}
+                                        userId={this.props.user.id}
+                                    />
+                                    <br/>
+                                    <MatchesList
+                                        header={'другие матчи'}
+                                        matches={this.props.matches}
+                                        userId={this.props.user.id}
+                                    />
+                                </Fragment>
+                            )}
+                    </div>
+                </div>
+            </Fragment>
         )
     }
 }
@@ -61,7 +70,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         getMatches: (id, cb) => dispatch(getMatches(id, cb)),
-        getMyMatches: (id) => dispatch(getMyMatches(id))
+        getMyMatches: (id) => dispatch(getMyMatches(id)),
+        onLogoutUser: () => dispatch(logoutUser())
     };
 };
 

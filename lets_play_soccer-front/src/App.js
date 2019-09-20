@@ -20,7 +20,7 @@ class App extends Component {
                 <Route exact path="/only_for_dev/icons" component={FontIcons}/>
                 <Route exact path="/profile/:id" component={Profile}/>
                 <Route exact path="/confirm" component={ConfirmPhone} />
-                <Route path="/:page" component={MainPrivate} />
+                <Route path="/" component={MainPrivate} />
             </Switch>
         );
     }

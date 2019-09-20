@@ -27,7 +27,6 @@ router.post('/', async (req, res) => {
 
 
         await GenerationCode.findOrCreate({where: {phoneNumber: user.phoneNumber}, defaults: {displayName: user.displayName, code: user.code, password: user.password}}).spread((user, created) => {
-            console.log(created);
             return user;
         })
             .then(async data => {

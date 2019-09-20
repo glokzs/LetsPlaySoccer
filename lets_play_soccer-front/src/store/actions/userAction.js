@@ -19,13 +19,31 @@ const registerUserError = (error) => {
     return {type: REGISTER_USER_ERROR, error};
 };
 
-export const registerUser = userData => {
+export const registerUser = (code, userData) => {
     // console.log(userData);
     return dispatch => {
-        return axios.post("/users", userData).then(
+        return axios.post("/users/" + code, userData).then(
             response => {
                 dispatch(registerUserSuccess(response.data));
                 dispatch(push("/tutorial"));
+            },
+            error => {
+                if (error.response && error.response.data) {
+                    dispatch(registerUserError(error.response.data));
+                } else {
+                    dispatch(registerUserError({global: "No internet connection"}));
+                }
+            }
+        )
+    }
+};
+export const confirmedPhoneNumber = userData => {
+    // console.log(userData);
+    return dispatch => {
+        dispatch({type: 'TEST', userData});
+        return axios.post("/code", userData).then(
+            response => {
+                dispatch(push("/confirm"));
             },
             error => {
                 if (error.response && error.response.data) {

@@ -12,13 +12,16 @@ const initialState = {
     registerError: null,
     loginError: null,
     updateUserDataError: null,
-    user: null
+    user: null,
+    codedUser: ''
 };
 
 const userReducer = (state = initialState, action) => {
     switch (action.type) {
         case REGISTER_USER_SUCCESS:
             return {...state, user: action.user, registerError: null};
+        case 'TEST':
+            return {...state, codedUser: action.userData};
         case REGISTER_USER_ERROR:
             return {...state, registerError: action.error};
         case LOGIN_USER_SUCCESS:

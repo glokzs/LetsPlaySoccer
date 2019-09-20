@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from "react-redux";
 import {Form, Button, Alert} from 'react-bootstrap';
-import {clearUserErrors, loginUser, registerUser} from '../store/actions/userAction';
+import {clearUserErrors, confirmedPhoneNumber, loginUser, registerUser} from '../store/actions/userAction';
 import FormElement from '../components/UI/FormElement';
 import MobileInput from "../components/UI/MobileInput";
 import Spinner from "../components/UI/Spinner";
@@ -27,11 +27,13 @@ class Register extends Component {
 
     submitFormHandler = (e) => {
         e.preventDefault();
-        const formData = new FormData();
-        formData.append('phoneNumber', '+7'+this.state.phone);
-        formData.append('password', this.state.password);
-        formData.append('displayName', this.state.displayName);
-        this.props.registration(formData);
+        const user = {};
+
+        user.phoneNumber = '+7'+this.state.phone;
+        user.password = this.state.password;
+        user.displayName = this.state.displayName;
+
+        this.props.sendToValidateAndGenerateCode(user);
     };
 
     render() {
@@ -95,7 +97,7 @@ const mapStateToProps = state => {
 };
 const mapDispatchToProps = dispatch => {
     return {
-        registration: data=> dispatch(registerUser(data)),
+        sendToValidateAndGenerateCode: (data)=> dispatch(confirmedPhoneNumber(data)),
         clearUserErrors: () => dispatch(clearUserErrors()),
         loginUser: data => dispatch(loginUser(data))
     };

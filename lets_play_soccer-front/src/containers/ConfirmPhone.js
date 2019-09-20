@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import {Form, Button, Alert} from 'react-bootstrap';
 import {Redirect} from "react-router-dom";
 import Spinner from "../components/UI/Spinner";
+import {clearUserErrors, confirmedPhoneNumber, loginUser, registerUser} from "../store/actions/userAction";
+import {connect} from "react-redux";
 
 const CODE_LENGTH = new Array(4).fill(0);
 
@@ -47,6 +49,11 @@ class ConfirmPhone extends Component {
                 value: (state.value + value).slice(0, CODE_LENGTH.length),
             };
         });
+    };
+    onSubmitHandler = (e) => {
+        e.preventDefault();
+        console.log(this.props.codedUser);
+        this.props.registration(this.state.value, this.props.codedUser);
     };
 
     render() {
@@ -119,5 +126,17 @@ class ConfirmPhone extends Component {
         )
     }
 }
+const mapStateToProps = state => {
+    return {
+        codedUser: state.users.codedUser,
+        registerError: state.users.registerError
+    };
+};
+const mapDispatchToProps = dispatch => {
+    return {
+        registration: (code, data)=> dispatch(registerUser(code, data)),
+        clearUserErrors: () => dispatch(clearUserErrors())
+    };
+};
 
-export default ConfirmPhone;
+export default connect(mapStateToProps, mapDispatchToProps)(ConfirmPhone);

@@ -69,7 +69,9 @@ router.get('/:id', (req, res) => {
 
 });
 
-router.post('/:code', upload.single('avatar'), async (req, res) => {
+router.post('/:code', async (req, res) => {
+  console.log('hjghjfgjhfghfgfhdfgdfgd', req.body);
+
   const generationCode = await GenerationCode.findOne({where: {phoneNumber: req.body.phoneNumber}});
   const code = generationCode.dataValues.code;
   const userCode = parseInt(req.params.code);
@@ -81,11 +83,6 @@ router.post('/:code', upload.single('avatar'), async (req, res) => {
       email: req.body.email,
       token: nanoid()
     };
-
-    if (req.file) {
-      user.avatar = req.file.filename;
-    }
-
     if(req.body.phoneNumber) {
       const userFromDB = await User.findOne({
         where: {
@@ -158,7 +155,6 @@ router.delete('/sessions', async (req, res) => {
   });
 
   if(!user) return res.send(success);
-
 
   user.update({token: nanoid()});
 

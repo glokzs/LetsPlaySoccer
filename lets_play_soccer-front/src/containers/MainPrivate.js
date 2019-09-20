@@ -1,10 +1,12 @@
 import React, {Component, Fragment} from 'react';
-import {withRouter} from "react-router-dom";
+import {Route, Switch, withRouter} from "react-router-dom";
 import {connect} from 'react-redux';
-import Toolbar from "../components/UI/Toolbar";
-import {logoutUser} from "../store/actions/userAction";
-import MainRoutes from '../MainRoutes';
 import {Redirect} from "react-router";
+import Matches from "./Matches";
+import CreateMatch from "./CreateMatch";
+import MatchDetails from "./MatchDetails";
+import Fields from "./Fields";
+import FieldDetails from "./FieldDetails";
 
 
 class MainPrivate extends Component {
@@ -13,18 +15,15 @@ class MainPrivate extends Component {
     return (
       <Fragment>
         {
-          this.props.user?
+          this.props.user && this.props.user.token?
             (
-              <Fragment>
-                <header>
-                  <Toolbar user={this.props.user} logout={this.props.onLogoutUser} />
-                </header>
-                <main>
-                  <div className='container'>
-                     <MainRoutes />
-                  </div>
-                </main>
-              </Fragment>
+              <Switch>
+                <Route exact path="/" component={Matches}/>
+                <Route exact path='/match/create' component={CreateMatch}/>
+                <Route path='/matches/:id' component={MatchDetails} />
+                <Route exact path='/fields' component={Fields}/>
+                <Route path='/fields/:id' component={FieldDetails}/>
+              </Switch>
             ) :
             <Redirect to={{ pathname: '/login', state: { from: this.props.location } }} />
         }
@@ -39,12 +38,8 @@ const mapStateToProps = state => {
   }
 };
 
-const mapDispatchToProps = dispatch => ({
-  onLogoutUser: () => dispatch(logoutUser())
-});
 
-
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(MainPrivate));
+export default withRouter(connect(mapStateToProps, null)(MainPrivate));
 
 
 
