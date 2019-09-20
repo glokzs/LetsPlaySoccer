@@ -25,7 +25,6 @@ class Matches extends Component {
     }
 
     render() {
-        // console.log(this.props.matches);
         return (
             <div className='matches'>
 

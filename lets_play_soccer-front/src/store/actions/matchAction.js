@@ -46,6 +46,7 @@ export const getMatches = (id, cb) => {
             })
     };
 };
+
 export const getMyMatches = (id) => {
     return dispatch => {
         axios.get("/matches", {params: {organizerId: id, mine: true}})
@@ -58,12 +59,15 @@ export const getMyMatches = (id) => {
             })
     };
 };
+
 export const postMatch = (data) => {
     return dispatch => {
         return axios.post("/matches", data).then(
             response => {
                 const data = response.data;
-                dispatch({type: POST_MATCH_SUCCESS, data})
+                dispatch({type: POST_MATCH_SUCCESS, data});
+                // dispatch(getMyMatches(data.id));
+                console.log(data);
             },
             error => {
                 dispatch({type: POST_MATCH_ERROR, error})
@@ -86,6 +90,7 @@ export const becomeMatchMember = (data) => {
         )
     }
 };
+
 export const removeUserFromMatch = (data) => {
     return dispatch => {
         return axios.delete("/user_match", {data}).then(

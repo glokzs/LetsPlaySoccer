@@ -5,7 +5,7 @@ const auth = async (req, res, next) => {
   if (!token) {
     return res.status(401).send({message: "Токен не предоставлен"});
   }
-  const user = await User.findOne({token});
+  const user = await User.findOne({where: {token}});
   if(!user) {
     return res.status(401).send({message: "Пользователь не найден"});
   }

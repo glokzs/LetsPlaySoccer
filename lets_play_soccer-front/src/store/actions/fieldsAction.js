@@ -1,4 +1,4 @@
-import {GET_FIELDS_ERROR, GET_FIELDS_SUCCESS, IS_FIELD_LIST_EMPTY} from "./action-type";
+import {GET_ALL_FIELDS_AT_ONCE, GET_FIELDS_ERROR, GET_FIELDS_SUCCESS, IS_FIELD_LIST_EMPTY} from "./action-type";
 import axios from "../../axios-api";
 
 const getFieldsSuccess = data => {
@@ -29,16 +29,17 @@ export const getFields = (cb) => {
     return dispatch => {
         return axios.get("/fields").then(
             response => {
-                dispatch(getFieldsSuccess(response.data));
-                cb();
+                const data = response.data;
+                dispatch({type: GET_ALL_FIELDS_AT_ONCE, data});
+                if(cb) cb();
             },
             error => {
                 if (error.response && error.response.data) {
                     dispatch(getFieldsError(error.response.data));
-                    cb();
+                    if(cb) cb();
                 } else {
                     dispatch(getFieldsError({global: "No internet connection"}));
-                    cb();
+                    if(cb) cb();
                 }
             }
         )

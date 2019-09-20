@@ -42,8 +42,8 @@ module.exports = (sequelize, type) => {
           }
         }
       },
-      latitude: {
-        type: type.INTEGER,
+      lat: {
+        type: type.DOUBLE,
         allowNull: true,
         defaultValue: null,
         validate: {
@@ -57,8 +57,8 @@ module.exports = (sequelize, type) => {
           }
         }
       },
-      longitude: {
-        type: type.INTEGER,
+      lng: {
+        type: type.DOUBLE,
         allowNull: true,
         defaultValue: null,
         validate: {
