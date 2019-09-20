@@ -8,7 +8,7 @@ const types = require("./app/types");
 const formats = require("./app/formats");
 const matches = require("./app/matches");
 const user_match = require("./app/user_match");
-
+const generationCode = require('./app/generationCode');
 
 const cors = require('cors');
 
@@ -30,6 +30,7 @@ app.use('/covers', covers);
 app.use('/types', types);
 app.use('/formats', formats);
 app.use('/matches', matches);
+app.use('/code', generationCode);
 app.use('/user_match', user_match);
 
 

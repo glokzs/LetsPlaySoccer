@@ -6,6 +6,7 @@ const CoverModel = require("./models/Cover");
 const TypeModel = require("./models/Type");
 const MatchModel = require("./models/Match");
 const UserMatchModel = require('./models/UserMatch');
+const GenerationCodeModel = require('./models/GenerationCode');
 const {_user, _password} = require('./mysqlpass');
 
 // create locally file, name it 'mysqlpass.js'
@@ -35,7 +36,7 @@ const sequelize = new Sequelize("LetsPlaySoccer", _user, _password, {
 });
 const User = UserModel(sequelize, Sequelize);
 const Field = FieldModel(sequelize, Sequelize);
-
+const GenerationCode = GenerationCodeModel(sequelize, Sequelize);
 const Format = FormatModel(sequelize, Sequelize);
 const Cover = CoverModel(sequelize, Sequelize);
 const Type = TypeModel(sequelize, Sequelize);
@@ -58,6 +59,7 @@ module.exports = {
     Cover,
     Type,
     Match,
-    UserMatch
+    UserMatch,
+    GenerationCode
 };
 
