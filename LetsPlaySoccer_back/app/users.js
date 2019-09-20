@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const {User} = require('../sequelize');
+const {User, GenerationCode} = require('../sequelize');
 
 const multer  = require('multer');
 const path = require('path');
@@ -69,43 +69,50 @@ router.get('/:id', (req, res) => {
 
 });
 
-router.post('/', upload.single('avatar'), async (req, res) => {
-  const user = {
-    displayName: req.body.displayName,
-    phoneNumber: req.body.phoneNumber,
-    password: req.body.password,
-    email: req.body.email,
-    token: nanoid()
-  };
+router.post('/:code', upload.single('avatar'), async (req, res) => {
+  const generationCode = await GenerationCode.findOne({where: {phoneNumber: req.body.phoneNumber}});
+  const code = generationCode.dataValues.code;
+  const userCode = parseInt(req.params.code);
+  if(code === userCode) {
+    const user = {
+      displayName: req.body.displayName,
+      phoneNumber: req.body.phoneNumber,
+      password: req.body.password,
+      email: req.body.email,
+      token: nanoid()
+    };
 
-  if (req.file) {
-    user.avatar = req.file.filename;
-  }
-
-  if(req.body.phoneNumber) {
-    const userFromDB = await User.findOne({
-      where: {
-        phoneNumber: req.body.phoneNumber
-      },
-    });
-
-    if(userFromDB) {
-      return res.status(400).send({message: 'Пользователь уже существует'});
+    if (req.file) {
+      user.avatar = req.file.filename;
     }
 
-
-    User.create(user)
-      .then(data => {
-        const user = data.toJSON();
-        delete user.password;
-        res.json(user);
-      })
-      .catch(err => {
-        res.json({message: err.errors[0].message})
+    if(req.body.phoneNumber) {
+      const userFromDB = await User.findOne({
+        where: {
+          phoneNumber: req.body.phoneNumber
+        },
       });
 
+      if(userFromDB) {
+        return res.status(400).send({message: 'Пользователь уже существует'});
+      }
+
+
+      User.create(user)
+          .then(data => {
+            const user = data.toJSON();
+            delete user.password;
+            res.json(user);
+          })
+          .catch(err => {
+            res.json({message: err.errors[0].message})
+          });
+
+    } else {
+      return res.status(400).send({message: "Введите номер телефона"})
+    }
   } else {
-    return res.status(400).send({message: "Введите номер телефона"})
+    res.send({message: "Error"});
   }
 });
 
