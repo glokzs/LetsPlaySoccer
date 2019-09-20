@@ -104,7 +104,7 @@ router.post('/', auth, async (req, res) => {
     if(organizer) {
         Match.create(match).then(match => UserMatch.create({
             matchId: match.id,
-            userId: req.body.userId,
+            userId: req.user.id,
             confirmed: true,
             organizer: true
         }))
