@@ -5,7 +5,6 @@ import Login from "./containers/Login";
 import Tutorial from "./containers/Tutorial";
 import MainPrivate from "./containers/MainPrivate";
 import FontIcons from './containers/OnlyForDevelopment/FontIcons';
-import Profile from './containers/Profile';
 import ConfirmPhone from './containers/ConfirmPhone';
 
 
@@ -17,10 +16,10 @@ class App extends Component {
                 <Route exact path="/register" component={Register}/>
                 <Route exact path="/login" component={Login}/>
                 <Route exact path="/tutorial" component={Tutorial}/>
-                <Route exact path="/only_for_dev/icons" component={FontIcons}/>
-                <Route exact path="/profile/:id" component={Profile}/>
                 <Route exact path="/confirm" component={ConfirmPhone} />
-                <Route path="/" component={MainPrivate} />
+                <Route exact path="/" component={MainPrivate} />
+
+                <Route exact path="/only_for_dev/icons" component={FontIcons}/>
             </Switch>
         );
     }

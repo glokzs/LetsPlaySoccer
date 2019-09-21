@@ -7,6 +7,7 @@ import CreateMatch from "./CreateMatch";
 import MatchDetails from "./MatchDetails";
 import Fields from "./Fields";
 import FieldDetails from "./FieldDetails";
+import Profile from "./Profile";
 
 
 class MainPrivate extends Component {
@@ -23,6 +24,7 @@ class MainPrivate extends Component {
                 <Route path='/matches/:id' component={MatchDetails} />
                 <Route exact path='/fields' component={Fields}/>
                 <Route path='/fields/:id' component={FieldDetails}/>
+                <Route exact path="/profile/:id" component={Profile}/>
               </Switch>
             ) :
             <Redirect to={{ pathname: '/login', state: { from: this.props.location } }} />
