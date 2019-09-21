@@ -55,7 +55,7 @@ class Tutorial extends Component {
                                 <p className='tutorial__text'>Выигрывайте матчи среди лучших команд</p>
                                 <Link
                                     exact={'true'}
-                                    to={'/'}
+                                    to={'/my/matches'}
                                     className="tutorial__next"
                                 >
                                     Дальше

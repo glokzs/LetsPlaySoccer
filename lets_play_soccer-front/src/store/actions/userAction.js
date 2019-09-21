@@ -18,7 +18,7 @@ export const registerUser = (code, userData) => {
             response => {
                 const user = response.data;
                 dispatch({type: REGISTER_USER_SUCCESS, user});
-                dispatch(push("/tutorial"));
+                dispatch(push("/my/tutorial"));
             },
             error => {
                 if (error.response && error.response.data) {
@@ -59,7 +59,7 @@ export const loginUser = userData => {
             response => {
                 const user = response.data;
                 dispatch({type: LOGIN_USER_SUCCESS, user});
-                dispatch(push('/'));
+                dispatch(push('/my/matches'));
             },
             error => {
                 if (error.response && error.response.data) {

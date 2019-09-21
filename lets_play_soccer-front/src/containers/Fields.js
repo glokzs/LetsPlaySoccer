@@ -81,7 +81,7 @@ class Fields extends Component {
                                         key={inx}
                                         className='field__card'
                                         to={{
-                                            pathname: `/fields/${field.id}`,
+                                            pathname: `/my/fields/${field.id}`,
                                             state: field
                                         }}
                                     >

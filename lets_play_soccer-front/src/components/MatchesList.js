@@ -36,7 +36,7 @@ class MatchesList extends Component {
                                         <Link
                                             className='matches__card'
                                             key={match.id}
-                                            to={`/matches/${match.id}`}
+                                            to={`/my/matches/${match.id}`}
                                         >
                                             <div className='matches__card__head'>
                                                 <img className='matches__avatar' src={photo} alt="avatar"/>
@@ -85,7 +85,7 @@ class MatchesList extends Component {
                                         </Link>
                                     );
                                 })}
-                            </Fragment>) : null
+                            </Fragment>) : <div>nothing yet</div>
                     }
                 </Fragment>
             </div>

@@ -4,7 +4,7 @@ const router = express.Router();
 const {Match, User, Field, UserMatch} = require('../sequelize');
 const auth = require('../middlewares/auth');
 
-router.get('/', async (req, res) => {
+router.get('/', auth, async (req, res) => {
     let query = {};
      if(req.query.organizerId && req.query.mine) {
         query = {organizerId: req.query.organizerId};
@@ -45,7 +45,7 @@ router.get('/', async (req, res) => {
     res.send(matches);
 });
 
-router.get('/:id', async (req, res) => {
+router.get('/:id', auth, async (req, res) => {
     const match = await Match.findOne({
         where: {id: req.params.id},
         include: [

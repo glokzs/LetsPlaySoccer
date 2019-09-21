@@ -1,32 +1,44 @@
 import React, {Component} from 'react';
-import {Route, Switch} from "react-router-dom";
-import Register from "./containers/Register";
-import Login from "./containers/Login";
-import Tutorial from "./containers/Tutorial";
-import MainPrivate from "./containers/MainPrivate";
-import FontIcons from './containers/OnlyForDevelopment/FontIcons';
-import ConfirmPhone from './containers/ConfirmPhone';
+import {Redirect, Route, Switch, withRouter} from "react-router-dom";
+import {connect} from "react-redux";
+import PrivateRoutes from "./routes/PrivateRoutes";
+import PublicRoutes from "./routes/PublicRoutes";
 
+const PrivateRoute = ({isAllowed, ...props}) => isAllowed ? <Route {...props} /> : <Redirect to="/login"/>;
+
+const PublicRoute = ({isAllowed, ...props}) => isAllowed ? <Route {...props} /> : <Redirect to="/my/matches" />;
 
 class App extends Component {
 
     render() {
         return (
             <Switch>
-                <Route exact path="/register" component={Register}/>
-                <Route exact path="/login" component={Login}/>
-                <Route exact path="/tutorial" component={Tutorial}/>
-                <Route exact path="/confirm" component={ConfirmPhone} />
-                <Route exact path="/" component={MainPrivate} />
+                <PrivateRoute
+                    path="/my/"
+                    // exact
+                    component={PrivateRoutes}
+                    isAllowed={this.props.user && this.props.user.token}
+                />
+                <PublicRoute
+                    path="/"
+                    // exact
+                    component={PublicRoutes}
+                    isAllowed={!this.props.user || (this.props.user && !this.props.user.token)}
+                />
 
-                <Route exact path="/only_for_dev/icons" component={FontIcons}/>
             </Switch>
         );
     }
 }
 
+const mapStateToProps = state => {
+    return {
+        user: state.users.user
+    }
+};
 
-export default App;
+
+export default withRouter(connect(mapStateToProps, null)(App));
 
 
 
