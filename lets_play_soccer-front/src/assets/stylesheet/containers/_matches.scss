@@ -11,6 +11,14 @@
     margin-bottom: 15px;
     display: block;
     color: $grey;
+    .icon--clock,
+    .icon--calendar-b,
+    .xicon--map-b {
+      &::before {
+        font-size: 14px;
+        color: $secondary;
+      }
+    }
     &__head {
       display: flex;
       align-items: center;
@@ -139,12 +147,4 @@
 
 .day-of-the-week {
   text-transform: capitalize;
-}
-.icon--clock,
-.icon--calendar-b,
-.icon--map-b {
-  &::before {
-    font-size: 14px;
-    color: $secondary;
-  }
 }

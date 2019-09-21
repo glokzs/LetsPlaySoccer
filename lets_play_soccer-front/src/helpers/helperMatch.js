@@ -46,3 +46,47 @@ export const getMatchStatusImg = (status) => {
             return 'waiting';
     }
 };
+
+//create match
+export const getHoursInCreateMatch = hours => {
+    if (hours === 1) {
+        return 'час';
+    } else if (hours >= 0.5 && hours < 5) {
+        return 'часа';
+    } else if (hours >= 5 ) {
+        return 'часов';
+    }
+};
+export const getFormat = people => {
+    switch (people) {
+        case 1:
+        case 5:
+        case 6:
+        case 7:
+        case 8:
+        case 9:
+        case 10:
+        case 11:
+            return 'человек';
+        case 2:
+        case 3:
+        case 4:
+            return 'человека';
+        default:
+            return '';
+    }
+};
+export const getTeams = team => {
+    switch (team) {
+        case 1:
+            return 'команда';
+        case 5:
+            return 'команд';
+        case 2:
+        case 3:
+        case 4:
+            return 'команды';
+        default:
+            return '';
+    }
+};

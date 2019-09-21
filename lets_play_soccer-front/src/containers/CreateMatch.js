@@ -5,6 +5,7 @@ import moment from 'moment';
 import {postMatch} from "../store/actions/matchAction";
 import {connect} from "react-redux";
 import LeafletMap from "./LeafletMap";
+import {getFormat, getHoursInCreateMatch, getTeams} from "../helpers/helperMatch";
 
 
 class CreateMatch extends Component {
@@ -56,48 +57,6 @@ class CreateMatch extends Component {
     onPriceChange = price => this.setState({price, error: ''});
     onDurationChange = duration => this.setState({duration, error: ''});
 
-    getHours = hours => {
-        if (hours === 1) {
-            return 'час';
-        } else if (hours >= 0.5 && hours < 5) {
-            return 'часа';
-        } else if (hours >= 5 ) {
-            return 'часов';
-        }
-    };
-    getFormat = people => {
-        switch (people) {
-            case 1:
-            case 5:
-            case 6:
-            case 7:
-            case 8:
-            case 9:
-            case 10:
-            case 11:
-                return 'человек';
-            case 2:
-            case 3:
-            case 4:
-                return 'человека';
-            default:
-                return '';
-        }
-    };
-    getTeams = team => {
-        switch (team) {
-            case 1:
-                return 'команда';
-            case 5:
-                return 'команд';
-            case 2:
-            case 3:
-            case 4:
-                return 'команды';
-            default:
-                return '';
-        }
-    };
     getPricePerPerson = () => {
         const price = Math.round(this.state.price / (this.state.playersInTeam * this.state.numOfTeams));
         if (price === Infinity || isNaN(price)) return 0;
@@ -107,9 +66,9 @@ class CreateMatch extends Component {
     disabledDate = current => current < moment().startOf('day');
 
     render() {
-        const timeWord = this.getHours(this.state.duration);
-        const teamWord = this.getTeams(this.state.numOfTeams);
-        const people = this.getFormat(this.state.playersInTeam);
+        const timeWord = getHoursInCreateMatch(this.state.duration);
+        const teamWord = getTeams(this.state.numOfTeams);
+        const people = getFormat(this.state.playersInTeam);
         return (
             <Fragment>
                 <header className='toolbar__header'>
@@ -178,11 +137,14 @@ class CreateMatch extends Component {
                         <div className="col">
                             <div className='match__label'>Выберите площадку для игры</div>
                             <div className='position-relative'>
-                                <div className='icon--map-b match__input__icon'/>
+                                <div
+                                    onClick={this.toggleMap}
+                                    className='icon--map-b match__input__icon'
+                                />
                                 <Input
                                     placeholder='Выберите поле'
                                     className='match__input'
-                                    onFocus={this.toggleMap}
+                                    onFocus={() => this.props.history.push('/my/fields')}
                                     value={this.state.fieldName}
                                 />
                             </div>
