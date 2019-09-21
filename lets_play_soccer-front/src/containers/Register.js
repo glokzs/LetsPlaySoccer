@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from "react-redux";
 import {Form, Button, Alert} from 'react-bootstrap';
-import {clearUserErrors, confirmedPhoneNumber, loginUser, registerUser} from '../store/actions/userAction';
+import {clearUserErrors, confirmedPhoneNumber, loginUser} from '../store/actions/userAction';
 import FormElement from '../components/UI/FormElement';
 import MobileInput from "../components/UI/MobileInput";
 import Spinner from "../components/UI/Spinner";

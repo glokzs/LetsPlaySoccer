@@ -69,11 +69,12 @@ router.get('/:id', (req, res) => {
 
 });
 
-router.post('/:code', async (req, res) => {
+router.post('/register/:code', async (req, res) => {
   console.log('hjghjfgjhfghfgfhdfgdfgd', req.body);
 
   const generationCode = await GenerationCode.findOne({where: {phoneNumber: req.body.phoneNumber}});
   const code = generationCode.dataValues.code;
+  console.log(req.params);
   const userCode = parseInt(req.params.code);
   if(code === userCode) {
     const user = {
@@ -93,8 +94,6 @@ router.post('/:code', async (req, res) => {
       if(userFromDB) {
         return res.status(400).send({message: 'Пользователь уже существует'});
       }
-
-
       User.create(user)
           .then(data => {
             const user = data.toJSON();
@@ -108,18 +107,20 @@ router.post('/:code', async (req, res) => {
     } else {
       return res.status(400).send({message: "Введите номер телефона"})
     }
-  } else {
-    res.send({message: "Error"});
   }
+  else res.send({message: "Error"});
 });
 
 router.post('/sessions', async (req, res) => {
+  console.log(req.body);
   try {
     const user = await User.findOne({
       where: {
         phoneNumber: req.body.phoneNumber
       },
     });
+
+    console.log(user);
 
     if(!user) {
       return res.status(400).send({message: 'Такого пользователя нет'});

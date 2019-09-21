@@ -3,78 +3,71 @@ import {
     LOGIN_USER_SUCCESS,
     LOGIN_USER_ERROR,
     LOGOUT_USER,
-    REGISTER_USER_ERROR, 
+    REGISTER_USER_ERROR,
     CLEAR_USER_ERRORS,
     UPDATE_USER_SUCCESS,
-    UPDATE_USER_ERROR
+    UPDATE_USER_ERROR, SAVE_TEMPORARY_USER_TO_REDUX_STORE
 } from './action-type';
 import axios from "../../axios-api";
 import {push} from "connected-react-router";
-// import {NotificationManager} from "react-notifications";
-
-const registerUserSuccess = user => {
-    return {type: REGISTER_USER_SUCCESS, user};
-};
-const registerUserError = (error) => {
-    return {type: REGISTER_USER_ERROR, error};
-};
+import {NotificationManager} from "react-notifications";
 
 export const registerUser = (code, userData) => {
-    // console.log(userData);
     return dispatch => {
         return axios.post("/users/" + code, userData).then(
             response => {
-                dispatch(registerUserSuccess(response.data));
+                const user = response.data;
+                dispatch({type: REGISTER_USER_SUCCESS, user});
                 dispatch(push("/tutorial"));
             },
             error => {
                 if (error.response && error.response.data) {
-                    dispatch(registerUserError(error.response.data));
+                    const data = error.response.data;
+                    dispatch({type: REGISTER_USER_ERROR, data});
                 } else {
-                    dispatch(registerUserError({global: "No internet connection"}));
+                    const data = {global: "Что-то пошло не так"};
+                    dispatch({type: REGISTER_USER_ERROR, data});
                 }
             }
         )
     }
 };
+
 export const confirmedPhoneNumber = userData => {
-    // console.log(userData);
     return dispatch => {
-        dispatch({type: 'TEST', userData});
-        return axios.post("/code", userData).then(
+        dispatch({type: SAVE_TEMPORARY_USER_TO_REDUX_STORE, userData});
+        return axios.post("/register/code", userData).then(
             response => {
                 dispatch(push("/confirm"));
             },
             error => {
                 if (error.response && error.response.data) {
-                    dispatch(registerUserError(error.response.data));
+                    const data = error.response.data;
+                    dispatch({type: REGISTER_USER_ERROR, data});
                 } else {
-                    dispatch(registerUserError({global: "No internet connection"}));
+                    const data = {global: "Что-то пошло не так"};
+                    dispatch({type: REGISTER_USER_ERROR, data});
                 }
             }
         )
     }
-};
-
-const loginUserSuccess = (user) => {
-    return {type: LOGIN_USER_SUCCESS, user};
-};
-const loginUserError = (error) => {
-    return {type: LOGIN_USER_ERROR, error};
 };
 
 export const loginUser = userData => {
     return dispatch => {
         return axios.post('/users/sessions', userData).then(
             response => {
-                dispatch(loginUserSuccess(response.data));
+                const user = response.data;
+                dispatch({type: LOGIN_USER_SUCCESS, user});
                 dispatch(push('/'));
             },
             error => {
                 if (error.response && error.response.data) {
-                    dispatch(loginUserError(error.response.data));
+                    const data = error.response.data;
+                    dispatch({type: LOGIN_USER_ERROR, data});
                 } else {
-                    dispatch(loginUserError({global: "Что-то пошло не так"}));
+                    const data = {global: "Что-то пошло не так"};
+                    dispatch({type: LOGIN_USER_ERROR, data});
                 }
             }
         );
@@ -84,12 +77,14 @@ export const loginUser = userData => {
 export const logoutUser = () => {
     return (dispatch, getState) => {
         const token = getState().users.user.token;
-        const headers = {Token: token};
+        const headers = {Authorization: token};
 
         return axios.delete('/users/sessions', {headers}).then(
             response => {
                 dispatch({type: LOGOUT_USER});
                 dispatch(push('/login'));
+                localStorage.removeItem('user');
+                NotificationManager.success("Logged out!");
             }
         );
     }
@@ -101,26 +96,22 @@ export const clearUserErrors = () => {
     }
 };
 
-
-const updateUserError = (error) => {
-    return {type: UPDATE_USER_ERROR, error};
-};
-const updateUserSuccess = (user) => {
-    return {type: UPDATE_USER_SUCCESS, user};
-};
 export const updateUser = (updateDataUser) => {
-    console.log(updateDataUser);
+    // console.log(updateDataUser);
     return dispatch => {
         return axios.post('/users', updateDataUser).then(
             response => {
-                dispatch(updateUserSuccess(response.data));
+                const user = response.data;
+                dispatch({type: UPDATE_USER_SUCCESS, user});
             },
             error => {
                 if (error.response && error.response.data) {
-                    dispatch(updateUserError(error.response.data));
+                    const data = error.response.data;
+                    dispatch({type: UPDATE_USER_ERROR, data});
                 } else {
-                    dispatch(updateUserError({global: "Что-то пошло не так"}));
-                };
+                    const data = {global: "Что-то пошло не так"};
+                    dispatch({type: UPDATE_USER_ERROR, data});
+                }
             }
         );
     };

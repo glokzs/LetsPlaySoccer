@@ -31,22 +31,10 @@ const middleware = [
   routerMiddleware(history)
 ];
 
-const saveToLocalStorage = (state) => {
-  try {
-      const serializedState = JSON.stringify(state);
-      localStorage.setItem('user', serializedState);
-  } catch (e) {
-      console.log("Could not save user");
-  }
-};
-
 const loadFromLocalStorage = () => {
   try {
-      const serializedState = localStorage.getItem('user');
-      if(serializedState === null) {
-          return;
-      }
-      return JSON.parse(serializedState);
+      const token = localStorage.getItem('user');
+      if(token) return token;
   } catch {
       return undefined;
   }
@@ -64,17 +52,14 @@ axios.interceptors.request.use(config => {
   } catch {
       // do nothing
   }
-
   return config;
 });
 
 store.subscribe(() => {
-  const user = store.getState().users.user;
-  saveToLocalStorage({
-      users: {
-          user: user
-      }
-  });
+  const users = store.getState().users;
+  if (users && users.user && users.user.token) {
+      localStorage.setItem('user', users.user.token);
+  }
 });
 
 const app = (

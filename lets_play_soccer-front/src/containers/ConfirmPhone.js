@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {Form, Button, Alert} from 'react-bootstrap';
 import {Redirect} from "react-router-dom";
 import Spinner from "../components/UI/Spinner";
-import {clearUserErrors, confirmedPhoneNumber, loginUser, registerUser} from "../store/actions/userAction";
+import {clearUserErrors, registerUser} from "../store/actions/userAction";
 import {connect} from "react-redux";
 
 const CODE_LENGTH = new Array(4).fill(0);

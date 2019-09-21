@@ -11,7 +11,7 @@ router.post('/', async (req, res) => {
         displayName: req.body.displayName,
         phoneNumber: req.body.phoneNumber,
         password: req.body.password,
-        code: generate(numbers, 4)
+        code: generate('123456789', 4)
     };
 
     if(req.body.phoneNumber) {
@@ -32,8 +32,9 @@ router.post('/', async (req, res) => {
             .then(async data => {
                 const user = data.toJSON();
                 delete user.password;
-                console.log(user.code);
-                const phone = user.phoneNumber.replace('+', '');
+                delete user.code;
+                console.log(user);
+                // const phone = user.phoneNumber.replace('+', '');
                 console.log(phone);
                 res.send(user);
             })
