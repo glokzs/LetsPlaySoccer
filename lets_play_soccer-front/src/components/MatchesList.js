@@ -6,7 +6,7 @@ import {
     getDate,
     getDayOfTheWeek, getHours,
     getPlayerWord,
-    getPricePerPerson, getTimeDiff
+    getPricePerPerson
 } from "../helpers/helperMatch";
 
 
@@ -55,7 +55,7 @@ class MatchesList extends Component {
                                                         </div>
                                                         <div className='icon--clock'>
                                                             &nbsp;&nbsp;<span className='matches__text--main'>{getHours(match.start)}</span>
-                                                            &nbsp;- {getTimeDiff(match.start, match.end)}
+                                                            &nbsp;- {getHours(match.end)}
                                                         </div>
                                                         <div className='icon--calendar-b'>
                                                             &nbsp;&nbsp;<span className='matches__text--main'>{getDate(match.start)}</span>,
