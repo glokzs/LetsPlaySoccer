@@ -85,7 +85,7 @@ class MatchesList extends Component {
                                         </Link>
                                     );
                                 })}
-                            </Fragment>) : <div>nothing yet</div>
+                            </Fragment>) : null
                     }
                 </Fragment>
             </div>

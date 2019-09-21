@@ -5,6 +5,7 @@ import {getMatches, getMyMatches} from "../store/actions/matchAction";
 import MatchesList from "../components/MatchesList";
 import Toolbar from "../components/UI/Toolbar";
 import {logoutUser} from "../store/actions/userAction";
+import {Empty} from "antd";
 
 
 class Matches extends Component {
@@ -39,17 +40,25 @@ class Matches extends Component {
                             <Spinner />
                             :(
                                 <Fragment>
-                                    <MatchesList
-                                        header={'Мои матчи'}
-                                        matches={this.props.myMatches}
-                                        userId={this.props.user.id}
-                                    />
-                                    <br/>
-                                    <MatchesList
-                                        header={'другие матчи'}
-                                        matches={this.props.matches}
-                                        userId={this.props.user.id}
-                                    />
+                                    {!this.props.matches.length && !this.props.myMatches.length ?
+                                        <div className='mt-5'>
+                                            <Empty description={'Список матчей пока пустой. Создайте свой матч'}/>
+                                        </div>
+                                        :
+                                        <Fragment>
+                                            <MatchesList
+                                                header={'Мои матчи'}
+                                                matches={this.props.myMatches}
+                                                userId={this.props.user.id}
+                                            />
+                                            <br/>
+                                            <MatchesList
+                                                header={'другие матчи'}
+                                                matches={this.props.matches}
+                                                userId={this.props.user.id}
+                                            />
+                                        </Fragment>
+                                    }
                                 </Fragment>
                             )}
                     </div>
@@ -71,7 +80,7 @@ const mapDispatchToProps = dispatch => {
     return {
         getMatches: (id, cb) => dispatch(getMatches(id, cb)),
         getMyMatches: (id) => dispatch(getMyMatches(id)),
-        onLogoutUser: () => dispatch(logoutUser())
+        logout: () => dispatch(logoutUser())
     };
 };
 
