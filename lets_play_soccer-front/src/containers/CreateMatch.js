@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import {DatePicker, Input, InputNumber, TimePicker} from 'antd';
+import {Alert, DatePicker, Input, InputNumber, TimePicker} from 'antd';
 import 'moment/locale/ru';
 import moment from 'moment';
 import {postMatch} from "../store/actions/matchAction";
@@ -26,7 +26,7 @@ class CreateMatch extends Component {
     };
 
     toggleMap = (fieldId, fieldName) => {
-        if (fieldId) this.setState({openMap: !this.state.openMap, fieldId, fieldName});
+        if (fieldId) this.setState({openMap: !this.state.openMap, fieldId, fieldName, error: ''});
         else this.setState({openMap: !this.state.openMap});
     };
 
@@ -49,12 +49,12 @@ class CreateMatch extends Component {
 
     };
 
-    onDateChange = date => this.setState({date});
-    onTimeChange = time => this.setState({time});
-    onTeamChange = numOfTeams => this.setState({numOfTeams});
-    onFormatChange = playersInTeam => this.setState({playersInTeam});
-    onPriceChange = price => this.setState({price});
-    onDurationChange = duration => this.setState({duration});
+    onDateChange = date => this.setState({date, error: ''});
+    onTimeChange = time => this.setState({time, error: ''});
+    onTeamChange = numOfTeams => this.setState({numOfTeams, error: ''});
+    onFormatChange = playersInTeam => this.setState({playersInTeam, error: ''});
+    onPriceChange = price => this.setState({price, error: ''});
+    onDurationChange = duration => this.setState({duration, error: ''});
 
     getHours = hours => {
         if (hours === 1) {
@@ -116,144 +116,163 @@ class CreateMatch extends Component {
                     <div className='col-3'/>
                     <div className='col-6 toolbar__header__title'>Создание матча</div>
                     <div className='col-3 text-right'>
-                        <button className='icon--x toolbar__header__btn--close'/>
+                        <button
+                            className='icon--x toolbar__header__btn--close'
+                            onClick={() => this.props.history.push('/my/matches')}
+                        />
                     </div>
                 </header>
 
-                <div className='row mt-4'>
-                    <div className="col">
-                        <label className='match__label'>Дата проведения
-                            <DatePicker
-                                id='datepicker'
-                                onChange={this.onDateChange}
-                                className='datepicker icon--calendar-b'
-                                placeholder='Выберите дату'
-                                format='DD MMMM, dddd'
-                                value={this.state.date}
-                                allowClear={false}
-                                disabledDate={this.disabledDate}
-                            />
-                        </label>
-                    </div>
-                </div>
+                <div className='container'>
 
-                <div className='row mt-4'>
-                    <div className="col-6">
-                        <label htmlFor='timepicker' className="match__label">Начало игры</label>
-                        <TimePicker
-                            id='timepicker'
-                            onChange={this.onTimeChange}
-                            format='HH:mm'
-                            value={this.state.time}
-                            placeholder='Выберите время'
-                            className='timepicker'
-                        />
+                    <div className='row mt-4'>
+                        <div className="col">
+                            <label className='match__label'>Дата проведения
+                                <DatePicker
+                                    id='datepicker'
+                                    onChange={this.onDateChange}
+                                    className='datepicker icon--calendar-b'
+                                    placeholder='Выберите дату'
+                                    format='DD MMMM, dddd'
+                                    value={this.state.date}
+                                    allowClear={false}
+                                    disabledDate={this.disabledDate}
+                                />
+                            </label>
+                        </div>
                     </div>
-                    <div className="col-6">
-                        <label className="match__label">Длительность игры</label>
-                        <div className='position-relative'>
+
+                    <div className='row mt-4'>
+                        <div className="col-6">
+                            <label htmlFor='timepicker' className="match__label">Начало игры</label>
+                            <TimePicker
+                                id='timepicker'
+                                onChange={this.onTimeChange}
+                                format='HH:mm'
+                                value={this.state.time}
+                                placeholder='Выберите время'
+                                className='timepicker'
+                            />
+                        </div>
+                        <div className="col-6">
+                            <label className="match__label">Длительность игры</label>
+                            <div className='position-relative'>
                             <span className='timepicker__word'>
                                 {timeWord}
                             </span>
-                            <InputNumber
-                                min={0.5}
-                                max={9}
-                                onChange={this.onDurationChange}
-                                value={this.state.duration}
-                                className='match__input--number'
-                                placeholder='В часах'
-                                precision={1}
-                                step={0.5}
-                            />
+                                <InputNumber
+                                    min={0.5}
+                                    max={9}
+                                    onChange={this.onDurationChange}
+                                    value={this.state.duration}
+                                    className='match__input--number'
+                                    placeholder='В часах'
+                                    precision={1}
+                                    step={0.5}
+                                />
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div className="row mt-4">
-                    <div className="col">
-                        <div className='match__label'>Выберите площадку для игры</div>
-                        <div className='position-relative'>
-                            <div className='icon--map-b match__input__icon'/>
-                            <Input
-                                placeholder='Выберите поле'
-                                className='match__input'
-                                onFocus={this.toggleMap}
-                                value={this.state.fieldName}
-                            />
+                    <div className="row mt-4">
+                        <div className="col">
+                            <div className='match__label'>Выберите площадку для игры</div>
+                            <div className='position-relative'>
+                                <div className='icon--map-b match__input__icon'/>
+                                <Input
+                                    placeholder='Выберите поле'
+                                    className='match__input'
+                                    onFocus={this.toggleMap}
+                                    value={this.state.fieldName}
+                                />
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div className='row mt-4'>
-                    <div className="col-6">
-                        <div className="match__label">В одной команде</div>
-                        <div className='position-relative'>
+                    <div className='row mt-4'>
+                        <div className="col-6">
+                            <div className="match__label">В одной команде</div>
+                            <div className='position-relative'>
                             <span className='match__people'>
                                 {people}
                             </span>
-                            <InputNumber
-                                min={1}
-                                max={11}
-                                onChange={this.onFormatChange}
-                                value={this.state.playersInTeam}
-                                className='match__input--number'
-                                placeholder='Количество игроков'
-                                precision={0}
-                            />
+                                <InputNumber
+                                    min={1}
+                                    max={11}
+                                    onChange={this.onFormatChange}
+                                    value={this.state.playersInTeam}
+                                    className='match__input--number'
+                                    placeholder='Количество игроков'
+                                    precision={0}
+                                />
+                            </div>
                         </div>
-                    </div>
-                    <div className="col-6">
-                        <div className="match__label">Количество команд</div>
-                        <div className='position-relative'>
+                        <div className="col-6">
+                            <div className="match__label">Количество команд</div>
+                            <div className='position-relative'>
                             <span className='team__word'>
                                 {teamWord}
                             </span>
-                            <InputNumber
-                                min={2}
-                                max={5}
-                                placeholder='Количество команд'
-                                onChange={this.onTeamChange}
-                                value={this.state.numOfTeams}
-                                className='match__input--number'
-                                precision={0}
-                            />
+                                <InputNumber
+                                    min={2}
+                                    max={5}
+                                    placeholder='Количество команд'
+                                    onChange={this.onTeamChange}
+                                    value={this.state.numOfTeams}
+                                    className='match__input--number'
+                                    precision={0}
+                                />
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div className='row mt-4'>
-                    <div className="col-6">
-                        <div className="match__label">Стоимость площадки</div>
-                        <div className='position-relative'>
-                            <span className='match__input--price__icon'>₸</span>
-                            <InputNumber
-                                value={this.state.price}
-                                placeholder='Цена'
-                                formatter={value => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ' ')}
-                                parser={value => value.replace(/\$\s?|( *)/g, '')}
-                                onChange={this.onPriceChange}
-                                className='match__input--number match__input--price'
-                                min={0}
-                            />
+                    <div className='row mt-4'>
+                        <div className="col-6">
+                            <div className="match__label">Стоимость площадки</div>
+                            <div className='position-relative'>
+                                <span className='match__input--price__icon'>₸</span>
+                                <InputNumber
+                                    value={this.state.price}
+                                    placeholder='Цена'
+                                    formatter={value => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ' ')}
+                                    parser={value => value.replace(/\$\s?|( *)/g, '')}
+                                    onChange={this.onPriceChange}
+                                    className='match__input--number match__input--price'
+                                    min={0}
+                                />
+                            </div>
+                        </div>
+                        <div className="col-6 d-flex flex-column justify-content-end">
+                            <div className='match__price'>{this.getPricePerPerson()} ₸</div>
+                            <div className='match__label text-right'>С каждого игрока по</div>
                         </div>
                     </div>
-                    <div className="col-6 d-flex flex-column justify-content-end">
-                        <div className='match__price'>{this.getPricePerPerson()} ₸</div>
-                        <div className='match__label text-right'>С каждого игрока по</div>
-                    </div>
-                </div>
 
-                <div className="row mt-5">
-                    <div className="col">
-                        <button
-                            className='btn--primary'
-                            onClick={() => {
-                                this.createMatch()
-                            }}
-                        >
-                            Создать матч
-                        </button>
+                    {this.state.error?
+                        <div className='mt-5'>
+                            <Alert
+                                message={this.state.error}
+                                type="error"
+                                showIcon
+                            />
+                        </div> : null
+                    }
+
+                    <div className="row mt-5">
+                        <div className="col">
+                            <button
+                                className='btn--primary'
+                                onClick={() => {
+                                    this.createMatch();
+                                }}
+                            >
+                                Создать матч
+                            </button>
+                        </div>
                     </div>
+
+
+
                 </div>
 
 

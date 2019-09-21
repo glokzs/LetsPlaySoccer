@@ -5,12 +5,10 @@
     position: relative;
     &__btn {
         position: absolute;
-        &::before {
-            color: $primary;
-            font-size: 20px;
-            &:hover {
-                color: darken($primary, 10%);
-            }
+        color: $primary;
+        font-size: 20px;
+        &:hover {
+            color: darken($primary, 10%);
         }
         background: transparent;
         border: none;
@@ -18,6 +16,17 @@
         left: 15px;
         &:focus, &:active {
             outline: none;
+        }
+        &--add {
+            position: absolute;
+            right: 20px;
+            top: 12px;
+            color: #1098f7;
+            font-size: 18px;
+            cursor: pointer;
+            &:hover {
+                color: darken($primary, 10%);
+            }
         }
     }
     &__sidebar {
@@ -67,16 +76,12 @@
         font-size: 12px;
     }
     &__header {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
         display: flex;
         justify-content: center;
         align-items: center;
         height: 50px;
         background: white;
-        z-index: 2;
+        box-shadow: 0 2px 4px rgba(2, 4, 51, 0.08);
         &__title {
             text-align: center;
             font-size: 1rem;

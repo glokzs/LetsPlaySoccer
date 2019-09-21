@@ -7,6 +7,7 @@ import {
     POST_MATCH_SUCCESS, GET_MATCH_SUCCESS, GET_MATCH_ERROR
 } from "./action-type";
 import axios from "../../axios-api";
+import {push} from "connected-react-router";
 
 const getMatchesSuccess = data => {
     return {type: GET_MATCHES_SUCCESS, data};
@@ -21,7 +22,6 @@ export const getMatchById = (id, cb) => {
             .then(response => {
                 const data = response.data[0];
                 dispatch({type: GET_MATCH_SUCCESS, data});
-                console.log(cb);
                 if(cb) cb();
             }, error => {
                 dispatch({type: GET_MATCH_ERROR, error});
@@ -52,7 +52,6 @@ export const getMyMatches = (id) => {
         axios.get("/matches", {params: {organizerId: id, mine: true}})
             .then(response => {
                 const data = response.data;
-                // console.log(data);
                 dispatch({type: GET_MY_MATCHES_SUCCESS, data});
             }, error => {
                 dispatch({type: GET_MY_MATCHES_ERROR, error})
@@ -66,8 +65,7 @@ export const postMatch = (data) => {
             response => {
                 const data = response.data;
                 dispatch({type: POST_MATCH_SUCCESS, data});
-                // dispatch(getMyMatches(data.id));
-                console.log(data);
+                dispatch(push('/my/matches'));
             },
             error => {
                 dispatch({type: POST_MATCH_ERROR, error})
@@ -75,7 +73,6 @@ export const postMatch = (data) => {
         )
     }
 };
-
 
 //user_match routes
 export const becomeMatchMember = (data) => {

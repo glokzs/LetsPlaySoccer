@@ -30,7 +30,7 @@ class Matches extends Component {
         return (
             <Fragment>
                 <header>
-                    <Toolbar user={this.props.user} logout={this.props.onLogoutUser} />
+                    <Toolbar {...this.props} />
                 </header>
                 <div className='container'>
                     <div className='matches'>

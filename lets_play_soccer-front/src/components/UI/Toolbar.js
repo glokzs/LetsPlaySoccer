@@ -21,6 +21,11 @@ class Toolbar extends Component {
               className='toolbar__btn icon--hamburger'
               onClick={this.menuToggle}
             />
+
+            <div
+                className='toolbar__btn--add icon--plus'
+                onClick={() => this.props.history.push('/my/matches/create')}
+            />
           </div>
           <Drawer
             closable={false}
@@ -38,7 +43,7 @@ class Toolbar extends Component {
                   </span>
                 </div>
                 <Nav>
-                  <NavItem className="menu-item" ><NavLink className="menu-link" to="/matches/completed" >Завершённые матчи</NavLink></NavItem>
+                  <NavItem className="menu-item" ><NavLink className="menu-link" to="/my/matches/completed" >Завершённые матчи</NavLink></NavItem>
                   <NavItem className="menu-item" ><NavLink className="menu-link" to={"/profile?id="/*+props.user._id*/} >Профиль</NavLink></NavItem>
                   <NavItem className="menu-item" >
                     <NavLink className="menu-link" to={"/messages?id="/*+props.user._id*/} >Уведомления</NavLink>
