@@ -224,9 +224,7 @@ class CreateMatch extends Component {
                         <div className="col">
                             <button
                                 className='btn--primary'
-                                onClick={() => {
-                                    this.createMatch();
-                                }}
+                                onClick={this.createMatch}
                             >
                                 Создать матч
                             </button>

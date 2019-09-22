@@ -17,10 +17,11 @@ const getMatchesError = (error) => {
 };
 
 export const getMatchById = (id, cb) => {
+    console.log(id);
     return dispatch => {
-        axios.get("/matches", {params: {id}})
+        axios.get("/matches/" + id)
             .then(response => {
-                const data = response.data[0];
+                const data = response.data;
                 dispatch({type: GET_MATCH_SUCCESS, data});
                 if(cb) cb();
             }, error => {
