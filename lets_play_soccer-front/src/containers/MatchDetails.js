@@ -25,7 +25,7 @@ class MatchDetails extends Component {
 
     componentDidMount() {
         this.setState({loading: true}, () => {
-            console.log(this.props);
+            // console.log(this.props);
             this.props.getMatchById(
                 this.props.match.params.id,
                 () => this.setState({loading: false})
@@ -56,8 +56,8 @@ class MatchDetails extends Component {
                             <div className='col-6 toolbar__header__title'>Детали матча</div>
                             <div className='col-3 text-right'>
                                 <button
-                                    className='icon--share toolbar__header__btn--close'
-                                    // onClick={() => this.props.history.push('/my/matches')}
+                                    className='icon--share toolbar__header__btn'
+                                    // onClick={here will be share function}
                                 />
                             </div>
                         </header>

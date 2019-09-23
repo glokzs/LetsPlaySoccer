@@ -15,13 +15,11 @@ class App extends Component {
             <Switch>
                 <PrivateRoute
                     path="/my/"
-                    // exact
                     component={PrivateRoutes}
                     isAllowed={this.props.user && this.props.user.token}
                 />
                 <PublicRoute
                     path="/"
-                    // exact
                     component={PublicRoutes}
                     isAllowed={!this.props.user || (this.props.user && !this.props.user.token)}
                 />

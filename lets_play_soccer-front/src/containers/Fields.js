@@ -5,7 +5,7 @@ import {getFields, getLoadedFields} from "../store/actions/fieldsAction";
 import LoadingWrapper from "../components/UI/LoadingWrapper";
 import {Carousel, Input} from "antd";
 import config from "../config";
-import {Link} from "react-router-dom";
+import FieldDetails from "./FieldDetails";
 
 const {Search} = Input;
 
@@ -13,8 +13,13 @@ class Fields extends Component {
     state = {
         loading: true,
         offset: 0,
-        searchMode: false
+        searchMode: false,
+        openFieldDetails: false,
+        field: ''
     };
+
+    toggleFieldDetails = (field) => this.setState({openFieldDetails: !this.state.openFieldDetails, field});
+
     loadWithOffset = () => {
       let state = {...this.state};
       let offset = state.offset;
@@ -35,7 +40,7 @@ class Fields extends Component {
     deactiveSearchMode = (e) => {
         if(e.target.className === "search-block") {
             this.setState({searchMode: false});
-        };
+        }
     };
     searchStart = (e) => {
         this.setState({searchMode: false});
@@ -46,12 +51,15 @@ class Fields extends Component {
             <Fragment>
                 <header className='toolbar__header'>
                     <div className='col-3'>
-                        <button className='icon--arrow-right toolbar__header__btn--close'/>
+                        <button
+                            className='icon--arrow-right toolbar__header__btn'
+                            onClick={this.props.sendFieldId}
+                        />
                     </div>
                     <div className='col-6 toolbar__header__title'>Площадки</div>
                     <div className='col-3 d-flex align-items-center justify-content-end'>
-                        <button onClick={this.activeSearchMode} className='icon--search toolbar__header__btn--close search-mobile'/>
-                        <button className='icon--map-o toolbar__header__btn--close'/>
+                        <button onClick={this.activeSearchMode} className='icon--search toolbar__header__btn search-mobile'/>
+                        <button className='icon--map-o toolbar__header__btn'/>
                         <Search
                           className="search-desktop"
                           placeholder="input search text"
@@ -73,17 +81,18 @@ class Fields extends Component {
                     : null
                 }
                 <LoadingWrapper loading={this.state.loading}>
-                    <div className="text-center padding-top">
+                    <div className="text-center container">
                         {this.props.fields.length?
                             this.props.fields.map((field, inx) => {
                                 return (
-                                    <Link
+                                    <div
                                         key={inx}
                                         className='field__card'
-                                        to={{
-                                            pathname: `/my/fields/${field.id}`,
-                                            state: field
-                                        }}
+                                        // to={{
+                                        //     pathname: `/my/fields/${field.id}`,
+                                        //     state: field
+                                        // }}
+                                        onClick={() => this.toggleFieldDetails(field)}
                                     >
                                         <Carousel className='field__carousel'>
                                             {
@@ -110,7 +119,7 @@ class Fields extends Component {
                                             </div>
                                             <div className='field__address'>{field.address}</div>
                                         </div>
-                                    </Link>
+                                    </div>
                                 );
                             })
                             :
@@ -119,6 +128,16 @@ class Fields extends Component {
                        { !this.props.isEmpty ? <button onClick={this.loadWithOffset} type="button" className="btn btn-primary mt-2">See more</button> : null}
                     </div>
                 </LoadingWrapper>
+
+                {this.state.openFieldDetails?
+                    <div className='fixed-page'>
+                        <FieldDetails
+                            sendFieldId={this.props.sendFieldId}
+                            field={this.state.field}
+                        />
+                    </div> : null
+                }
+
             </Fragment>
         );
     }

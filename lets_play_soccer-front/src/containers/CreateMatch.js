@@ -6,6 +6,7 @@ import {postMatch} from "../store/actions/matchAction";
 import {connect} from "react-redux";
 import LeafletMap from "./LeafletMap";
 import {getFormat, getHoursInCreateMatch, getTeams} from "../helpers/helperMatch";
+import Fields from "./Fields";
 
 
 class CreateMatch extends Component {
@@ -23,12 +24,18 @@ class CreateMatch extends Component {
         numOfTeams: 2,
 
         openMap: false,
+        openFields: false,
         fieldName: ''
     };
 
     toggleMap = (fieldId, fieldName) => {
         if (fieldId) this.setState({openMap: !this.state.openMap, fieldId, fieldName, error: ''});
         else this.setState({openMap: !this.state.openMap});
+    };
+
+    toggleFields = (fieldId, fieldName) => {
+        if (fieldId) this.setState({openFields: !this.state.openFields, fieldId, fieldName, error: ''});
+        else this.setState({openFields: !this.state.openFields});
     };
 
     createMatch = () => {
@@ -76,7 +83,7 @@ class CreateMatch extends Component {
                     <div className='col-6 toolbar__header__title'>Создание матча</div>
                     <div className='col-3 text-right'>
                         <button
-                            className='icon--x toolbar__header__btn--close'
+                            className='icon--x toolbar__header__btn'
                             onClick={() => this.props.history.push('/my/matches')}
                         />
                     </div>
@@ -144,7 +151,7 @@ class CreateMatch extends Component {
                                 <Input
                                     placeholder='Выберите поле'
                                     className='match__input'
-                                    onFocus={() => this.props.history.push('/my/fields')}
+                                    onFocus={this.toggleFields}
                                     value={this.state.fieldName}
                                 />
                             </div>
@@ -237,9 +244,17 @@ class CreateMatch extends Component {
 
 
                 {this.state.openMap?
-                    <div className='map'>
+                    <div className='fixed-page'>
                         <LeafletMap
                             sendFieldId={this.toggleMap}
+                        />
+                    </div> : null
+                }
+
+                {this.state.openFields?
+                    <div className='fixed-page'>
+                        <Fields
+                            sendFieldId={this.toggleFields}
                         />
                     </div> : null
                 }
