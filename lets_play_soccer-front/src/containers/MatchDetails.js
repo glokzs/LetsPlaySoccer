@@ -41,6 +41,7 @@ class MatchDetails extends Component {
         const match = this.props.oneMatch;
         const isThisUserOrganizer = (match? this.props.oneMatch.organizerId === this.props.user.id : null);
         const thisUserInThisMatch = (match? this.checkThisUser(match.users, this.props.user) : []);
+        const matchPlayers = (match? (isThisUserOrganizer? match.users : match.users.filter(user => user.user_match.confirmed)) : []);
 
         return (
             <Fragment>
@@ -172,14 +173,30 @@ class MatchDetails extends Component {
                                         </div>
                                     </div>
                                     <ul>
-                                        {match.users.filter(user => user.user_match.confirmed).map(user => {
+                                        {matchPlayers.map(user => {
                                             return (
                                                 <li className='matches__card__head' key={user.phoneNumber}>
-                                                    <img className='matches__avatar' src={photo} alt="avatar"/>
+                                                    <div className='d-flex'>
+                                                        <img className='matches__avatar' src={photo} alt="avatar"/>
+                                                        <div>
+                                                            <div className='matches__text--player'>{user.displayName}</div>
+                                                            {user.user_match.organizer ?
+                                                                <span className='matches__text--green'>Организатор!</span>
+                                                                : null
+                                                            }
+                                                        </div>
+                                                    </div>
                                                     <div>
-                                                        <div className='matches__text--player'>{match.organizer.displayName}</div>
                                                         {user.user_match.organizer ?
-                                                            <span className='matches__text--green'>Организатор!</span>
+                                                            <button className={'icon--phone matches__btn--call'}/>
+                                                            : null
+                                                        }
+                                                        {user.user_match.organizer ?
+                                                            <button className={'icon--x matches__btn--remove'}/>
+                                                            : null
+                                                        }
+                                                        {user.user_match.organizer ?
+                                                            <button className={'icon--check matches__btn--check'}/>
                                                             : null
                                                         }
                                                     </div>
