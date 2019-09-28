@@ -529,5 +529,7 @@ connection.connect(function(err) {
   connection.query(query, function (err, result) {
     if (err) throw err;
     console.log("Result: " , result);
+    connection.destroy();
   });
 });
+
