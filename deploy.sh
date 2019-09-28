@@ -18,5 +18,4 @@ ssh root@lets-play-soccer.ltestl.com <<SSH
     use LetsPlaySoccer;
 SQL
   pm2 restart server.js
-  node CreateDB.js
 SSH
