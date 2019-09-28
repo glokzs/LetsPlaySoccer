@@ -30,8 +30,8 @@ const query =
     avatar,
     role
   ) VALUES (
-    '12',
-    '+77779996633',
+    '$2b$10$NwDdDQTGWur5NfGZoQPO9uS0/X3u1DHoI7LnYIeUBt6s7vUxuL9uG',
+    '+77771112233',
     'John Doe',
     'asda@sdf.sf',
     'sdfds.jpg',
@@ -46,8 +46,8 @@ const query =
     avatar,
     role
   ) VALUES (
-    '12',
-    '+77007894512',
+    '$2b$10$NwDdDQTGWur5NfGZoQPO9uS0/X3u1DHoI7LnYIeUBt6s7vUxuL9uG',
+    '+77001112233',
     'Harry Potter',
     'asda@sdf.sf',
     'qwer.jpg',
@@ -62,8 +62,8 @@ const query =
     avatar,
     role
   ) VALUES (
-    '12',
-    '+77011234578',
+    '$2b$10$NwDdDQTGWur5NfGZoQPO9uS0/X3u1DHoI7LnYIeUBt6s7vUxuL9uG',
+    '+77011112233',
     'Billy Clang',
     'asdddddddd@sdf.sf',
     'qwer3.jpg',
