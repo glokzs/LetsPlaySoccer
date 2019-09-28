@@ -1,3 +1,6 @@
+import axios from "../../axios-api";
+import {push} from "connected-react-router";
+import {NotificationManager} from "react-notifications";
 import {
     REGISTER_USER_SUCCESS,
     LOGIN_USER_SUCCESS,
@@ -8,13 +11,11 @@ import {
     UPDATE_USER_SUCCESS,
     UPDATE_USER_ERROR, SAVE_TEMPORARY_USER_TO_REDUX_STORE
 } from './action-type';
-import axios from "../../axios-api";
-import {push} from "connected-react-router";
-import {NotificationManager} from "react-notifications";
+
 
 export const registerUser = (code, userData) => {
     return dispatch => {
-        return axios.post("/users/" + code, userData).then(
+        return axios.post("/users/register/" + code, userData).then(
             response => {
                 const user = response.data;
                 dispatch({type: REGISTER_USER_SUCCESS, user});
@@ -36,7 +37,7 @@ export const registerUser = (code, userData) => {
 export const confirmedPhoneNumber = userData => {
     return dispatch => {
         dispatch({type: SAVE_TEMPORARY_USER_TO_REDUX_STORE, userData});
-        return axios.post("/register/code", userData).then(
+        return axios.post("code", userData).then(
             response => {
                 dispatch(push("/confirm"));
             },

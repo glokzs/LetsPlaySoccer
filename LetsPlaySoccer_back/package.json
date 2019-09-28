@@ -21,7 +21,8 @@
     "mysql2": "^1.6.5",
     "nanoid": "^2.1.1",
     "nanoid-dictionary": "^2.0.0",
-    "sequelize": "^5.10.1"
+    "sequelize": "^5.10.1",
+    "twilio": "^3.35.0"
   },
   "devDependencies": {
     "nodemon": "^1.19.1"

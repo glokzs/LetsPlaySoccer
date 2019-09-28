@@ -44,11 +44,7 @@ class Toolbar extends Component {
                 </div>
                 <Nav>
                   <NavItem className="menu-item" ><NavLink className="menu-link" to="/my/matches/completed" >Завершённые матчи</NavLink></NavItem>
-                  <NavItem className="menu-item" ><NavLink className="menu-link" to={"/profile?id="/*+props.user._id*/} >Профиль</NavLink></NavItem>
-                  <NavItem className="menu-item" >
-                    <NavLink className="menu-link" to={"/messages?id="/*+props.user._id*/} >Уведомления</NavLink>
-                    <div className="toolbar__messages">У вас {'5'} уведомлений </div>
-                  </NavItem>
+                  <NavItem className="menu-item" ><NavLink className="menu-link" to={"/my/profile/" + this.props.user.id} >Профиль</NavLink></NavItem>
                 </Nav>
                 <div>
                   <NavItem className="menu-item" >
