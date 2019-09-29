@@ -15,7 +15,7 @@ class CreateMatch extends Component {
         time: null,
         duration: 2.5,
 
-        price: 0,
+        price: '',
 
         start: '',
         end: '',
@@ -227,7 +227,7 @@ class CreateMatch extends Component {
                         </div> : null
                     }
 
-                    <div className="row mt-5">
+                    <div className="row mt-5 mb-5">
                         <div className="col">
                             <button
                                 className='btn--primary'

@@ -70,7 +70,6 @@ router.get('/:id', (req, res) => {
 });
 
 router.post('/register/:code', async (req, res) => {
-  console.log('hjghjfgjhfghfgfhdfgdfgd', req.body);
 
   const generationCode = await GenerationCode.findOne({where: {phoneNumber: req.body.phoneNumber}});
   const code = generationCode.dataValues.code;
@@ -112,7 +111,7 @@ router.post('/register/:code', async (req, res) => {
 });
 
 router.post('/sessions', async (req, res) => {
-  console.log(req.body);
+  // console.log(req.body);
   try {
     const user = await User.findOne({
       where: {
