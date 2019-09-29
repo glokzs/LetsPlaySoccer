@@ -55,3 +55,7 @@ a {
 ::-webkit-scrollbar-thumb:hover {
   background: $primary;
 }
+
+.container {
+  max-width: 500px;
+}
