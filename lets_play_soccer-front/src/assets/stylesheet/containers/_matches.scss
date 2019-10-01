@@ -150,6 +150,9 @@
     padding: 7px 10px;
     margin-left: 20px;
     color: white;
+    &:focus {
+      outline: none;
+    }
     &--call {
       @extend .matches__btn;
       background: $light-blue;

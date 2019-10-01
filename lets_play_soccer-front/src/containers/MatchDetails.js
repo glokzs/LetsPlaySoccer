@@ -39,9 +39,11 @@ class MatchDetails extends Component {
 
     render() {
         const match = this.props.oneMatch;
-        const isThisUserOrganizer = (match? this.props.oneMatch.organizerId === this.props.user.id : null);
+        const isThisUserOrganizer = (match? match.organizerId === this.props.user.id : null);
         const thisUserInThisMatch = (match? this.checkThisUser(match.users, this.props.user) : []);
         const matchPlayers = (match? (isThisUserOrganizer? match.users : match.users.filter(user => user.user_match.confirmed)) : []);
+        console.log(matchPlayers);
+        console.log(isThisUserOrganizer);
 
         return (
             <Fragment>
@@ -187,15 +189,15 @@ class MatchDetails extends Component {
                                                         </div>
                                                     </div>
                                                     <div>
-                                                        {user.user_match.organizer ?
-                                                            <button className={'icon--phone matches__btn--call'}/>
+                                                        {match.organizerId !== user.user_match.userId && (user.user_match.organizer || user.user_match.confirmed)?
+                                                            <link href={'tel:'+user.user_match.phoneNumber} className={'icon--phone matches__btn--call'}/>
                                                             : null
                                                         }
-                                                        {user.user_match.organizer ?
+                                                        {(!user.user_match.organizer)?
                                                             <button className={'icon--x matches__btn--remove'}/>
                                                             : null
                                                         }
-                                                        {user.user_match.organizer ?
+                                                        {(!user.user_match.organizer && !user.user_match.confirmed)?
                                                             <button className={'icon--check matches__btn--check'}/>
                                                             : null
                                                         }

@@ -17,7 +17,6 @@ const getMatchesError = (error) => {
 };
 
 export const getMatchById = (id, cb) => {
-    console.log(id);
     return dispatch => {
         axios.get("/matches/" + id)
             .then(response => {
