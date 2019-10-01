@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const {GenerationCode, User} = require('../sequelize');
-const axios = require('axios');
 const generate = require('nanoid/generate');
 const accountSid = 'AC320c849bbb97b563aca1ec17ee1e15f8';
 const authToken = 'c43cd2acdd619291bde086a66d1bd9e0';

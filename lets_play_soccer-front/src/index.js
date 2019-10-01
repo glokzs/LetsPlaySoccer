@@ -14,6 +14,7 @@ import 'antd/dist/antd.css';
 import './assets/stylesheet/app.scss';
 import fieldsReducer from "./store/reducers/fieldsReducer";
 import matchReducer from "./store/reducers/matchReducer";
+import * as serviceWorker from './serviceWorker';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -86,3 +87,4 @@ const app = (
 );
 
 ReactDOM.render(app, document.getElementById('root'));
+serviceWorker.register();
