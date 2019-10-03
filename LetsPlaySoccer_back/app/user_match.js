@@ -1,8 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const {UserMatch, User, Match} = require('../sequelize');
+const auth = require('../middlewares/auth');
 
-router.post('/', async (req, res) => {
+
+router.post('/', auth, async (req, res) => {
     const user = await User.findOne({where: {id: req.body.userId}});
     const match = await Match.findOne({where: {id: req.body.matchId}});
     if(user && match) {
@@ -20,7 +22,7 @@ router.post('/', async (req, res) => {
     }
 });
 
-router.delete('/', async (req, res) => {
+router.delete('/', auth, async (req, res) => {
     const user = await User.findOne({where: {id: req.body.userId}});
     const match = await Match.findOne({where: {id: req.body.matchId}});
     if(user && match) {
@@ -30,7 +32,32 @@ router.delete('/', async (req, res) => {
                 userId: req.body.userId
             }
         }).then(data => {
-            res.sendStatus(200);
+            res.json({matchId: req.body.matchId});
+        })
+            .catch(err => res.json(err.errors));
+    } else {
+        res.status(400).send({message: 'Неправильные данные'});
+    }
+});
+
+router.patch('/', auth, async (req, res) => {
+    const user = await User.findOne({where: {id: req.body.data.userId}});
+    const match = await Match.findOne({where: {id: req.body.data.matchId}});
+    if(user && match) {
+        UserMatch.findOne({
+            where: {
+                matchId: req.body.data.matchId,
+                userId: req.body.data.userId,
+            }
+        })
+            .then(data => {
+                data.update({
+                    confirmed: true
+                });
+                return data;
+            })
+            .then(data => {
+            res.json({matchId: req.body.data.matchId});
         })
             .catch(err => res.json(err.errors));
     } else {

@@ -157,6 +157,7 @@
       @extend .matches__btn;
       background: $light-blue;
       color: $primary;
+      display: inline-block;
     }
     &--remove {
       @extend .matches__btn;

@@ -10,27 +10,33 @@ import {
     getTimeDiff
 } from "../helpers/helperMatch";
 import config from "../config";
-import {Carousel} from "antd";
+import {Carousel, Modal} from "antd";
 import photo from "../assets/content_images/Mask.png";
 import {connect} from "react-redux";
-import {becomeMatchMember, getMatchById, removeUserFromMatch} from "../store/actions/matchAction";
+import {becomeMatchMember, confirmUserToMatch, getMatchById, removeUserFromMatch} from "../store/actions/matchAction";
+import Fields from "./Fields";
 
 class MatchDetails extends Component {
     state = {
         loading: false,
         isDescriptionOpen: true,
         isTimetableOpen: false,
-        isContactsOpen: false
+        isContactsOpen: false,
+        deleteConfirmModal: false,
+        userToDelete: ''
     };
 
-    componentDidMount() {
+    getMatch = () => {
         this.setState({loading: true}, () => {
-            // console.log(this.props);
             this.props.getMatchById(
                 this.props.match.params.id,
                 () => this.setState({loading: false})
             );
         })
+    };
+
+    componentDidMount() {
+        this.getMatch();
     }
 
     checkThisUser = (users, thisUser) => {
@@ -186,19 +192,40 @@ class MatchDetails extends Component {
                                                                 <span className='matches__text--green'>Организатор!</span>
                                                                 : null
                                                             }
+                                                            {user.user_match.confirmed && !user.user_match.organizer ?
+                                                                <span className='matches__text--muted'>Подтвержден!</span>
+                                                                : null
+                                                            }
                                                         </div>
                                                     </div>
                                                     <div>
                                                         {match.organizerId !== user.user_match.userId && (user.user_match.organizer || user.user_match.confirmed)?
-                                                            <link href={'tel:'+user.user_match.phoneNumber} className={'icon--phone matches__btn--call'}/>
+                                                            <a href={'tel:'+user.phoneNumber} className={'icon--phone matches__btn--call'}/>
                                                             : null
                                                         }
                                                         {(!user.user_match.organizer)?
-                                                            <button className={'icon--x matches__btn--remove'}/>
+                                                            <button
+                                                                className={'icon--x matches__btn--remove'}
+                                                                onClick={() => this.setState({
+                                                                    deleteConfirmModal: true,
+                                                                    userToDelete: {
+                                                                        matchId: user.user_match.matchId,
+                                                                        userId: user.user_match.userId,
+                                                                    }
+                                                                })}
+                                                            />
                                                             : null
                                                         }
                                                         {(!user.user_match.organizer && !user.user_match.confirmed)?
-                                                            <button className={'icon--check matches__btn--check'}/>
+                                                            <button
+                                                                className={'icon--check matches__btn--check'}
+                                                                onClick={() => {
+                                                                    this.props.confirmUserToMatch({
+                                                                        matchId: user.user_match.matchId,
+                                                                        userId: user.user_match.userId,
+                                                                    });
+                                                                }}
+                                                            />
                                                             : null
                                                         }
                                                     </div>
@@ -213,6 +240,29 @@ class MatchDetails extends Component {
                         }
                     </Fragment>
                 </LoadingWrapper>
+
+                {this.state.deleteConfirmModal?
+                    <div className='fixed-page'>
+                        <Fields
+                            sendFieldId={this.toggleFields}
+                        />
+                    </div> : null
+                }
+
+                <Modal
+                    title="Необратимый процесс"
+                    visible={this.state.deleteConfirmModal}
+                    onOk={() => {
+                        if (this.state.userToDelete) {
+                            this.props.removeUserFromMatch(this.state.userToDelete);
+                            this.setState({userToDelete: ''});
+                        }
+                        this.setState({deleteConfirmModal: false});
+                    }}
+                    onCancel={() => this.setState({deleteConfirmModal: false})}
+                >
+                    <p>Вы уверены?</p>
+                </Modal>
             </Fragment>
         );
     }
@@ -228,6 +278,7 @@ const mapDispatchToProps = dispatch => {
     return {
         becomeMatchMember: data => dispatch(becomeMatchMember(data)),
         removeUserFromMatch: data => dispatch(removeUserFromMatch(data)),
+        confirmUserToMatch: data => dispatch(confirmUserToMatch(data)),
         getMatchById: (id, cb) => dispatch(getMatchById(id, cb))
     };
 };

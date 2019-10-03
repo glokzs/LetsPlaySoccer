@@ -100,3 +100,17 @@ export const removeUserFromMatch = (data) => {
         )
     }
 };
+
+export const confirmUserToMatch = (data) => {
+    console.log(data);
+    return dispatch => {
+        return axios.patch("/user_match", {data}).then(
+            response => {
+                dispatch(getMatchById(response.data.matchId));
+            },
+            error => {
+                console.log(error);
+            }
+        )
+    }
+};
