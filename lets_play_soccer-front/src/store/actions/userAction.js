@@ -36,21 +36,18 @@ export const registerUser = (code, userData) => {
 
 export const confirmedPhoneNumber = userData => {
     return dispatch => {
-        dispatch({type: SAVE_TEMPORARY_USER_TO_REDUX_STORE, userData});
-        return axios.post("code", userData).then(
-            response => {
+        return axios.post("code", userData).then(response => {
+                dispatch({type: SAVE_TEMPORARY_USER_TO_REDUX_STORE, userData});
                 dispatch(push("/confirm"));
-            },
-            error => {
-                if (error.response && error.response.data) {
-                    const data = error.response.data;
-                    dispatch({type: REGISTER_USER_ERROR, data});
-                } else {
-                    const data = {global: "Что-то пошло не так"};
-                    dispatch({type: REGISTER_USER_ERROR, data});
-                }
+            }).catch(error => {
+            if (error.response && error.response.data) {
+                const data = error.response.data;
+                dispatch({type: REGISTER_USER_ERROR, data});
+            } else {
+                const data = {global: "Что-то пошло не так"};
+                dispatch({type: REGISTER_USER_ERROR, data});
             }
-        )
+        })
     }
 };
 

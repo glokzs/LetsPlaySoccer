@@ -56,10 +56,10 @@ module.exports = (sequelize, type) => {
             timestamps: false
         }
     );
-    GenerationCode.beforeCreate((user) => {
-        return bcrypt.hash(user.password, 10)
+    GenerationCode.beforeCreate((code) => {
+        return bcrypt.hash(code.password, 10)
             .then(hash => {
-                user.password = hash;
+                code.password = hash;
             })
             .catch(err => {
                 throw new Error(err);
