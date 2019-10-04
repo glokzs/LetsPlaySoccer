@@ -13,7 +13,13 @@ import config from "../config";
 import {Carousel, Empty, Modal, Popover} from "antd";
 import photo from "../assets/content_images/Mask.png";
 import {connect} from "react-redux";
-import {becomeMatchMember, confirmUserToMatch, getMatchById, removeUserFromMatch} from "../store/actions/matchAction";
+import {
+    becomeMatchMember,
+    confirmUserToMatch,
+    getMatchById,
+    patchMatch,
+    removeUserFromMatch
+} from "../store/actions/matchAction";
 import Fields from "./Fields";
 
 class MatchDetails extends Component {
@@ -93,7 +99,7 @@ class MatchDetails extends Component {
                                                             className={'btn btn-secondary'}
                                                             onClick={() => {
                                                                 this.setState({matchCancelled: true});
-                                                                //,l;,;l;lk;l
+                                                                patchMatch(match.id);
                                                             }}
                                                         >
                                                             Отменить матч

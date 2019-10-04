@@ -147,21 +147,15 @@ router.post('/', auth, async (req, res) => {
 });
 
 router.patch('/', auth, async (req, res) => {
-    const match = await Match.findOne(
-        {
-            where: {id: req.body.id}
-        });
+    const match = await Match.findOne({ where: {id: req.body.id} });
+
     if(!match) res.status(400).send({message: 'Такого матча нет'});
 
-    console.log(match);
-
-    if(match) {
-        Match.update({
-            disabled: true
-        })
-            .then((data => res.json(data)))
-            .catch(err => res.json(err.errors));
-    }
+    match.update({
+        disabled: true
+    })
+        .then((data => res.json(data)))
+        .catch(err => res.json(err.errors));
 });
 
 module.exports = router;

@@ -74,17 +74,15 @@ export const postMatch = (data) => {
     }
 };
 
-export const patchMatch = (data) => {
-    return dispatch => {
-        return axios.post("/matches", data).then(
-            response => {
-                //
-            },
-            error => {
-                dispatch({type: POST_MATCH_ERROR, error})
-            }
-        )
-    }
+export const patchMatch = (id) => {
+    return axios.patch("/matches", {id}).then(
+        response => {
+            //do nothing
+        },
+        error => {
+            //do nothing
+        }
+    )
 };
 
 //user_match routes

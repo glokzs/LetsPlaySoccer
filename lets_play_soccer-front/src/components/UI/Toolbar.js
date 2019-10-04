@@ -3,7 +3,7 @@ import photo from '../../assets/content_images/Mask.png';
 import {Nav, NavItem} from 'react-bootstrap';
 import {NavLink} from 'react-router-dom';
 import Footer from '../Footer';
-import {Drawer, Popover} from 'antd';
+import {Drawer} from 'antd';
 import config from '../../config';
 
 
