@@ -10,7 +10,7 @@ import {
     getTimeDiff
 } from "../helpers/helperMatch";
 import config from "../config";
-import {Carousel, Empty, Modal} from "antd";
+import {Carousel, Empty, Modal, Popover} from "antd";
 import photo from "../assets/content_images/Mask.png";
 import {connect} from "react-redux";
 import {becomeMatchMember, confirmUserToMatch, getMatchById, removeUserFromMatch} from "../store/actions/matchAction";
@@ -23,7 +23,8 @@ class MatchDetails extends Component {
         isTimetableOpen: false,
         isContactsOpen: false,
         deleteConfirmModal: false,
-        userToDelete: ''
+        userToDelete: '',
+        matchCancelled: false
     };
 
     getMatch = () => {
@@ -63,22 +64,42 @@ class MatchDetails extends Component {
                                 </div>
                                 <div className='col-6 toolbar__header__title'>Детали матча</div>
                                 <div className='col-3 text-right'>
-                                    <button
-                                        className='icon--share toolbar__header__btn'
-                                        // onClick={here will be share function}
-                                    />
+                                    <Popover placement='leftBottom' title='Пока не доступно. В разработке'>
+                                        <button
+                                            className='icon--share toolbar__header__btn'
+                                            // onClick={here will be share function}
+                                        />
+                                    </Popover>
                                 </div>
                             </header>
                             {match?
                                 <div className='container mt-3'>
                                     <div className='matches__header'>
                                         <div className='d-flex justify-content-between align-items-center'>
-                                    <span className='d-flex align-items-center'>
-                                        <img src={require('../assets/design_images/'+getMatchStatusImg(match.status)+'.svg')} alt='icon'/>
-                                        <span className={'matches__status--'+getMatchStatusImg(match.status)}>&nbsp;{match.status}</span>
-                                    </span>
+                                            {isThisUserOrganizer && this.state.matchCancelled?
+                                                <span className={'matches__status--finished'}>вы отменили матч</span>
+                                                :
+                                                <span className='d-flex align-items-center'>
+                                                    <img src={require('../assets/design_images/'+getMatchStatusImg(match.status)+'.svg')} alt='icon'/>
+                                                    <span className={'matches__status--'+getMatchStatusImg(match.status)}>&nbsp;{match.status}</span>
+                                                </span>
+                                            }
                                             {isThisUserOrganizer?
-                                                <span><button>Отменить матч</button></span>
+                                                (this.state.matchCancelled?
+                                                    null
+                                                        :
+                                                    <span>
+                                                        <button
+                                                            className={'btn btn-secondary'}
+                                                            onClick={() => {
+                                                                this.setState({matchCancelled: true});
+                                                                //,l;,;l;lk;l
+                                                            }}
+                                                        >
+                                                            Отменить матч
+                                                        </button>
+                                                    </span>
+                                                )
                                                 :
                                                 (thisUserInThisMatch.length?
                                                         (thisUserInThisMatch[0].user_match.confirmed?
@@ -134,6 +155,11 @@ class MatchDetails extends Component {
                                             Выйти из матча
                                         </button>
                                         : null
+                                    }
+                                    {isThisUserOrganizer && this.state.matchCancelled ?
+                                        <div className='text-center pb-3'><span className='btn--exit'>Матч автоматический удалится через 5 часов</span></div>
+                                        : null
+
                                     }
                                     <div className='matches__field'>
                                         <div className='row p-3'>
@@ -199,11 +225,11 @@ class MatchDetails extends Component {
                                                             </div>
                                                         </div>
                                                         <div>
-                                                            {match.organizerId !== user.user_match.userId && (user.user_match.organizer || user.user_match.confirmed)?
+                                                            {(!isThisUserOrganizer || this.props.user.id !== user.user_match.userId)  && (user.user_match.organizer || user.user_match.confirmed)?
                                                                 <a href={'tel:'+user.phoneNumber} className={'icon--phone matches__btn--call'}/>
                                                                 : null
                                                             }
-                                                            {(!user.user_match.organizer)?
+                                                            {(isThisUserOrganizer && !user.user_match.organizer)?
                                                                 <button
                                                                     className={'icon--x matches__btn--remove'}
                                                                     onClick={() => this.setState({
@@ -216,7 +242,7 @@ class MatchDetails extends Component {
                                                                 />
                                                                 : null
                                                             }
-                                                            {(!user.user_match.organizer && !user.user_match.confirmed)?
+                                                            {(isThisUserOrganizer && !user.user_match.organizer && !user.user_match.confirmed)?
                                                                 <button
                                                                     className={'icon--check matches__btn--check'}
                                                                     onClick={() => {

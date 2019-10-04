@@ -4,7 +4,6 @@
     height: 50px;
     position: relative;
     &__btn {
-        position: absolute;
         color: $primary;
         font-size: 20px;
         &:hover {
@@ -12,15 +11,10 @@
         }
         background: transparent;
         border: none;
-        top: 12px;
-        left: 15px;
         &:focus, &:active {
             outline: none;
         }
         &--add {
-            position: absolute;
-            right: 20px;
-            top: 12px;
             color: $primary;
             font-size: 18px;
             cursor: pointer;
@@ -112,7 +106,7 @@
             }
         }
         .icon--share {
-            color: $primary;
+            color: $grey;
             cursor: pointer;
             &:hover {
                 color: darken($primary, 10%);

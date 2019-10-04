@@ -74,6 +74,19 @@ export const postMatch = (data) => {
     }
 };
 
+export const patchMatch = (data) => {
+    return dispatch => {
+        return axios.post("/matches", data).then(
+            response => {
+                //
+            },
+            error => {
+                dispatch({type: POST_MATCH_ERROR, error})
+            }
+        )
+    }
+};
+
 //user_match routes
 export const becomeMatchMember = (data) => {
     return dispatch => {
