@@ -86,7 +86,7 @@ class MatchDetails extends Component {
                                                 <span className={'matches__status--finished'}>вы отменили матч</span>
                                                 :
                                                 <span className='d-flex align-items-center'>
-                                                    <img src={require('../assets/design_images/'+getMatchStatusImg(match.status)+'.svg')} alt='icon'/>
+                                                    <img src={config.publicUserFolder + match.organizer.avatar} alt='icon'/>
                                                     <span className={'matches__status--'+getMatchStatusImg(match.status)}>&nbsp;{match.status}</span>
                                                 </span>
                                             }

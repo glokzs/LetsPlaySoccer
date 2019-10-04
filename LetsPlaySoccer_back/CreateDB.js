@@ -945,23 +945,7 @@ const query =
         4
     );
     
-  INSERT INTO matches (
-    start,
-    end,
-    fieldId,
-    userId,
-    playersInTeam,
-    numOfTeams,
-    price
-  ) VALUES (
-    '2019-03-11T11:33:48.927Z',
-    '2019-03-11T13:17:12.927Z',
-    '4',
-    '1',
-    '5',
-    '2',
-    '5000'
-  );
+
 	
 `;
 
