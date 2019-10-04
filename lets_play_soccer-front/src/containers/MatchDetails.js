@@ -11,7 +11,6 @@ import {
 } from "../helpers/helperMatch";
 import config from "../config";
 import {Carousel, Empty, Modal, Popover} from "antd";
-import photo from "../assets/content_images/Mask.png";
 import {connect} from "react-redux";
 import {
     becomeMatchMember,
@@ -21,6 +20,7 @@ import {
     removeUserFromMatch
 } from "../store/actions/matchAction";
 import Fields from "./Fields";
+import LeafletMap from "./LeafletMap";
 
 class MatchDetails extends Component {
     state = {
@@ -30,7 +30,9 @@ class MatchDetails extends Component {
         isContactsOpen: false,
         deleteConfirmModal: false,
         userToDelete: '',
-        matchCancelled: false
+        matchCancelled: false,
+        openMap: false,
+        chosenField: ''
     };
 
     getMatch = () => {
@@ -48,6 +50,11 @@ class MatchDetails extends Component {
 
     checkThisUser = (users, thisUser) => {
         return users.filter(user => user.phoneNumber === thisUser.phoneNumber);
+    };
+
+    toggleMap = (chosenField) => {
+        if (chosenField) this.setState({openMap: !this.state.openMap, chosenField, error: ''});
+        else this.setState({openMap: !this.state.openMap});
     };
 
     render() {
@@ -199,7 +206,12 @@ class MatchDetails extends Component {
                                             <div className='field__images icon--camera'>
                                                 {match.field.images.length}
                                             </div>
-                                            <button className='btn--map'>Показать на карте</button>
+                                            <button
+                                                className='btn--map'
+                                                onClick={() => this.toggleMap(match.field)}
+                                            >
+                                                Показать на карте
+                                            </button>
                                         </div>
                                     </div>
 
@@ -215,7 +227,7 @@ class MatchDetails extends Component {
                                         <ul>
                                             {matchPlayers.map(user => {
                                                 return (
-                                                    <li className='matches__card__head' key={user.phoneNumber}>
+                                                    <li className='matches__card__head justify-content-between' key={user.phoneNumber}>
                                                         <div className='d-flex'>
                                                             <img className='matches__avatar' src={config.publicUserFolder + user.avatar} alt="avatar"/>
                                                             <div>
@@ -282,6 +294,16 @@ class MatchDetails extends Component {
                     <div className='fixed-page'>
                         <Fields
                             sendFieldId={this.toggleFields}
+                        />
+                    </div> : null
+                }
+
+                {this.state.openMap?
+                    <div className='fixed-page'>
+                        <LeafletMap
+                            sendFieldId={this.toggleMap}
+                            field={this.state.chosenField}
+                            oneField
                         />
                     </div> : null
                 }

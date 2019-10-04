@@ -31,7 +31,7 @@ const query =
     role
   ) VALUES (
     '$2b$10$NwDdDQTGWur5NfGZoQPO9uS0/X3u1DHoI7LnYIeUBt6s7vUxuL9uG',
-    '+77771112211',
+    '+77771111111',
     'Есен Ахметов',
     'test@test.kz',
     'test_user1.jpeg',
@@ -47,7 +47,7 @@ const query =
     role
   ) VALUES (
     '$2b$10$NwDdDQTGWur5NfGZoQPO9uS0/X3u1DHoI7LnYIeUBt6s7vUxuL9uG',
-    '+77771112212',
+    '+77772222222',
     'Владислав Цой',
     'tsoy@test.kz',
     'test_user2.jpeg',
@@ -63,7 +63,7 @@ const query =
     role
   ) VALUES (
     '$2b$10$NwDdDQTGWur5NfGZoQPO9uS0/X3u1DHoI7LnYIeUBt6s7vUxuL9uG',
-    '+77771112213',
+    '+77773333333',
     'Геннадий Кадыров',
     'gena@test.kz',
     'test_user3.jpeg',
@@ -79,10 +79,10 @@ const query =
     role
   ) VALUES (
     '$2b$10$NwDdDQTGWur5NfGZoQPO9uS0/X3u1DHoI7LnYIeUBt6s7vUxuL9uG',
-    '+77771112214',
+    '+77774444444',
     'Абай Ибрагимов',
     'blink@test.kz',
-    'test_user5.jpeg',
+    'test_user4.jpeg',
     'user'
   );
   
@@ -95,7 +95,7 @@ const query =
     role
   ) VALUES (
     '$2b$10$NwDdDQTGWur5NfGZoQPO9uS0/X3u1DHoI7LnYIeUBt6s7vUxuL9uG',
-    '+77771112215',
+    '+77775555555',
     'Кемаль Доронин',
     'football@test.kz',
     'test_user5.jpeg',
