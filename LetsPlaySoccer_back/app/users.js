@@ -6,6 +6,7 @@ const multer  = require('multer');
 const path = require('path');
 const config = require('../config');
 const nanoid = require('nanoid');
+const auth = require('../middlewares/auth');
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -16,24 +17,7 @@ const storage = multer.diskStorage({
   }
 });
 
-const upload = multer({
-  storage: storage,
-  fileFilter: function (req, file, cb) {
-    User.findOne({
-      where: {
-        phoneNumber: req.body.phoneNumber
-      },
-    }).then(data => {
-      if (data) {
-        cb(null, false);
-      } else {
-        cb(null, true);
-      }
-    }).catch(err => {
-      cb(null, false);
-    });
-  }
-});
+const upload = multer({storage});
 
 router.get('/', (req, res) => {
   User.findAll({
@@ -110,8 +94,42 @@ router.post('/register/:code', async (req, res) => {
   else res.send({message: "Error"});
 });
 
+router.put('/', [auth, upload.single('avatar')], async (req, res) => {
+ try {
+   const updateUser = {
+     displayName: req.body.displayName
+   };
+   if(req.body.email) {
+     updateUser.email = req.body.email;
+   }
+   console.log(req.body);
+   console.log(req.file);
+   if (req.file) {
+     updateUser.avatar = req.file.filename;
+   }
+   const user = await User.findOne({
+     where: {
+       id: req.user.id
+     },
+     attributes: {
+       exclude: ['password']
+     }
+   });
+
+   console.log(updateUser);
+   user.update({...updateUser})
+     .then(data => {
+       const user = data.toJSON();
+       console.log(user);
+       res.send(user);
+     })
+ } catch (e) {
+   res.send(e);
+ }
+});
+
+
 router.post('/sessions', async (req, res) => {
-  // console.log(req.body);
   try {
     const user = await User.findOne({
       where: {
@@ -136,11 +154,12 @@ router.post('/sessions', async (req, res) => {
     delete copyUser.password;
     res.status(200).json(copyUser);
   }catch (e) {
-    res.status(404).send({message: "Что-то пошло не так"});
+    res.status(500).send({message: "Что-то пошло не так"});
   }
 });
 
 router.delete('/sessions', async (req, res) => {
+try {
   const token = req.get("Authorization");
   const success = {message: "Вы вышли из сессии"};
   if(!token) return res.send(success);
@@ -159,6 +178,9 @@ router.delete('/sessions', async (req, res) => {
   user.update({token: nanoid()});
 
   res.send(success);
+}catch (e) {
+  res.status(500).send({message: "Что-то пошло не так"});
+}
 });
 
 module.exports = router;

@@ -5,6 +5,7 @@ import {
     LOGIN_USER_ERROR,
     LOGOUT_USER,
     CLEAR_USER_ERRORS,
+    UPDATE_USER_SUCCESS,
     UPDATE_USER_ERROR, SAVE_TEMPORARY_USER_TO_REDUX_STORE
 } from '../actions/action-type';
 
@@ -30,6 +31,8 @@ const userReducer = (state = initialState, action) => {
             return {...state, loginError: action.data};
         case LOGOUT_USER:
             return {...state, user: null, loginError: null, registerError: null};
+        case UPDATE_USER_SUCCESS:
+            return {...state, user: action.user, loginError: null, registerError: null};
         case CLEAR_USER_ERRORS:
             return {...state, registerError: null, loginError: null};
         case UPDATE_USER_ERROR:

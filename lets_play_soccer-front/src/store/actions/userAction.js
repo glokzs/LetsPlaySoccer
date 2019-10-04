@@ -98,9 +98,8 @@ export const clearUserErrors = () => {
 };
 
 export const updateUser = (updateDataUser) => {
-    // console.log(updateDataUser);
     return dispatch => {
-        return axios.post('/users', updateDataUser).then(
+        return axios.put('/users', updateDataUser).then(
             response => {
                 const user = response.data;
                 dispatch({type: UPDATE_USER_SUCCESS, user});
