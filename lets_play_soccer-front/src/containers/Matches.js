@@ -80,7 +80,7 @@ const mapDispatchToProps = dispatch => {
     return {
         getMatches: (id, cb) => dispatch(getMatches(id, cb)),
         getMyMatches: (id) => dispatch(getMyMatches(id)),
-        logout: () => dispatch(logoutUser())
+        onLogoutUser: () => dispatch(logoutUser())
     };
 };
 
