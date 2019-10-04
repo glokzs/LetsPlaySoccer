@@ -49,6 +49,13 @@
             margin-top: 20px;
         }
     }
+    &__avatar {
+        width: 84px;
+        height: 84px;
+        object-fit: cover;
+        border-radius: 50%;
+        display: inline-block;
+    }
 
 
     &__name {

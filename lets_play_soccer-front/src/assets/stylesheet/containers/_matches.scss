@@ -24,7 +24,6 @@
       align-items: center;
       padding: 10px;
       border-bottom: 1px solid $light-grey;
-      justify-content: space-between;
     }
     &__body {
       padding: 10px;
@@ -37,6 +36,7 @@
     border-radius: 50%;
     border: 3px solid white;
     position: relative;
+    object-fit: cover;
     &:first-child {
       left: -20px;
       z-index: 2;
@@ -93,6 +93,7 @@
     height: 35px;
     border-radius: 50%;
     margin-right: 10px;
+    object-fit: cover;
   }
   &__format--t-shirt {
     padding: 3px;

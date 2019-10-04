@@ -60,11 +60,11 @@ class Toolbar extends Component {
             <div>
               <div className="toolbar__sidebar">
                 <div className="profile">
-                  <img className="photo-profile" src={img} alt='' width={84}/>
+                  <img className="toolbar__avatar" src={img} alt='' width={84}/>
                   <h2 className='toolbar__name'>{this.props.user.displayName}</h2>
                 </div>
                 <Nav>
-                  <NavItem className="menu-item" ><NavLink className="menu-link" to="/my/matches/completed" >Завершённые матчи</NavLink></NavItem>
+                  <NavItem className="menu-item" ><NavLink className="menu-link" to="/my/matches" >Матчи</NavLink></NavItem>
                   <NavItem className="menu-item" ><NavLink className="menu-link" to={"/my/profile/" + this.props.user.id} >Профиль</NavLink></NavItem>
                 </Nav>
                 <div>

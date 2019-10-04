@@ -86,7 +86,7 @@ class MatchDetails extends Component {
                                                 <span className={'matches__status--finished'}>вы отменили матч</span>
                                                 :
                                                 <span className='d-flex align-items-center'>
-                                                    <img src={config.publicUserFolder + match.organizer.avatar} alt='icon'/>
+                                                    <img src={require('../assets/design_images/'+getMatchStatusImg(match.status)+'.svg')} alt='icon'/>
                                                     <span className={'matches__status--'+getMatchStatusImg(match.status)}>&nbsp;{match.status}</span>
                                                 </span>
                                             }
@@ -217,7 +217,7 @@ class MatchDetails extends Component {
                                                 return (
                                                     <li className='matches__card__head' key={user.phoneNumber}>
                                                         <div className='d-flex'>
-                                                            <img className='matches__avatar' src={photo} alt="avatar"/>
+                                                            <img className='matches__avatar' src={config.publicUserFolder + user.avatar} alt="avatar"/>
                                                             <div>
                                                                 <div className='matches__text--player'>{user.displayName}</div>
                                                                 {user.user_match.organizer ?
