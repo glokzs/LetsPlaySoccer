@@ -23,5 +23,13 @@
   left: 0;
   right: 0;
   background: $light-blue;
-  overflow: auto;
+  overflow: hidden;
+}
+
+.map {
+  &__btn {
+    position: absolute;
+    z-index: 10000;
+    right: 0;
+  }
 }

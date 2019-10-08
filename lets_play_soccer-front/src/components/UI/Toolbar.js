@@ -3,7 +3,7 @@ import photo from '../../assets/content_images/Mask.png';
 import {Nav, NavItem} from 'react-bootstrap';
 import {NavLink} from 'react-router-dom';
 import Footer from '../Footer';
-import { Drawer } from 'antd';
+import {Drawer} from 'antd';
 import config from '../../config';
 
 
@@ -32,17 +32,23 @@ class Toolbar extends Component {
                 onClick={this.menuToggle}
               />
 
-            </div> :
-              <div className='toolbar'>
+            </div>
+                :
+            <header className='toolbar__header'>
+              <div className='col-3'>
                 <button
-                  className='toolbar__btn icon--hamburger'
-                  onClick={this.menuToggle}
+                    className='toolbar__btn icon--hamburger'
+                    onClick={this.menuToggle}
                 />
-                    <div
-                      className='toolbar__btn--add icon--plus'
-                      onClick={() => this.props.history.push('/my/matches/create')}
-                    />
               </div>
+              <div className='col-6 toolbar__header__title'>Матчи</div>
+              <div className='col-3 text-right'>
+                <div
+                    className='toolbar__btn--add icon--plus'
+                    onClick={() => this.props.history.push('/my/matches/create')}
+                />
+              </div>
+            </header>
           }
 
           <Drawer
@@ -54,11 +60,11 @@ class Toolbar extends Component {
             <div>
               <div className="toolbar__sidebar">
                 <div className="profile">
-                  <img className="photo-profile" src={img} alt='' width={84}/>
+                  <img className="toolbar__avatar" src={img} alt='' width={84}/>
                   <h2 className='toolbar__name'>{this.props.user.displayName}</h2>
                 </div>
                 <Nav>
-                  <NavItem className="menu-item" ><NavLink className="menu-link" to="/my/matches/completed" >Завершённые матчи</NavLink></NavItem>
+                  <NavItem className="menu-item" ><NavLink className="menu-link" to="/my/matches" >Матчи</NavLink></NavItem>
                   <NavItem className="menu-item" ><NavLink className="menu-link" to={"/my/profile/" + this.props.user.id} >Профиль</NavLink></NavItem>
                 </Nav>
                 <div>

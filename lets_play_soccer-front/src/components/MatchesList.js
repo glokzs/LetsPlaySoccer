@@ -8,6 +8,7 @@ import {
     getPlayerWord,
     getPricePerPerson
 } from "../helpers/helperMatch";
+import config from "../config";
 
 
 class MatchesList extends Component {
@@ -16,9 +17,9 @@ class MatchesList extends Component {
         const confirmedUsers = users.filter(user => user.user_match.confirmed);
         return (
             <div className='position-relative'>
-                {confirmedUsers[0]? <img src={photo} alt="avatar" className='matches__users'/> : null}
-                {confirmedUsers[1]? <img src={photo} alt="avatar" className='matches__users'/> : null}
-                {confirmedUsers[2]? <img src={photo} alt="avatar" className='matches__users'/> : null}
+                {confirmedUsers[0]? <img src={config.publicUserFolder+confirmedUsers[0].avatar} alt="avatar" className='matches__users'/> : null}
+                {confirmedUsers[1]? <img src={config.publicUserFolder+confirmedUsers[1].avatar} alt="avatar" className='matches__users'/> : null}
+                {confirmedUsers[2]? <img src={config.publicUserFolder+confirmedUsers[2].avatar} alt="avatar" className='matches__users'/> : null}
             </div>
         );
     };
@@ -39,7 +40,7 @@ class MatchesList extends Component {
                                             to={`/my/matches/${match.id}`}
                                         >
                                             <div className='matches__card__head'>
-                                                <img className='matches__avatar' src={photo} alt="avatar"/>
+                                                <img className='matches__avatar' src={config.publicUserFolder+match.organizer.avatar} alt="avatar"/>
                                                 <div>
                                                     <div className='matches__text--main'>{match.organizer.displayName}</div>
                                                     <span className='matches__text--primary'>

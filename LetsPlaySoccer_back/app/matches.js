@@ -7,9 +7,9 @@ const auth = require('../middlewares/auth');
 router.get('/', auth, async (req, res) => {
     let query = {};
      if(req.query.organizerId && req.query.mine) {
-        query = {organizerId: req.query.organizerId};
+        query = {organizerId: req.query.organizerId, disabled: false};
     } else if(req.query.organizerId && !req.query.mine) {
-        query = {organizerId: {[sequelize.Op.not]: req.query.organizerId}};
+        query = {organizerId: {[sequelize.Op.not]: req.query.organizerId}, disabled: false};
     }
     const matches = await Match.findAll({
         where : query,
@@ -144,6 +144,18 @@ router.post('/', auth, async (req, res) => {
             })
             .catch(err => res.json(err.errors));
     }
+});
+
+router.patch('/', auth, async (req, res) => {
+    const match = await Match.findOne({ where: {id: req.body.id} });
+
+    if(!match) res.status(400).send({message: 'Такого матча нет'});
+
+    match.update({
+        disabled: true
+    })
+        .then((data => res.json(data)))
+        .catch(err => res.json(err.errors));
 });
 
 module.exports = router;

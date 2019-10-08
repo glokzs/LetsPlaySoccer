@@ -6,6 +6,7 @@ const multer  = require('multer');
 const path = require('path');
 const config = require('../config');
 const Sequelize = require("sequelize");
+const auth = require('../middlewares/auth');
 const Op = Sequelize.Op;
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -18,7 +19,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({storage});
 
-router.get('/', async (req, res) => {
+router.get('/', auth, async (req, res) => {
   let query = {disabled: false};
   let fieldOffset = 0;
   try {
@@ -51,7 +52,7 @@ router.get('/', async (req, res) => {
 
 });
 
-router.get('/:id', async (req, res) => {
+router.get('/:id',auth, async (req, res) => {
   Field.findOne({where: {id: req.params.id}, include: [Type, Cover]})
     .then(data => {
       if(data) {
@@ -63,7 +64,7 @@ router.get('/:id', async (req, res) => {
     })
 });
 
-router.post('/', upload.array('images'), async (req, res) => {
+router.post('/', auth, upload.array('images'), async (req, res) => {
 
   const field = {
     name: req.body.name,

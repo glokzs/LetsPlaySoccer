@@ -46,6 +46,10 @@ module.exports = (sequelize, type) => {
             organizerId: {
                 type: type.INTEGER,
                 allowNull: false
+            },
+            disabled: {
+                type: type.BOOLEAN,
+                defaultValue: false
             }
         },
         {
