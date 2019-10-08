@@ -2,7 +2,8 @@ exports.config = {
   output: './output',
   helpers: {
     Puppeteer: {
-      url: 'http://localhost'
+      url: 'http://localhost:3000',
+      show: true
     }
   },
   include: {
@@ -23,4 +24,4 @@ exports.config = {
   },
   tests: './*_test.js',
   name: 'lets_play_soccer-test'
-}
+};

@@ -21,6 +21,7 @@ export default class MobileInput extends Component {
         return (
             <Fragment>
                 <NumberFormat
+                    id={this.props.id}
                     value={this.props.phone}
                     format={'+7 (###) ###-##-##'}
                     onValueChange={this.updateInputPhone}

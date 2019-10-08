@@ -81,8 +81,8 @@ class ConfirmPhone extends Component {
                     <Form onSubmit={this.onSubmitHandler} >
                         <div className="wrap" onClick={this.handleClick}>
                             <input
-                                value=""
-                                type="number"
+                                value=''
+                                type="tel"
                                 ref={this.input}
                                 onChange={this.handleChange}
                                 onKeyUp={this.handleKeyUp}

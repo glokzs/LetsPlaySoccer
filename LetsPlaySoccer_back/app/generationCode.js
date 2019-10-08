@@ -27,7 +27,13 @@ router.post('/', async (req, res) => {
                 },
             });
             if(isCode) {
-                console.log(isCode);
+                let message = "\nВаш код подтверждения: " + isCode.dataValues.code;
+                console.log(message);
+                client.messages.create({
+                    body: message,
+                    from: '+19384440294',
+                    to: user.phoneNumber
+                }).then(message => console.log(message));
                 return res.send(isCode);
             }
             if(userFromDB) {
