@@ -238,7 +238,13 @@ class CreateMatch extends Component {
                         </div>
                     </div>
 
-
+                    При создании матча тебе нужно:
+                    <ul className='matches__rule mt-2'>
+                        <li className='icon--soccer-ball text-success'>&nbsp;&nbsp;Позвонить владельцу поля</li>
+                        <li className='icon--soccer-ball text-success'>&nbsp;&nbsp;Согласовать дату, время и стоимость</li>
+                        <li className='icon--soccer-ball text-success'>&nbsp;&nbsp;Подтверждать участие игроков</li>
+                        <li className='icon--soccer-ball text-success'>&nbsp;&nbsp;Наслаждаться игрой</li>
+                    </ul>
 
                 </div>
 
