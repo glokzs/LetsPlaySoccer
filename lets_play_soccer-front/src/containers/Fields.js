@@ -130,7 +130,7 @@ class Fields extends Component {
                 </LoadingWrapper>
 
                 {this.state.openFieldDetails?
-                    <div className='fixed-page'>
+                    <div className='fixed-page overflow-auto'>
                         <FieldDetails
                             sendFieldId={this.props.sendFieldId}
                             field={this.state.field}

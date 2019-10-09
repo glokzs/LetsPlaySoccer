@@ -258,7 +258,7 @@ class CreateMatch extends Component {
                 }
 
                 {this.state.openFields?
-                    <div className='fixed-page'>
+                    <div className='fixed-page overflow-auto'>
                         <Fields
                             sendFieldId={this.toggleFields}
                         />
