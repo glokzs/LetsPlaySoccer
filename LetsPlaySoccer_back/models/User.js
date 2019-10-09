@@ -56,7 +56,8 @@ module.exports = (sequelize, type) => {
                 }
             },
             avatar: {
-                type: type.STRING
+                type: type.STRING,
+                defaultValue: "default_avatar.jpg"
             },
             token: {
                 type: type.STRING
