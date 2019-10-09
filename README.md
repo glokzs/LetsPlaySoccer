@@ -1,37 +1,14 @@
-## Welcome to GitHub Pages
+ 
 
-You can use the [editor on GitHub](https://github.com/sound0terror/LetsPlaySoccer/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
-
-### Markdown
-
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
-
-```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/sound0terror/LetsPlaySoccer/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+1. Установить NodeJS и через его установить npm (на сайте NodeJS есть инструкция)
+2. Клонирование проекта (git clone git@github.com:RabigaSB/LetsPlaySoccer.git или git clone https://github.com/RabigaSB/LetsPlaySoccer, если нету git'a то устанавливаем его npm i git)
+3. Далее в папке lets-play-soccer-front запускаем npm i или yarn add (скачать зависимости)
+4. В папке Lets-play-soccer-back запускаем npm i или yarn add (скачать зависимости) 
+5. Скачайте MySQL https://www.mysql.com/downloads/
+6. Создаёшь базу данных в MySQL с названием LetsPlaySoccer
+7. Вводим команду npm run dev в папке Lets-play-soccers-back
+8. Запускаем фикстуры (node CreateDb.js)
+9. Снова запускаем npm run dev
+10. Заходим в config.js В папке lets-play-soccer-front/src и раскомментируем первые пять строчек и кломентируем с 8 по 12 строчки
+11. В папке lets-play-soccer-front запускаем команду npm start
