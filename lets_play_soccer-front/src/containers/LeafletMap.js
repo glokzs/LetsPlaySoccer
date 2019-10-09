@@ -1,8 +1,7 @@
-import React, {Component, Fragment} from 'react';
+import React, {Component} from 'react';
 import {Map, Marker, Popup, TileLayer} from 'react-leaflet';
 import {connect} from "react-redux";
 import {getFields} from "../store/actions/fieldsAction";
-// import {saveIdOfSelectedField} from "../store/actions/matchAction";
 
 class LeafletMap extends Component {
     state = {

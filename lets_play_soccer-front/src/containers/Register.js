@@ -6,6 +6,7 @@ import FormElement from '../components/UI/FormElement';
 import MobileInput from "../components/UI/MobileInput";
 import Spinner from "../components/UI/Spinner";
 import {Redirect} from "react-router";
+import {NavLink} from "react-router-dom";
 
 class Register extends Component {
     state = {
@@ -70,6 +71,9 @@ class Register extends Component {
                             />
                             <div>
                                 <Button type="submit" variant="primary" size="lg" block>Зарегистрироваться</Button>
+                            </div>
+                            <div className='mt-3 text-right'>
+                                <span>Есть уже аккаунт? <NavLink to="/login">Войти </NavLink></span>
                             </div>
                         </Form>
                     </div>

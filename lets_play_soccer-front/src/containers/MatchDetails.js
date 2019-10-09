@@ -244,7 +244,7 @@ class MatchDetails extends Component {
                                                         </div>
                                                         <div>
                                                             {(!isThisUserOrganizer || this.props.user.id !== user.user_match.userId)  && (user.user_match.organizer || user.user_match.confirmed)?
-                                                                <a href={'tel:'+user.phoneNumber} className={'icon--phone matches__btn--call'}/>
+                                                                <a href={'tel:'+user.phoneNumber} className={'icon--phone matches__btn--call'}>&nbsp;</a>
                                                                 : null
                                                             }
                                                             {(isThisUserOrganizer && !user.user_match.organizer)?

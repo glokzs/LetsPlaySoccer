@@ -1,5 +1,4 @@
 import React, {Component, Fragment} from 'react';
-import photo from '../assets/content_images/Mask.png';
 import {Link} from "react-router-dom";
 import {
     getConfirmedUsersNumber,

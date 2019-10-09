@@ -60,9 +60,9 @@ class Login extends Component {
                             name="password"
                             value={this.state.password}
                         />
-                        <div className="text-right">
-                            <NavLink to="">Забыли пароль?</NavLink>
-                        </div>
+                        {/*<div className="text-right">*/}
+                        {/*    <NavLink to="">Забыли пароль?</NavLink>*/}
+                        {/*</div>*/}
                         <div className="mt-5 mb-2">
                             <Button id='test-login-button' type="submit" variant="primary" size="lg" block>Войти</Button>
                         </div>
