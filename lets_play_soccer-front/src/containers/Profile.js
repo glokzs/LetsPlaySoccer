@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import photo from '../assets/content_images/Mask.png';
+import photo from '../assets/content_images/default_avatar.jpg';
 import Toolbar from '../components/UI/Toolbar';
 import {logoutUser, clearUserErrors, updateUser} from '../store/actions/userAction';
 import {withRouter} from "react-router-dom";
